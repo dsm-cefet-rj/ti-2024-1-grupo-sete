@@ -1,8 +1,12 @@
 import React from "react";
+import Pesquisa from "../../Components/FerramentaPesquisa/pesquisa";
 
 export default function Principal(props){
     return(
-        <div>
+        <><div>
             Principal
-        </div>);
+        </div>
+        
+        <Pesquisa/>
+        </>);
 }

@@ -1,0 +1,10 @@
+.card-carros {
+    position: relative;
+    transition: transform 0.3s ease;
+    color:brown;
+}
+
+.card-carros:hover {
+    transform: scale(1.10);
+}
+
