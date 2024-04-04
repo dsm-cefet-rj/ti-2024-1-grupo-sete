@@ -13,7 +13,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Fiat Uno",
         ano: "2010",
         dono: "Julio Cesar",
-        cidade: "Rio de Janeiro"
+        cidade: "Rio de Janeiro",
+        preco: 50.00
     },
 
     2: {
@@ -21,7 +22,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Ferrari",
         ano: "2011",
         dono: "Augusto",
-        cidade: "São Paulo"
+        cidade: "São Paulo",
+        preco: 40.00
     },
 
     3: {
@@ -29,7 +31,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Mercedes",
         ano: "2012",
         dono: "Rogério",
-        cidade: "Volta Redonda"
+        cidade: "Volta Redonda",
+        preco: 35.00
     },
 
     4: {
@@ -37,7 +40,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "BMW",
         ano: "2013",
         dono: "Marcos",
-        cidade: "Florianópolis"
+        cidade: "Florianópolis",
+        preco: 47.00
     },
 
     5: {
@@ -45,7 +49,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Honda Civic",
         ano: "2014",
         dono: "Reinaldo",
-        cidade: "Niterói"
+        cidade: "Niterói",
+        preco: 29.00
     },
 
     6: {
@@ -53,7 +58,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Tesla",
         ano: "2015",
         dono: "Matheus",
-        cidade: "Duque de Caxias"
+        cidade: "Duque de Caxias",
+        preco: 61.00
     },
 
     7: {
@@ -61,7 +67,8 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Fiat Uno",
         ano: "2016",
         dono: "José",
-        cidade: "Campinas"
+        cidade: "Campinas",
+        preco: 29.10
     },
 };
 

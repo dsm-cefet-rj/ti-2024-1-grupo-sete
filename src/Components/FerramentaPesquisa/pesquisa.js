@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import carros from '../Carros/carros';
 
 import './style.css';
-import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
 
 export default function Pesquisa() {
   const [busca, setBusca] = useState('');
@@ -10,14 +10,18 @@ export default function Pesquisa() {
 
   return (
     <div>
-      <h1>O que está buscando?</h1>
-      <input
-        type="text"
-        value={busca}
-        onChange={(ev) => setBusca(ev.target.value)}
-      />
+      <div className="pesquisa">
+        <div className="pesquisa-conteudo">
+          <h1>O que está buscando?</h1>
+          <input
+            type="text"
+            value={busca}
+            onChange={(ev) => setBusca(ev.target.value)}
+          />
+        </div>
+      </div>
 
-      <Row>
+      <Row >
 
         {Object.keys(carros).map((carroId) => {
           const carro = carros[carroId];
@@ -32,9 +36,17 @@ export default function Pesquisa() {
                   />
                   <CardTitle><h2>{carro.modelo}</h2></CardTitle>
                   <CardText>
-                    <p>Ano: {carro.ano}</p>
+                    <Row className="card-text-columns">
+                    <Col><p>Ano: {carro.ano}</p>
                     <p>Dono: {carro.dono}</p>
                     <p>Cidade: {carro.cidade}</p>
+                    </Col>
+                    <Col className="justify-center">
+                    <Container>
+                    <p className="preco"> Preço </p></Container>
+                    <h1 className="preco">R$ {carro.preco}/dia</h1>
+                    </Col>
+                    </Row>
                   </CardText>
                 </CardBody>
               </Card>

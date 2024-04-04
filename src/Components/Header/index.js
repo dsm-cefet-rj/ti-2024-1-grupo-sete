@@ -15,7 +15,7 @@ return(
   <div className ="all">
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
-    <a className="navbar-brand" ><Link to="/"><img className="ImgLogo" src={Logo} alt="DriveZoom Logo" /></Link></a>
+    <Link className= "nav-link" to="/"><img className="ImgLogo" src={Logo} alt="DriveZoom Logo" /></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation" onClick={toggle}>
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -25,17 +25,17 @@ return(
         <Link className="nav-link" aria-current="page" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Conheça nossa frota</a>
+        <Link className="nav-link" aria-current="page" to="/">Alugue seu carro</Link>
         </li>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Mais informações
               </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Quem somos</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+              <DropdownMenu>
+                <DropdownItem><Link className="nav-link" aria-current="page" to="/sobre-nos">Sobre Nós</Link></DropdownItem>
+                <DropdownItem><Link className="nav-link" aria-current="page" to="/FAQ">FAQ</Link></DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                <DropdownItem><Link className="nav-link" aria-current="page" to="/contatos">Contatos</Link></DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
       </Nav>

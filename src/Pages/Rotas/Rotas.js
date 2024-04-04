@@ -1,6 +1,9 @@
 import Detalhes from '../Detalhes/Detalhes';
 import Pagamento from '../Pagamento/Pagamento';
 import Principal from '../Principal/Principal';
+import SobreNos from '../SobreNos/index';
+import FAQ from '../FAQ/index';
+import Contatos from '../Contatos/index';
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const AppRouter =() => {
@@ -17,7 +20,11 @@ export const AppRouter =() => {
               <Switch>
               <Route path="/pagamento"><Pagamento /></Route>
               <Route path="/detalhes"><Detalhes /></Route>
+              <Route path="/sobre-nos"><SobreNos/></Route>
+              <Route path="/FAQ"><FAQ/></Route>
+              <Route path="/contatos"><Contatos/></Route>
               <Route path="/"><Principal /></Route>
+
               </Switch>
       </div>
   </Router> 
