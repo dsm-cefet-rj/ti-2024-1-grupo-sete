@@ -1,45 +1,47 @@
-import React, {useState} from 'react';
-import carros from '../Carros/carros'
-import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
+import React, { useState } from 'react';
+import carros from '../Carros/carros';
+
 import './style.css';
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
 
+export default function Pesquisa() {
+  const [busca, setBusca] = useState('');
+  console.log(busca);
 
+  return (
+    <div>
+      <h1>O que está buscando?</h1>
+      <input
+        type="text"
+        value={busca}
+        onChange={(ev) => setBusca(ev.target.value)}
+      />
 
-export default function Pesquisa(){
-    const[busca, setBusca] = useState('');
-   console.log( busca);
+      <Row>
 
-
-
-    return(
-        <div>
-            <h1>O que está buscando?</h1>
-            <input
-                type="text"
-                value={busca}
-                onChange={(ev) => setBusca(ev.target.value)}
-            />
-
-            <ul>
-            {Object.keys(carros).map((carroId) => {
-        const carro = carros[carroId];
-        return (
-            <Card className='card-carros' style={{width: '15rem'}}>
+        {Object.keys(carros).map((carroId) => {
+          const carro = carros[carroId];
+          return (
+            <Col xs={12} md={6} lg={4} key={carroId}>
+              <Card className="card-carros">
                 <CardBody>
-                    <div key={carroId}>
-                        <CardImg src={carro.Image} alt={carro.modelo} onError={(error) => console.error('Erro ao carregar imagem:', error)}/>
-                        <CardTitle><h2>{carro.modelo}</h2></CardTitle>
-                        <CardText>
-                        <p>Ano: {carro.ano}</p>
-                        <p>Dono: {carro.dono}</p>
-                        <p>Cidade: {carro.cidade}</p>
-                        </CardText>
-                    </div>
+                  <CardImg
+                    src={carro.Image}
+                    alt={carro.modelo}
+                    onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                  />
+                  <CardTitle><h2>{carro.modelo}</h2></CardTitle>
+                  <CardText>
+                    <p>Ano: {carro.ano}</p>
+                    <p>Dono: {carro.dono}</p>
+                    <p>Cidade: {carro.cidade}</p>
+                  </CardText>
                 </CardBody>
-          </Card>
-        );
-      })}
-            </ul>
-        </div>
-    )
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
 }

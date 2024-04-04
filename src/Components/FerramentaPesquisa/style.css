@@ -2,9 +2,24 @@
     position: relative;
     transition: transform 0.3s ease;
     color:brown;
+    width: '15rem';
 }
 
 .card-carros:hover {
-    transform: scale(1.10);
+    transform: scale(1.05);
 }
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to multiple lines if needed */
+    justify-content: space-between; /* Distribute cards evenly */
+    align-items: flex-start; /* Align cards vertically from the top */
+  }
+
+
+    .card-img {
+        max-width: 100%; /* Allow images to scale down to fit the container */
+        height: auto; /* Maintain aspect ratio */
+      }
+
 

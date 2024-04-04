@@ -9,7 +9,6 @@ import { AppRouter } from './Pages/Rotas/Rotas';
 const App = (props) => {
   return (
     <AppRouter>
-      
     </AppRouter>
  );
 }

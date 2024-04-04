@@ -1,47 +1,57 @@
-import React from "react";
+import React, {useState} from "react";
 import './header.css';
 import Logo from "../../Assets/Logo2.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Nav } from "reactstrap";
+
 
 export default function HeaderMain(props){
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 return(
   <>
+  <div className ="all">
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
     <a className="navbar-brand" ><Link to="/"><img className="ImgLogo" src={Logo} alt="DriveZoom Logo" /></Link></a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation" onClick={toggle}>
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div className="collapse navbar-collapse" id="navbarScroll">
-      <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+    <Collapse isOpen={isOpen} navbar>
+          <Nav className="me-auto" navbar>
         <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/">Página Principal</Link>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Link</a>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <Link className="nav-link" aria-current="page" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" aria-disabled="true">Link</a>
+          <a className="nav-link" href="#">Conheça nossa frota</a>
         </li>
-      </ul>
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Mais informações
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>Quem somos</DropdownItem>
+                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>Reset</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+      </Nav>
+      <Nav navbar>
+        <li className="nav-item">
+          <Link className="nav-link" aria-current="page" to="/">Cadastre-se</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link " aria-current="page" to="/">Login</Link>
+        </li>
+      </Nav>
+    </Collapse>
   </div>
 </nav>
+</div>
+
   </>
 )
   
