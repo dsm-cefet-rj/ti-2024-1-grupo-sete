@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderMain from "../../Components/Header";
 import Pesquisa from "../../Components/FerramentaPesquisa/pesquisa";
+import Footer from "../../Components/Footer/footer"
 
 
 export default function Principal(props){
@@ -9,9 +10,12 @@ export default function Principal(props){
         <>
         <HeaderMain/>
         <div>
-            Principal
+            Principal 
         </div>
 
         <Pesquisa/>
+        
+
+        <Footer />
         </>);
 }
