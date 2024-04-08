@@ -16,6 +16,6 @@ export default function Principal(props){
         <Pesquisa/>
         
 
-        <Footer />
+        <Footer/>
         </>);
 }
