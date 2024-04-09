@@ -55,6 +55,7 @@ export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) 
             console.log(date)
             console.log(format(date, 'MM/dd/yyyy'))
             setCalendar(format(date, 'dd/MM/yyyy'))
+            
             const exactDateTimestamp = new Date(date).getTime();
             console.log(exactDateTimestamp)
         }
