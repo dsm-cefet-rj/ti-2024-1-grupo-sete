@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 import carros from '../Carros/carros';
-
+import BarraPesquisa from './barrapesquisa';
 import './style.css';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
 
 export default function Pesquisa() {
-  const [busca, setBusca] = useState('');
+  const [busca, setBusca] = useState("Todos");
+  const [calendar, setCalendar] = useState("Data");
   console.log(busca);
+
 
   return (
     <div>
-      <div className="pesquisa">
-        <div className="pesquisa-conteudo">
-          <h1>O que está buscando?</h1>
-          <input
-            type="text"
-            value={busca}
-            onChange={(ev) => setBusca(ev.target.value)}
-          />
-        </div>
-      </div>
+
+      <div><BarraPesquisa
+            busca={busca}
+            setBusca={setBusca}
+            calendar={calendar}
+            setCalendar={setCalendar}
+      /></div>
 
       <Row >
 
-        {Object.keys(carros).map((carroId) => {
+        {Object.keys(carros).filter(
+          ((carroId) =>{
+            if(busca === "Todos") return true;
+            return carros[carroId].cidade === busca;
+          })
+        ).filter(
+          ((carroId) =>{
+            return carros[carroId].diaAlugado !== calendar;
+          })
+        ).map((carroId, index) => {
           const carro = carros[carroId];
           return (
-            <Col xs={12} md={6} lg={4} key={carroId}>
+            <Col xs={12} md={6} lg={4} key={index}>
               <Card className="card-carros">
                 <CardBody>
                   <CardImg
@@ -36,17 +44,18 @@ export default function Pesquisa() {
                   />
                   <CardTitle><h2>{carro.modelo}</h2></CardTitle>
                   <CardText>
-                    <Row className="card-text-columns">
-                    <Col><p>Ano: {carro.ano}</p>
+
+                    <p>Ano: {carro.ano}</p>
                     <p>Dono: {carro.dono}</p>
                     <p>Cidade: {carro.cidade}</p>
-                    </Col>
-                    <Col className="justify-center">
-                    <Container>
-                    <p className="preco"> Preço </p></Container>
+
+
+
+                    <p className="preco"> Preço </p>
                     <h1 className="preco">R$ {carro.preco}/dia</h1>
-                    </Col>
-                    </Row>
+                    <div className= "buttonDetails"><button className="btn btn-primary" type="submit"> Mais Detalhes </button> </div>
+
+
                   </CardText>
                 </CardBody>
               </Card>

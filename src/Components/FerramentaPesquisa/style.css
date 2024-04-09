@@ -66,3 +66,16 @@
 }
 
 
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+.buttonDetails{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+

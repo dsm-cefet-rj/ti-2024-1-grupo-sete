@@ -13,8 +13,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Fiat Uno",
         ano: "2010",
         dono: "Julio Cesar",
-        cidade: "Rio de Janeiro",
-        preco: 50.00
+        cidade: "Rio de Janeiro, RJ",
+        preco: 50.00,
+        diaAlugado: "10/04/2024"
     },
 
     2: {
@@ -22,8 +23,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Ferrari",
         ano: "2011",
         dono: "Augusto",
-        cidade: "São Paulo",
-        preco: 40.00
+        cidade: "São Paulo, SP",
+        preco: 40.00,
+        diaAlugado: "12/10/2024"
     },
 
     3: {
@@ -31,8 +33,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Mercedes",
         ano: "2012",
         dono: "Rogério",
-        cidade: "Volta Redonda",
-        preco: 35.00
+        cidade: "Volta Redonda, RJ",
+        preco: 35.00,
+        diaAlugado: "10/04/2024"
     },
 
     4: {
@@ -40,8 +43,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "BMW",
         ano: "2013",
         dono: "Marcos",
-        cidade: "Florianópolis",
-        preco: 47.00
+        cidade: "Florianópolis, SC",
+        preco: 47.00,
+        diaAlugado: "12/10/2024"
     },
 
     5: {
@@ -49,8 +53,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Honda Civic",
         ano: "2014",
         dono: "Reinaldo",
-        cidade: "Niterói",
-        preco: 29.00
+        cidade: "Rio de Janeiro, RJ",
+        preco: 29.00,
+        diaAlugado: "12/10/2024"
     },
 
     6: {
@@ -58,8 +63,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Tesla",
         ano: "2015",
         dono: "Matheus",
-        cidade: "Duque de Caxias",
-        preco: 61.00
+        cidade: "Duque de Caxias, RJ",
+        preco: 61.00,
+        diaAlugado: "12/10/2024"
     },
 
     7: {
@@ -67,8 +73,9 @@ import Honda from '../../Assets/honda.jpg';
         modelo: "Fiat Uno",
         ano: "2016",
         dono: "José",
-        cidade: "Campinas",
-        preco: 29.10
+        cidade: "Campinas, SP",
+        preco: 29.10,
+        diaAlugado: "12/10/2024"
     },
 };
 
