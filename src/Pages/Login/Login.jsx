@@ -7,6 +7,7 @@ function Login(){
     const [senha, setSenha] = useState("")
 
     return (
+        <body>
         <div className="container">
             <div className="container-login">
                 <div className="wrap-login">
@@ -50,7 +51,7 @@ function Login(){
                 </div>
             </div>
         </div>
-    
+        </body>
     )
 }
 

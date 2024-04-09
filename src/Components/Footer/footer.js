@@ -6,12 +6,11 @@ function Footer(){
     <footer className={styles.footer}>
         <ul className={styles.social_list }>
             <p>
-                <FaInstagram />
-                   DriveZoom
+                <FaInstagram /> DriveZoom
             </p>
         </ul>
         <p className={styles.copy_right}>
-            <span>Costs</span> &copy; 2024
+            <span>DriveZoom</span> &copy; 2024
         </p>
     </footer>
     )

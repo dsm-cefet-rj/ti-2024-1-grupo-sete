@@ -26,7 +26,6 @@ export const AppRouter =() => {
               <Route path="/contatos"><Contatos/></Route>
               <Route path="/login"><Login /></Route>
               <Route path="/"><Principal /></Route>
-
               </Switch>
       </div>
   </Router> 

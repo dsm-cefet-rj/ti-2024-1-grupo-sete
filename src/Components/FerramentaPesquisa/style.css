@@ -12,6 +12,12 @@
   flex-direction: column; /* Arrange elements vertically */
   align-items: center; /* Center content horizontally */
 }
+
+.link {
+  text-decoration: none;
+  color: rgb(51, 106, 138);
+}
+
 .card-carros {
     position: relative;
     transition: transform 0.3s ease;
@@ -56,7 +62,7 @@
   }
 
 .preco{
-  color: black;
+  color: rgb(35, 78, 101);
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
