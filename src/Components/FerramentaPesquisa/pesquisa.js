@@ -3,6 +3,8 @@ import carros from '../Carros/carros';
 
 import './style.css';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
+import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 
 export default function Pesquisa() {
   const [busca, setBusca] = useState('');
@@ -28,6 +30,7 @@ export default function Pesquisa() {
           return (
             <Col xs={12} md={6} lg={4} key={carroId}>
               <Card className="card-carros">
+                <Link to="/detalhes" className="link">
                 <CardBody>
                   <CardImg
                     src={carro.Image}
@@ -49,6 +52,7 @@ export default function Pesquisa() {
                     </Row>
                   </CardText>
                 </CardBody>
+                </Link>
               </Card>
             </Col>
           );
