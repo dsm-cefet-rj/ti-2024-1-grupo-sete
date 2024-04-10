@@ -8,7 +8,7 @@ export default function Detalhes(props){
         <>
         <HeaderMain />
         <div>
-            <h1>Detalhes aqui</h1>
+            <h1>Teste</h1>
         </div>
         <footer>
             <Footer />
