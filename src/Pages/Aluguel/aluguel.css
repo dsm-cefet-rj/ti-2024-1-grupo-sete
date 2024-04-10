@@ -1,0 +1,9 @@
+.butConfirm{
+    text-align: center;
+}
+
+button{
+    background-color: royalblue;
+    color: white;
+    border: none;
+}

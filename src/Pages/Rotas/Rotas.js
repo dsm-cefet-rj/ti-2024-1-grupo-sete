@@ -5,6 +5,7 @@ import SobreNos from '../SobreNos/index';
 import FAQ from '../FAQ/index';
 import Contatos from '../Contatos/index';
 import Login from '../Login/Login'
+import Alugar from '../Aluguel';
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const AppRouter =() => {
@@ -25,6 +26,7 @@ export const AppRouter =() => {
               <Route path="/FAQ"><FAQ/></Route>
               <Route path="/contatos"><Contatos/></Route>
               <Route path="/login"><Login /></Route>
+              <Route path="/Aluguel"><Alugar/></Route>
               <Route path="/"><Principal /></Route>
 
               </Switch>

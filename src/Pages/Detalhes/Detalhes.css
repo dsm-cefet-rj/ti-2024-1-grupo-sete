@@ -61,3 +61,18 @@ main > article{
     box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
     border: solid 3px rgba(0, 0, 0, 0.28);
 }
+
+
+.aluPag{
+    text-decoration: none;
+    text-align: center;
+    color: white;
+}
+
+.butAlu{
+    text-align: center;
+}
+
+button{
+    background-color: royalblue;
+}
