@@ -14,13 +14,14 @@ export default function Pesquisa() {
 
   return (
     <div>
-
-      <div><BarraPesquisa
+      <div>
+        <BarraPesquisa
             busca={busca}
             setBusca={setBusca}
             calendar={calendar}
             setCalendar={setCalendar}
-      /></div>
+        />
+      </div>
 
       <Row >
 
@@ -38,7 +39,7 @@ export default function Pesquisa() {
           return (
             <Col xs={12} md={6} lg={4} key={index}>
               <Card className="card-carros">
-                <Link to="/detalhes" className="link">
+                <Link to={`/detalhes/${carroId}`} className="link">
                 <CardBody>
                   <CardImg
                     src={carro.Image}

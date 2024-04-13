@@ -2,6 +2,8 @@
     --cor1: rgb(54, 54, 228);
     --cor2: rgb(105, 105, 230);
     --cor3: aliceblue;
+    --cor4: rgb(51, 106, 138);
+    --cor5: rgb(159, 156, 156);
 }
 
 * {
@@ -10,69 +12,112 @@
     padding: 0px;
 }
 
-body{
-    background-color: white;
-}
-
-main{
-    min-width: 300px;
-    margin: auto;
-    background-color: aliceblue;
+.titulo{
+    text-decoration-line: overline;
+    text-decoration-color: var(--cor5);
+    color: rgb(57, 53, 53);
+    max-width: 500px;
+    margin: 17px;
     padding: 10px;
 }
-.container {
+
+.flex-container-1{
+    display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.flex-item {
+    align-items: center;
+    font-size: 0.7em;
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
+    border-radius: 10px;
+    border: solid 3px rgba(0, 0, 0, 0.28);
+    margin: 17px;
+    padding: 17px;
+    color: var(--cor4);
+    width: fit-content;
+    min-width: 200px;
 }
 
-main img{
-    min-width: 250px;
-    margin: 17px;
+.flex-container-2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.img-carro{
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
+    border-radius: 10px;
+    border: solid 3px rgba(0, 0, 0, 0.28);
+    max-width: 600px;
+    min-width: 300px;
+    margin: 20px;
     
 }
-/*main{
-    background-image: -moz-linear-gradient(to right, rgb(74, 74, 95), rgb(167, 167, 192));
-    border-radius: 10px;
-    width: 800px;
-    padding: 10px;
-    margin: auto;
-}*/
-main h2{
-    color: var(--cor3);
-    background-color: var(--cor2);
-    margin: 17px;
-    padding: 10px;
-    border-radius: 7px;
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
-    border: solid 3px rgba(0, 0, 0, 0.28);
-    max-width: 500px;
-}
-
-main p{
-    margin: 15px 10px 15px 10px;
-    text-align: justify;
-}
-
-main > article{
-    color: var(--cor3);
-    background-color: var(--cor2);
-    margin: 15px;
-    padding: 7px;
-    border-radius: 7px;
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
-    border: solid 3px rgba(0, 0, 0, 0.28);
-}
-
 
 .aluPag{
+    font-size: 2.4em;
     text-decoration: none;
     text-align: center;
     color: white;
+    margin: 20px;
 }
 
-.butAlu{
-    text-align: center;
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 1px;
+}
+.button-alugar{
+    border: 2px solid var(--cor4);
+    padding: 7px;
+    border-radius: 12px;
+    transition-duration: 0.7s;
+    margin-top: 20px;
+}
+.button-alugar:hover {
+    cursor: pointer;
+    background-color: var(--cor4);
+    box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+    
 }
 
-button{
-    background-color: royalblue;
+
+.detalhes-tecnicos{
+    color: var(--cor4);
+    padding-left: 10px;
+    margin: 20px;
+    width: 70%; 
+    
+}
+.detalhes-titulo {
+    text-decoration: underline;
+    text-decoration-color: rgb(57, 53, 53);
+    padding: 20px;
+}
+
+.flex-container-3{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    align-items: left;
+}
+
+.flex-container-item-3 {
+    align-items: center;
+    font-size: 1.4em;
+    border: solid 3px rgba(0, 0, 0, 0.28);
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
+    border-radius: 10px;
+    color: var(--cor4);
+    margin: 17px;
+    padding: 17px 10px 10px;
+    width: fit-content;
+    min-width: 100px;
 }
