@@ -1,12 +1,11 @@
+import styles from './footer.module.css'
+
 export default function Footer() {
     return (
-        <footer className="App-footer">
-            <div id="" >
-                <p>DriveZoom</p>
-            </div>
-            <div>
-                <span>Todos os direitos reservados</span>
-            </div>
+        <footer className={styles.footer}>
+            <p className={styles.copy_right}>
+                <span>DriveZoom</span> &copy; 2024
+            </p>
         </footer>
     );
 }

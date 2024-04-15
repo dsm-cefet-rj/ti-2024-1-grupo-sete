@@ -1,15 +1,8 @@
-import Header from './components/header/header';
-import Footer from './components/footer/footer';
-import Planos from './pages/planos/planos';
-import Pagamentos from './pages/pagamentos/pagamentos';
+import { AppRouter } from './pages/rotas/rotas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   return (
-    <>
-      <Header />
-        <Planos />
-        <Pagamentos />
-      <Footer />
-    </>
+    <AppRouter></AppRouter>
   );
 }
