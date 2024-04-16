@@ -81,27 +81,27 @@ export default function Detalhes() {
 
             <ul className="flex-container-3">
                 <li className="flex-container-item-3">
-                    <p>Média de consumo estrada: 14km/l</p>
+                    <p>Média de consumo estrada: {carro?.consumoEstrada}</p>
                 </li>
 
                 <li className="flex-container-item-3">
-                    <p>Média de consumo cidade: 10km/l</p>
+                    <p>Média de consumo cidade: {carro?.consumoCidade}</p>
                 </li>
 
                 <li className="flex-container-item-3">
-                    <p>Câmbio: automático</p>
+                    <p>Câmbio: {carro?.cambio}</p>
                 </li>
 
                 <li className="flex-container-item-3">
-                    <p>Central multimídia de 9" conexão Android Auto e Apple CarPlay</p>
+                    <p>{carro?.multimidia}</p>
                 </li>
 
                 <li className="flex-container-item-3">
-                    <p>Motor: 2.0</p>
+                    <p>Motor: {carro?.motor}</p>
                 </li>
 
                 <li className="flex-container-item-3">
-                    <p>Controle adaptativo de velocidade de cruzeiro</p>
+                    <p>{carro?.detalheAdicional}</p>
                 </li>
             </ul>
             </div>
@@ -111,10 +111,10 @@ export default function Detalhes() {
             <div className="detalhes-linha-2">
             </div>
                 <div className="data-titulo">
-                    <h3>Datas disponíveis</h3>
+                    <h3>Datas Indisponíveis</h3>
                 </div>
                 <div className="data-datas">
-                    <p>De 12/05/2024 até 30/06/2024</p>
+                    <p>De {carro?.dataAlugadoInicio} até {carro?.dataAlugadoFinal}</p>
                 </div>
                 
             </div>
