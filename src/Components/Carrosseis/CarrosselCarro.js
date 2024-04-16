@@ -4,9 +4,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import Ferrari from '../../Assets/Ferrari.jpeg';
 import BMW from '../../Assets/bmw.png';
 import Mercedes from '../../Assets/Mercedes.jpg';
-import FiatUno from '../../Assets/fiat-uno.jpg';
-import Tesla from '../../Assets/tesla.jpeg';
-import Honda from '../../Assets/honda.jpg';
+import FiatUno from '../../Assets/Fiat-uno.jpg';
+import Tesla from '../../Assets/Tesla.jpg';
+import Honda from '../../Assets/Honda.jpg';
 import './style.css';
 
 
