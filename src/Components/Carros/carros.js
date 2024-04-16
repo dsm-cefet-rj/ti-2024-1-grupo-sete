@@ -3,6 +3,7 @@ import FiatUno22 from '../../Assets/Fiat-uno2.jpg';
 import FordKa from '../../Assets/FordKa.jpg';
 import FordKa2 from '../../Assets/FordKa2.jpg';
 import BMW from '../../Assets/bmw.png';
+import Bmw2 from '../../Assets/Bmw2';
 import Mercedes from '../../Assets/Mercedes.jpg';
 import Mercedes2 from '../../Assets/Mercedes2.jpg';
 import FiatUno from '../../Assets/Fiat-uno.jpg';
@@ -10,7 +11,7 @@ import FiatUno2 from '../../Assets/Fiat-uno2.jpg';
 import Tesla from '../../Assets/Tesla.jpg';
 import Tesla2 from '../../Assets/Tesla2.jpg'
 import Honda from '../../Assets/Honda.jpg';
-import Honda2 from '../../Assets/Honda2.jpeg'
+import Honda2 from '../../Assets/Honda2.jpeg';
 
  
  
@@ -20,10 +21,17 @@ import Honda2 from '../../Assets/Honda2.jpeg'
         Image2: FiatUno2,
         modelo: "Fiat Uno",
         ano: "2014",
-        dono: "Julio Cesar",
+        dono: "Julio Cesar Mendonça",
         cidade: "Rio de Janeiro, RJ",
-        preco: 180.00,
-        diaAlugado: "10/04/2024"
+        preco: 120.00,
+        diaAlugadoInicio: "10/04/2024",
+        diaAlugadoFinal: "10/05/2024",
+        consumoEstrada: "15 km/L",
+        consumoCidade: "11km/L",
+        motor: "1.0",
+        cambio: "Manual",
+        multimidia: "Rádio e bluetooth",
+        detalheAdicional: "Direção hidráulica",
     },
 
     2: {
@@ -31,10 +39,17 @@ import Honda2 from '../../Assets/Honda2.jpeg'
         Image2: FordKa2,
         modelo: "Ford Ka",
         ano: "2017",
-        dono: "Augusto",
+        dono: "Augusto Neves",
         cidade: "Mogi das Cruzes, SP",
         preco: 180.00,
-        diaAlugado: "12/10/2024"
+        diaAlugadoInicio: "12/10/2024",
+        diaAlugadoFinal: "12/12/2024",
+        consumoEstrada: "12km/L",
+        consumoCidade: "15km/L",
+        motor: "1.0",
+        cambio: "Manual",
+        multimidia: "Rádio e bluetooth",
+        detalheAdicional: "Direção Elétrica",
     },
 
     3: {
@@ -42,21 +57,36 @@ import Honda2 from '../../Assets/Honda2.jpeg'
         Image2: Mercedes2,
         modelo: "Mercedes",
         ano: "2021",
-        dono: "Rogério",
+        dono: "Rogério Teixeira",
         cidade: "Volta Redonda, RJ",
         preco: 450.00,
-        diaAlugado: "10/04/2024"
+        diaAlugadoInicio: "01/10/2024",
+        diaAlugadoFinal: "01/11/2024",
+        consumoEstrada: "14 km/L",
+        consumoCidade: "11km/L",
+        motor: "2.0",
+        cambio: "Automática",
+        multimidia: "Sistema multimídia MBUX",
+        detalheAdicional: "Direção autônoma",
+
     },
 
     4: {
         Image: BMW,
-
+        Image2: Bmw2,
         modelo: "BMW",
         ano: "2013",
-        dono: "Marcos",
+        dono: "Marcos Pimentel",
         cidade: "Florianópolis, SC",
-        preco: 490.00,
-        diaAlugado: "12/10/2024"
+        preco: 690.00,
+        diaAlugadoInicio: "01/05/2024",
+        diaAlugadoFinal: "01/07/2024",
+        consumoEstrada: "13 km/L",
+        consumoCidade: "11km/L",
+        motor: "2.0",
+        cambio: "Automática com modo manual de 8 marchas",
+        multimidia: "Central Multimídia 7 polegadas conexão Android Auto e Apple CarPlay",
+        detalheAdicional: "Direção elétrica",
     },
 
     5: {
@@ -64,10 +94,17 @@ import Honda2 from '../../Assets/Honda2.jpeg'
         Image2: Honda2,
         modelo: "Honda Civic",
         ano: "2014",
-        dono: "Reinaldo",
+        dono: "Reinaldo Barbosa",
         cidade: "Rio de Janeiro, RJ",
         preco: 300.00,
-        diaAlugado: "12/10/2024"
+        diaAlugadoInicio: "01/06/2024",
+        diaAlugadoFinal: "01/07/2024",
+        consumoEstrada: "15 km/L",
+        consumoCidade: "13km/L",
+        motor: "2.0",
+        cambio: "Automático",
+        multimidia: "Central Multimídia 7 polegadas conexão Android Auto e Apple CarPlay",
+        detalheAdicional: "Controle adaptativo de velocidade de cruzeiro",
     },
 
     6: {
@@ -75,21 +112,36 @@ import Honda2 from '../../Assets/Honda2.jpeg'
         Image2: Tesla2,
         modelo: "Tesla",
         ano: "2022",
-        dono: "Matheus",
+        dono: "Matheus Oliveira",
         cidade: "São Paulo, SP",
-        preco: 3000.00,
-        diaAlugado: "12/10/2024"
+        preco: 17000.00,
+        diaAlugadoInicio: "01/04/2024",
+        diaAlugadoFinal: "01/05/2024",
+        consumoEstrada: "17,5 kWh/100km",
+        consumoCidade: "17,5 kWh/100km",
+        motor: "2.0",
+        cambio: "Automático",
+        multimidia: "Central Multimídia 12 polegadas",
+        detalheAdicional: "Sistema Autopilot",
     },
 
     7: {
         Image: FiatUno,
         Image: FiatUno22,
         modelo: "Fiat Uno",
-        ano: "2016",
-        dono: "José",
+        ano: "2017",
+        dono: "José Castro",
         cidade: "Campinas, SP",
         preco: 150.00,
-        diaAlugado: "12/10/2024"
+        diaAlugadoInicio: "12/10/2024",
+        diaAlugadoFinal: "12/11/2024",
+        consumoEstrada: "14 km/L",
+        consumoCidade: "11km/L",
+        motor: "1.0",
+        cambio: "Manual",
+        multimidia: "Rádio e bluetooth",
+        detalheAdicional: "Direção elétrica",
+        
     },
 };
 
