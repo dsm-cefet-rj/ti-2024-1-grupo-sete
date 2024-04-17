@@ -21,6 +21,7 @@
     color: rgb(82, 76, 76);
     width: 100%;
     margin: 17px;
+    margin-top: 50px;
     padding: 10px;
     font-size: 2em;
 }
@@ -29,7 +30,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 0px 150px;
     justify-content: space-around;
+    
+    
 }
 .flex-item {
     align-items: center;
@@ -140,14 +144,19 @@
 .data-titulo {
     text-decoration-color: rgb(57, 53, 53);
     padding: 20px;
+    margin: 0px 80px; 
 }
 
-.data-datas {
+.data-container-datas {
     font-size: 1.4em;
     color: var(--cor4);
     margin: 17px;
     padding: 0px 10px 10px;
-    width: fit-content;
+    align-self: center;
+}
+
+.data-item {
+    text-align: center;
 }
 
 .detalhes-tecnicos{
@@ -160,7 +169,7 @@
 .detalhes-titulo {
     text-decoration-color: rgb(57, 53, 53);
     padding: 20px;
-    margin-left: 30px;
+    margin: 0px 150px;
 }
 
 .flex-container-3{

@@ -1,9 +1,9 @@
-import Ferrari from '../../Assets/Ferrari.jpeg';
+import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
 import FiatUno22 from '../../Assets/Fiat-uno2.jpg';
 import FordKa from '../../Assets/FordKa.jpg';
 import FordKa2 from '../../Assets/FordKa2.jpg';
-import BMW from '../../Assets/bmw.png';
-import Bmw2 from '../../Assets/Bmw2';
+import Bmw from '../../Assets/bmw.png';
+import Bmw2 from '../../Assets/Bmw2.jpg';
 import Mercedes from '../../Assets/Mercedes.jpg';
 import Mercedes2 from '../../Assets/Mercedes2.jpg';
 import FiatUno from '../../Assets/Fiat-uno.jpg';
@@ -72,7 +72,7 @@ import Honda2 from '../../Assets/Honda2.jpeg';
     },
 
     4: {
-        Image: BMW,
+        Image: Bmw,
         Image2: Bmw2,
         modelo: "BMW",
         ano: "2013",
@@ -126,8 +126,8 @@ import Honda2 from '../../Assets/Honda2.jpeg';
     },
 
     7: {
-        Image: FiatUno,
-        Image: FiatUno22,
+        Image: FiatUno21,
+        Image2: FiatUno22,
         modelo: "Fiat Uno",
         ano: "2017",
         dono: "José Castro",

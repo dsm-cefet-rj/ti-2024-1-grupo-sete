@@ -111,10 +111,12 @@ export default function Detalhes() {
             <div className="detalhes-linha-2">
             </div>
                 <div className="data-titulo">
-                    <h3>Datas Indisponíveis</h3>
+                    <h3>Datas Indisponíveis:</h3>
                 </div>
-                <div className="data-datas">
+                <div className="data-container-datas">
+                    <div className="data-item">
                     <p>De {carro?.dataAlugadoInicio} até {carro?.dataAlugadoFinal}</p>
+                    </div>
                 </div>
                 
             </div>

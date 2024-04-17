@@ -10,9 +10,6 @@ export default function Principal(props){
         
         <>
         <HeaderMain/>
-        <div>
-            Principal 
-        </div>
         <CarrosselCarro/>
         <Pesquisa/>
         
