@@ -18,3 +18,17 @@
 .dropdown-item{
   font-size: 20px; /* Adjust font size of menu items */
 }
+
+.nav-item:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  color: black;
+}
+
+.fa-cadastro{
+  font-size: 1.24em;
+}
+
+.fa-login {
+  font-size: 1.2em;
+}

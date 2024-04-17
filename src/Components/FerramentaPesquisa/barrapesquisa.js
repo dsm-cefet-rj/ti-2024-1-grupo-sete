@@ -63,7 +63,7 @@ export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) 
       
         <div className="pesquisa">
           <div className="pesquisa-conteudo">
-            <h1>Qual cidade e data deseja?</h1>
+          <h1 className="qual-cidade">Qual cidade e data deseja?</h1>
             <Card className="container-pesquisa">
                 <div className="dentro-pesquisa">
                     <input type="text" value={digita} onChange={onChange} />

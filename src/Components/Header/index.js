@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import './header.css';
 import Logo from "../../Assets/Logo2.png";
+import { RiLoginBoxLine } from "react-icons/ri";
+import { FaPersonCirclePlus } from "react-icons/fa6";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Nav } from "reactstrap";
 
@@ -41,10 +43,10 @@ return(
       </Nav>
       <Nav navbar>
         <li className="nav-item">
-          <Link className="nav-link" aria-current="page" to="/">Cadastre-se</Link>
+        <Link className="nav-link" aria-current="page" to="/"><FaPersonCirclePlus className="fa-cadastro"/> Cadastre-se</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link " aria-current="page" to="/login">Login</Link>
+          <Link className="nav-link " aria-current="page" to="/login"><RiLoginBoxLine className="fa-login"/> Login</Link>
         </li>
       </Nav>
     </Collapse>

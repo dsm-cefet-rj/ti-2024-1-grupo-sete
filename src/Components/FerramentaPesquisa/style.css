@@ -13,6 +13,13 @@
   align-items: center; /* Center content horizontally */
 }
 
+.qual-cidade {
+  margin: 30px;
+}
+.container-pesquisa {
+  margin-bottom: 30px;
+}
+
 .link {
   text-decoration: none;
   color: rgb(51, 106, 138);

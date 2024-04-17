@@ -2,17 +2,13 @@
     background-color: rgb(159, 156, 156);
     color: #FFF;
     padding: 1.7em;
-    text-align: center;
+    align-items: center;
 }
 
 .social.list {
     display: flex;
     justify-content: center;
     list-style-type: none;
-}
-
-.social_list p {
-    margin: 0 1em;
 }
 
 .social_list p:hover {
@@ -29,8 +25,9 @@
 }
 
 .copy_right {
-    margin-top: 2em;
+    margin-top: 1.7em;
     margin-bottom: auto;
+    margin-left: 30px;
 }
 
 .copy_right span {

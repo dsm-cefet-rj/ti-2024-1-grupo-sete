@@ -15,7 +15,6 @@ export const AppRouter =() => {
         <nav>
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/detalhes">Detalhes</Link></li>
                 <li><Link to="/pagamento">Pagamento</Link></li>
             </ul>
         </nav>
