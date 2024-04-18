@@ -1,19 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
-import './aluguel.css'
+
+import '../Pagamento/Pagamento';
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom";
+import carros from "../../Components/Carros/carros";
+//import Detalhes from "../Detalhes/Detalhes";
+import './aluguel.css';
+
 
 export default function Alugar(props){
-    return(
+    const {id } = useParams();
+    const [carro, setCarro] = useState();
+    
+  
+    useEffect(() => {
+      const carroOfList = carros[id];
+      setCarro(carroOfList)
+    }, [])
+    
+    
+    console.log('paraams: ', id)
+    console.log('Car: ', carro)
+    console.log('Modelo: ', carro?.modelo)
+    
+    let dias = 5;
+    const total = dias*(carro?.preco);
+
+    return(      
         <>
-        <HeaderMain/>
-        <div className="det">
-            <h3>Detalhes do Pedido </h3>
+        <HeaderMain />
+        <body>
+            <div className="titulo">
+                <h2>Detalhes do Pedido</h2>
+            </div>
             
-        </div>
-        <div className="butConfirm">  
-            <button>Confirmar</button>
-        </div>
-        <Footer/>
+            <section className="flex-container-1">
+                <img src={carro?.Image} className="img-carro"/>
+            </section>
+
+
+            <section className="flex-container-2">
+                <ul>
+                    <li className="flex-item">
+                        <p>Proprietário: {carro?.dono}</p>
+                    </li>
+                    <li className="flex-item">
+                        <p>Modelo: {carro?.modelo} {carro?.ano}</p>
+                    </li>
+                    <li className="flex-item">
+                        <p>Cidade: {carro?.cidade}</p>
+                    </li>
+                    <li className="flex-item">
+                        <p>Preço/dia: R$ {carro?.preco}</p>
+                    </li>
+                    <li className="flex-item">
+                        <p>Câmbio: {carro?.cambio}</p>
+                    </li>
+                    <li className="flex-item">
+                        <p>Motor: {carro?.motor} </p>
+                    </li>
+                    <li className="flex-item">
+                        <p>total a pagar: R$ {total} </p>
+                    </li>
+                </ul>
+            </section>
+            
+            <div className="button-container">
+                <button className="button-voltar">
+                    <Link className="pagPag" aria-current="page" to={`/detalhes/${id}`}>Voltar</Link>
+                </button>
+                <button className="button-confirm">
+                    <Link className="pagPag" aria-current="page" to="../Pagamento/Pagamento">Confirmar</Link>
+                </button>
+                
+            </div>
+
+        </body>
+
+        <footer>
+            <Footer />
+        </footer>
         </>);
 }

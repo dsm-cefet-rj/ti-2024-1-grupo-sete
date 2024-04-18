@@ -1,16 +1,16 @@
 import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
-import FiatUno22 from '../../Assets/Fiat-uno2.jpg';
+import FiatUno22 from '../../Assets/fiatUno22.jpg';
 import FordKa from '../../Assets/FordKa.jpg';
 import FordKa2 from '../../Assets/FordKa2.jpg';
 import Bmw from '../../Assets/bmw.png';
-import Bmw2 from '../../Assets/Bmw2.jpg';
+import Bmw2 from '../../Assets/bmw2.jpg';
 import Mercedes from '../../Assets/Mercedes.jpg';
 import Mercedes2 from '../../Assets/Mercedes2.jpg';
-import FiatUno from '../../Assets/Fiat-uno.jpg';
+import FiatUno from '../../Assets/fiat-uno.jpg';
 import FiatUno2 from '../../Assets/Fiat-uno2.jpg';
 import Tesla from '../../Assets/Tesla.jpg';
 import Tesla2 from '../../Assets/Tesla2.jpg'
-import Honda from '../../Assets/Honda.jpg';
+import Honda from '../../Assets/honda.jpg';
 import Honda2 from '../../Assets/Honda2.jpeg';
 
  

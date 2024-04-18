@@ -62,13 +62,6 @@ export default function Detalhes() {
           
         </section>
 
-        <div className="button-container">
-        <button className="button-alugar">
-            <Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>Alugar</Link>
-        </button>
-        </div>
-
-
         <div className="detalhes-linha">
         </div>
 
@@ -119,6 +112,16 @@ export default function Detalhes() {
                 
             </div>
         </div>
+
+        <div className="button-container">
+            <button className="button-voltar">
+                <Link className="pagPag" aria-current="page" to={'/'}>Voltar</Link>
+            </button>
+            <button className="button-alugar">
+                <Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>Alugar</Link>
+            </button>
+        </div>
+
         </body>
 
         <footer>

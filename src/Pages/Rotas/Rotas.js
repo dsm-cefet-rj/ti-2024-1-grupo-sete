@@ -25,7 +25,7 @@ export const AppRouter =() => {
               <Route path="/FAQ"><FAQ/></Route>
               <Route path="/contatos"><Contatos/></Route>
               <Route path="/login"><Login /></Route>
-              <Route path="/Aluguel"><Alugar/></Route>
+              <Route path={`/Aluguel/:id`}><Alugar/></Route>
               <Route path="/"><Principal /></Route>
 
               </Switch>
