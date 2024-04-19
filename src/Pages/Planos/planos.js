@@ -1,10 +1,8 @@
-import React from 'react';
-
 export default function Planos() {
   return (
     <div className="planos">
-      <p>Planos</p>
+      <h2>Planos</h2>
+      
     </div>
   );
 }
-
