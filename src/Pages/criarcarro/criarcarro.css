@@ -1,0 +1,13 @@
+.criarcarro-container {
+    width: 450px;
+    margin: 0 auto;
+    padding: 3em;
+}
+
+.criarcarro-container h1 {
+    margin: 0.5em;
+}
+
+.criarcarro-container p {
+    color: blue;
+}

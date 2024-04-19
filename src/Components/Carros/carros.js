@@ -1,9 +1,26 @@
+<<<<<<< Updated upstream
 import Ferrari from '../../Assets/Ferrari.jpeg';
 import BMW from '../../Assets/bmw.png';
 import Mercedes from '../../Assets/Mercedes.jpg';
 import FiatUno from '../../Assets/fiat-uno.jpg';
 import Tesla from '../../Assets/tesla.jpeg';
 import Honda from '../../Assets/honda.jpg';
+=======
+import FiatUno21 from '../../Assets/fiat-uno21.jpg';
+import FiatUno22 from '../../Assets/fiat-uno22.jpg';
+import FordKa from '../../Assets/ford-ka.jpg';
+import FordKa2 from '../../Assets/ford-ka2.jpg';
+import Bmw from '../../Assets/bmw.png';
+import Bmw2 from '../../Assets/bmw2.jpg';
+import Mercedes from '../../Assets/mercedes.jpg';
+import Mercedes2 from '../../Assets/mercedes2.jpg';
+import FiatUno from '../../Assets/fiat-uno.jpg';
+import FiatUno2 from '../../Assets/fiat-uno2.jpg';
+import Tesla from '../../Assets/tesla.jpg';
+import Tesla2 from '../../Assets/tesla2.jpg'
+import Honda from '../../Assets/honda.jpg';
+import Honda2 from '../../Assets/honda2.jpeg';
+>>>>>>> Stashed changes
 
  
  

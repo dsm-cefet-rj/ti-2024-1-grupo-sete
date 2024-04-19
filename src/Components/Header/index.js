@@ -27,6 +27,9 @@ return(
         <li className="nav-item">
         <Link className="nav-link" aria-current="page" to="/">Alugue seu carro</Link>
         </li>
+        <li className="nav-item">
+        <Link className="nav-link" aria-current="page" to="/criarcarro">Cadastre seu carro</Link>
+        </li>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Mais informações
