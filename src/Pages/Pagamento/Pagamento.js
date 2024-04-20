@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabela from '../../components/tabela/tabela';
+
 import "./styles.css";
 import { Button } from 'react-bootstrap';
 
@@ -14,7 +14,7 @@ export function Pagamento() {
         Adicionar
       </Button>
       <p>Pagamento</p>
-      <Tabela />
+      
 
     </div>
   );

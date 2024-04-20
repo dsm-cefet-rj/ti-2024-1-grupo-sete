@@ -4,8 +4,9 @@ import Principal from '../Principal/Principal';
 import SobreNos from '../SobreNos/index';
 import FAQ from '../FAQ/index';
 import Contatos from '../Contatos/index';
-import Login from '../Login/Login'
+import Login from '../Login/Login';
 import Alugar from '../Aluguel';
+import Criarcarro from '../Criarcarro/Criarcarro';
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const AppRouter =() => {
@@ -26,7 +27,10 @@ export const AppRouter =() => {
               <Route path="/contatos"><Contatos/></Route>
               <Route path="/login"><Login /></Route>
               <Route path={`/Aluguel/:id`}><Alugar/></Route>
+              <Route path="/criarcarro"><Criarcarro /></Route>
               <Route path="/"><Principal /></Route>
+
+              
 
               </Switch>
       </div>

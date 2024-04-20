@@ -106,7 +106,6 @@
     border-radius: 12px;
     transition-duration: 0.7s;
     color: var(--cor4);
-    
 }
 .button-alugar:hover {
     cursor: pointer;
