@@ -1,14 +1,15 @@
 import React, {useState, useRef, useEffect} from "react";
 import {Card} from "reactstrap";
-import { Calendar } from "react-date-range";
+import { DateRange } from "react-date-range";
 import { format } from "date-fns/format";
+import { addDays, eachDayOfInterval } from "date-fns";
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 var data = require("../../cidades.json");
 
 
 
-export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) {
+export default function BarraPesquisa({busca, setBusca, diasEntreDatas, setDiasEntreDatas}) {
     const [digita, setDigita] = useState(busca);
     const onChange = (event) => {
         setDigita(event.target.value);
@@ -20,18 +21,34 @@ export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) 
         console.log('Qual cidade', busca);
     }
 
+      // date state
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: 'selection'
+    }
+  ])
+
+
+
     const [open, setOpen] = useState(false)
 
     // get the target element to toggle 
     const refOne = useRef(null)
-
     useEffect(() => {
-        // set current date on component load
-        setCalendar(format(new Date(), 'dd/MM/yyyy'))
         // event listeners
         document.addEventListener("keydown", hideOnEscape, true)
         document.addEventListener("click", hideOnClickOutside, true)
-    }, [])
+    
+        // Atualizar os dias entre datas sempre que o intervalo for alterado
+        console.log(diasEntreDatas);
+        const startDate = range[0].startDate;
+        const endDate = range[0].endDate;
+        const dias = eachDayOfInterval({ start: startDate, end: endDate });
+        setDiasEntreDatas(dias);
+    
+      }, [range])
 
     // hide dropdown on ESC press
     const hideOnEscape = (e) => {
@@ -50,15 +67,6 @@ export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) 
         }
     }
 
-        // on date change, store date in state
-        const handleSelect = (date) => {
-            console.log(date)
-            console.log(format(date, 'MM/dd/yyyy'))
-            setCalendar(format(date, 'dd/MM/yyyy'))
-            
-            const exactDateTimestamp = new Date(date).getTime();
-            console.log(exactDateTimestamp)
-        }
     return (
       
         <div className="pesquisa">
@@ -82,21 +90,25 @@ export default function BarraPesquisa({busca, setBusca, calendar, setCalendar}) 
                 </div>
                 <div className="calendarWrap">
 
-                        <input
-                            value={ calendar }
-                            readOnly
-                            className="inputBox"
-                            onClick={ () => setOpen(open => !open) }
-                        />
+                      <input
+                        value={`${format(range[0].startDate, "dd/MM/yyyy")} ATÉ ${format(range[0].endDate, "dd/MM/yyyy")}`}
+                        readOnly
+                        className="inputBox"
+                        onClick={ () => setOpen(open => !open) }
+                      />
 
                         <div ref={refOne}>
                             {open && 
-                            <Calendar
-                                date={ new Date() }
-                                minDate={new Date()}
-                                onChange = { handleSelect }
-                                className="calendarElement"
-                            />
+                                <DateRange
+                                    onChange={item => {setRange([item.selection]);
+                                                    }}
+                                    editableDateInputs={true}
+                                    moveRangeOnFirstSelection={false}
+                                    ranges={range}
+                                    months={1}
+                                    direction="horizontal"
+                                    className="calendarElement"
+                                />
                             }
                         </div>
 

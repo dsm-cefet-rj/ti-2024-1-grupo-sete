@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 import carros from '../Carros/carros';
 import BarraPesquisa from './barrapesquisa';
+import format from 'date-fns/format';
 import './style.css';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+function containsArray(array1, array2) {
+  for (let i = 0; i < array1.length; i++) {
+    const elemento = format(array1[i], "dd/MM/yyyy");
+
+    if (array2.includes(elemento)) {
+      console.log("bateu");
+      return true;
+    }
+
+    console.log(elemento);
+  }
+
+  return false;
+}
 
 export default function Pesquisa() {
-  const [busca, setBusca] = useState("Todos");
-  const [calendar, setCalendar] = useState("Data");
+  const [busca, setBusca] = useState("");
+  const [diasEntreDatas, setDiasEntreDatas] = useState([]);
   console.log(busca);
 
 
@@ -18,8 +33,8 @@ export default function Pesquisa() {
         <BarraPesquisa
             busca={busca}
             setBusca={setBusca}
-            calendar={calendar}
-            setCalendar={setCalendar}
+            diasEntreDatas={diasEntreDatas}
+            setDiasEntreDatas={setDiasEntreDatas}
         />
       </div>
 
@@ -27,12 +42,12 @@ export default function Pesquisa() {
 
         {Object.keys(carros).filter(
           ((carroId) =>{
-            if(busca === "Todos") return true;
+            if(busca === "") return true;
             return carros[carroId].cidade === busca;
           })
         ).filter(
           ((carroId) =>{
-            return carros[carroId].diaAlugado !== calendar;
+            return !containsArray(diasEntreDatas,carros[carroId].diasAlugado);
           })
         ).map((carroId, index) => {
           const carro = carros[carroId];

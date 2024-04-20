@@ -7,7 +7,7 @@ import './index.css';
 
 
 export default function Faq(props){
-    const [open, setOpen] = useState('1');
+    const [open, setOpen] = useState('0');
     const toggle = (id) => {
         if (open === id) {
         setOpen();

@@ -12,6 +12,7 @@
   width: 250px; /* Set a specific width */
   font-size: 30px; /* Adjust font size of menu items */
   line-height: 2.5; /* Adjust spacing between items */
+  z-index: 9999;
 
 }
 
@@ -23,6 +24,7 @@
   cursor: pointer;
   transform: scale(1.05);
   color: black;
+  z-index: 999;
 }
 
 .fa-cadastro{
