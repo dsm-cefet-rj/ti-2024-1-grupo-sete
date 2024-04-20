@@ -3,7 +3,7 @@ import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 
 import '../Pagamento/Pagamento';
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom/cjs/react-router-dom";
 import carros from "../../Components/Carros/carros";
 //import Detalhes from "../Detalhes/Detalhes";
 import './aluguel.css';
@@ -12,6 +12,8 @@ import './aluguel.css';
 export default function Alugar(props){
     const {id } = useParams();
     const [carro, setCarro] = useState();
+    const location = useLocation();
+    const diasEntreDatas = location.state.selectedDiasEntreDatas;
     
   
     useEffect(() => {
@@ -24,7 +26,7 @@ export default function Alugar(props){
     console.log('Car: ', carro)
     console.log('Modelo: ', carro?.modelo)
     
-    let dias = 5;
+    let dias = diasEntreDatas.length;
     const total = dias*(carro?.preco);
 
     return(      

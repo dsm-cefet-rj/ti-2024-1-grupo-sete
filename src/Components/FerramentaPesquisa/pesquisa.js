@@ -4,7 +4,7 @@ import BarraPesquisa from './barrapesquisa';
 import format from 'date-fns/format';
 import './style.css';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
-import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import{ BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
@@ -24,8 +24,15 @@ function containsArray(array1, array2) {
 export default function Pesquisa() {
   const [busca, setBusca] = useState("");
   const [diasEntreDatas, setDiasEntreDatas] = useState([]);
+  const history = useHistory();
   console.log(busca);
 
+  const handleCardClick = (carroId) => {
+    history.push(`/aluguel/${carroId}`, { selectedDiasEntreDatas: diasEntreDatas });
+  };
+
+  let primeiroDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
+  let ultimoDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
 
   return (
     <div>
@@ -37,13 +44,15 @@ export default function Pesquisa() {
             setDiasEntreDatas={setDiasEntreDatas}
         />
       </div>
-
+      <h1>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
       <Row >
 
         {Object.keys(carros).filter(
           ((carroId) =>{
             if(busca === "") return true;
-            return carros[carroId].cidade === busca;
+            const busca2 = busca.toLowerCase();
+            const carroCompar = carros[carroId].cidade.toLowerCase();
+            return carroCompar.includes(busca2);
           })
         ).filter(
           ((carroId) =>{
@@ -53,9 +62,9 @@ export default function Pesquisa() {
           const carro = carros[carroId];
           return (
             <Col xs={12} md={6} lg={4} key={index}>
-              <Card className="card-carros">
+              <Card onClick={() => handleCardClick(carroId)} className="card-carros">
                 <Link to={`/detalhes/${carroId}`} className="link">
-                <CardBody>
+                <CardBody >
                   <CardImg
                     src={carro.Image}
                     alt={carro.modelo}

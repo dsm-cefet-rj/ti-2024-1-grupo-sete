@@ -3,9 +3,9 @@ import {Card} from "reactstrap";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns/format";
 import { addDays, eachDayOfInterval } from "date-fns";
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
-var data = require("../../cidades.json");
+import carros from '../Carros/carros';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 
 
@@ -74,22 +74,27 @@ export default function BarraPesquisa({busca, setBusca, diasEntreDatas, setDiasE
           <h1 className="qual-cidade">Qual cidade e data deseja?</h1>
             <Card className="container-pesquisa">
                 <div className="dentro-pesquisa">
+                    <h4>Cidade </h4> 
                     <input type="text" value={digita} onChange={onChange} />
                     <button onClick={()=>onSearch(digita)}> Buscar </button>
                 </div>
                 <div className="dropdown">
-                   {data.filter(item => 
-                   {const searchTerm = digita.toLowerCase(); 
-                    const cidade = item.cidade.toLowerCase();
-                         return searchTerm && cidade.includes(searchTerm) && cidade !== searchTerm              
-                })
-                .slice(0,4).map((item)=> <div onClick={()=>onSearch(item.cidade)} className="dropdown-row" key = {item.cidade}>
-                        {item.cidade}
-                        <div></div>
-                    </div>)} 
+                {[...new Set(Object.values(carros).map(item => item.cidade))]
+                      .filter(cidade => {
+                        const searchTerm = digita.toLowerCase();
+                        const cidade1 = cidade.toLowerCase();
+                        return searchTerm && cidade1.includes(searchTerm) && cidade1 !== searchTerm;
+                      })
+                      .slice(0, 4)
+                      .map(cidade => (
+                        <div onClick={() => onSearch(cidade)} className="dropdown-row" key={cidade}>
+                          {cidade}
+                          <div></div>
+                        </div>
+                      ))}
                 </div>
                 <div className="calendarWrap">
-
+                      <h4>Dias para alugar</h4>
                       <input
                         value={`${format(range[0].startDate, "dd/MM/yyyy")} ATÉ ${format(range[0].endDate, "dd/MM/yyyy")}`}
                         readOnly
