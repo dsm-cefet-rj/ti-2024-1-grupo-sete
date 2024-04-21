@@ -22,8 +22,8 @@ export default function Historico(params) {
 
     return (
         <>
-            <div className="pagamento">
-                <h2>Histórico de pagamento</h2>
+            <div className="Pagamento">
+                <h2>Histórico de Pagamento</h2>
                 <Table>
                     <thead>
                         <tr>
@@ -31,7 +31,7 @@ export default function Historico(params) {
                             <th>Carro Alugado</th>
                             <th>Valor diário</th>
                             <th>Dias Alugado</th>
-                            <th>Forma de pagamento</th>
+                            <th>Forma de Pagamento</th>
                         </tr>
                     </thead>
                     <tbody>
