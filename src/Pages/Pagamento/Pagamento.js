@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabela from '../../components/tabela/tabela';
+import Tabela from '../../Components/Tabela/tabela';
 import "./styles.css";
 import { Button } from 'react-bootstrap';
 
