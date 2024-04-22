@@ -2,15 +2,25 @@ import { useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { Container, Form } from 'react-bootstrap';
 import Buttons from '../buttons/buttons';
-
+import { useLocation } from 'react-router-dom';
 
 export default function Tabela(params) {
+
+    const location = useLocation();
+    const carData = location.state;
+
+    const [tipoPagamento, setTipoPagamento] = useState([
+        { value: 'pix', label: 'pix' },
+        { value: 'cartão', label: 'cartão' },
+        { value: 'boleto', label: 'boleto' }
+    ]);
+
     const [dados, setDados] = useState({
-        carro: 'Ford KA',
-        nome: 'José Silva Ribeiro',
-        valorDiario: '5,00',
-        quantDias: '4',
-        formPagamento: 'Pix',
+        carro: '',
+        nome: '',
+        valorDiario: '',
+        quantDias: '',
+        formPagamento: tipoPagamento,
     });
 
     const [registros, setRegistros] = useState([]);
@@ -23,16 +33,19 @@ export default function Tabela(params) {
         }));
     };
 
+    const handleSelectChange = (e) => {
+        setTipoPagamento(e.target.value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        
         setRegistros(prevRegistros => [...prevRegistros, dados]);
         setDados({
             carro: '',
             nome: '',
             valorDiario: '',
             quantDias: '',
-            formPagamento: '',
+            formPagamento: [],
         });
     };
 
@@ -45,51 +58,63 @@ export default function Tabela(params) {
                     <Form.Control
                         type="text"
                         placeholder="Nome Completo"
-                        name="cardHolder"
+                        name="nome"
                         value={dados.nome}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                    />
                 </Form.Group>
 
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formCardNumber">
                         <Form.Label>Carro</Form.Label>
                         <Form.Control
+                            aria-label="Default select example"
                             type="text"
-                            placeholder="5 dias"
-                            name="dias"
+                            placeholder="Carro alugado"
+                            name="carro"
                             value={dados.carro}
-                            onChange={handleChange} />
+                            onChange={handleChange}
+                        />
+
                     </Form.Group>
 
                     <Form.Group controlId="formExpirationDate">
-                        <Form.Label>Valor da diária</Form.Label>
+                        <Form.Label>Valor diário</Form.Label>
                         <Form.Control
+                            aria-label="Default select example"
                             type="text"
-                            placeholder="0,00"
-                            name="expirationDate"
+                            placeholder="Valor diario"
+                            name="valorDiario"
                             value={dados.valorDiario}
-                            onChange={handleChange} />
+                            onChange={handleChange}
+                        />
                     </Form.Group>
 
                     <Form.Group controlId="formCVV">
-                        <Form.Label>quantidade de dias</Form.Label>
+                        <Form.Label>Quantidade de dias</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="5 dias"
-                            name="dias"
+                            name="quantDias"
                             value={dados.quantDias}
-                            onChange={handleChange} />
+                            onChange={handleChange}
+                        />
                     </Form.Group>
                     <Form.Group controlId="formCardNumber">
                         <Form.Label>Forma de pagamento</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="5 dias"
-                            name="dias"
-                            value={dados.formPagamento}
-                            onChange={handleChange} />
+                        <Form.Select
+                            aria-label="Default select example"
+                            placeholder=""
+                            name="cardNumber"
+                            value={tipoPagamento}
+                            onChange={handleSelectChange}
+                        >
+                            <option>Selecione a forma de pagamento</option>
+                            <option value="1">Cartão</option>
+                            <option value="2">Pix</option>
+                            <option value="3">Boleto</option>
+                        </Form.Select>
                     </Form.Group>
-
                     <Buttons />
                 </Form>
             </Container>
@@ -107,7 +132,7 @@ export default function Tabela(params) {
                         <tr key={index}>
                             <td>{registro.nome}</td>
                             <td>{registro.carro}</td>
-                            <td><Button variant="primary">Visualizar</Button>{' '}</td>
+                            <td><Button variant="primary" href="/historico">Visualizar</Button>{' '}</td>
                         </tr>
                     </tbody>
                 ))}

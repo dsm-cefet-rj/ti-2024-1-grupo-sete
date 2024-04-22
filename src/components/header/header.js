@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import './header.css';
-import Logo from "../../Assets/Logo2.png";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import Logo from "../../assets/Logo2.png";
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Nav } from "reactstrap";
+import { Link } from "react-router-dom";
 
 
 export default function HeaderMain(props) {

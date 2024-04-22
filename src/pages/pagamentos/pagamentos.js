@@ -4,7 +4,7 @@ import "./styles.css";
 import { Button } from 'react-bootstrap';
 
 export function Pagamentos() {
-  const adicionarPagamento = (e) => {
+  const adicionarPagamento = () => {
     
   };
 

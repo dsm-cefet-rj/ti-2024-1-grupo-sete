@@ -1,21 +1,24 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Pagamentos from '../pagamentos/pagamentos';
 import Planos from '../planos/planos';
 import Footer from "../../components/footer/footer";
 import HeaderMain from "../../components/header/header";
 import Historico from "../pagamentos/historico";
 import Home from "../home/home";
+import Forms from "../../components/forms/forms";
 
 export const AppRouter = () => {
     return (
         <Router>
             <HeaderMain />
             <div>
-                <Switch>
-                    <Route exact path="/" component={Home}></Route>
-                    <Route path="/pagamentos" component={Pagamentos}></Route>
-                    <Route path="/planos" component={Planos}></Route>
-                    <Route path="/historico" component={Historico}></Route>
+                <Routes>
+                    <Route exact path="/" Component={Home}></Route>
+                    <Route path="/pagamentos" Component={Pagamentos}></Route>
+                    <Route path="/pagamentos/:id" Component={Pagamentos}></Route>
+                    <Route path="/planos" Component={Planos}></Route>
+                    <Route path="/historico" Component={Historico}></Route>
+                    <Route path="/forms" Component={Forms}></Route>
                     {/* <Route path="/detalhes"><Detalhes /></Route>
                     <Route path="/sobre-nos"><SobreNos /></Route> */}
                     {/* <Route path="/FAQ"><FAQ /></Route>
@@ -23,7 +26,7 @@ export const AppRouter = () => {
                     <Route path="/login"><Login /></Route> */}
                     {/* <Route path="/Aluguel"><Alugar /></Route> */}
 
-                </Switch>
+                </Routes>
             </div>
             <Footer />
         </Router>

@@ -2,35 +2,46 @@ import React, { useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import Buttons from '../buttons/buttons';
 
-export function Forms(params) {
+export function Forms() {
+
+    const [tipoPagamento, setTipoPagamento] = useState([
+        { value: 'pix', label: 'pix' },
+        { value: 'cartão', label: 'cartão' },
+        { value: 'boleto', label: 'boleto' }
+    ]);
 
     const [dados, setDados] = useState({
         carro: '',
         nome: '',
         valorDiario: '',
         quantDias: '',
-        formPagamento: '',
+        formPagamento: tipoPagamento,
     });
+
+    const handleSelectChange = (e) => {
+        setTipoPagamento(e.target.value);
+    };
+
+    // eslint-disable-next-line
     const [registros, setRegistros] = useState([]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        setDados(prevDados => ({
+            ...prevDados,
+            [name]: value
+        }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
-        setFormData(prevRegistros => [...prevRegistros, dados]);
+        setRegistros(prevRegistros => [...prevRegistros, dados]);
         setDados({
             carro: '',
             nome: '',
             valorDiario: '',
             quantDias: '',
-            formPagamento: '',
+            formPagamento: [],
         });
     };
 
@@ -42,8 +53,8 @@ export function Forms(params) {
                 <Form.Control
                     type="text"
                     placeholder="Nome Completo"
-                    name="cardHolder"
-                    value={formData.cardHolder}
+                    name="nome"
+                    value={dados.nome}
                     onChange={handleChange}
                 />
             </Form.Group>
@@ -51,28 +62,25 @@ export function Forms(params) {
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formCardNumber">
                     <Form.Label>Carro</Form.Label>
-                    <Form.Select
+                    <Form.Control
                         aria-label="Default select example"
-                        type=""
-                        placeholder=""
-                        name="cardNumber"
-                        value={formData.cardCar}
+                        type="text"
+                        placeholder="Carro alugado"
+                        name="carro"
+                        value={dados.carro}
                         onChange={handleChange}
-                    >
-                        <option>Escolha o carro</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </Form.Select>
+                    />
+
                 </Form.Group>
 
                 <Form.Group controlId="formExpirationDate">
                     <Form.Label>Valor da diária</Form.Label>
                     <Form.Control
+                        aria-label="Default select example"
                         type="text"
-                        placeholder="0,00"
-                        name="expirationDate"
-                        value={formData.expirationDate}
+                        placeholder=""
+                        name="valorDiario"
+                        value={dados.valorDiario}
                         onChange={handleChange}
                     />
                 </Form.Group>
@@ -82,8 +90,8 @@ export function Forms(params) {
                     <Form.Control
                         type="text"
                         placeholder="5 dias"
-                        name="dias"
-                        value={formData.quant}
+                        name="quantDias"
+                        value={dados.quantDias}
                         onChange={handleChange}
                     />
                 </Form.Group>
@@ -91,11 +99,10 @@ export function Forms(params) {
                     <Form.Label>Forma de pagamento</Form.Label>
                     <Form.Select
                         aria-label="Default select example"
-                        type=""
                         placeholder=""
                         name="cardNumber"
-                        value={formData.formPayment}
-                        onChange={handleChange}
+                        value={tipoPagamento}
+                        onChange={handleSelectChange}
                     >
                         <option>Selecione a forma de pagamento</option>
                         <option value="1">Cartão</option>
