@@ -1,9 +1,34 @@
+import { useHistory } from 'react-router-dom';
+
 import Formcriarcarro from '../../Pages/Formcriarcarro/Formcriarcarro';
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import './Criarcarro.css';
 
 function Criarcarro() {
+
+    const history = useHistory()
+
+    function createCarro(carro) {
+
+        
+        carro.diasAlugado = []
+
+        fetch("http://localhost:4000/carros", {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(carro)
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                console.log(data)
+                history.push('/carros', { message: 'Projeto criado com sucesso'})
+            })
+            .catch((err) => console.log(err))
+    }
+
     return(
         <>
         <HeaderMain/>
@@ -11,7 +36,7 @@ function Criarcarro() {
         <div className="criarcarro-container">
             <h2>Cadastrar carro</h2>
             <p>Cadastre aqui seu carro para ser alugado</p>
-                <Formcriarcarro botaotxt="Cadastrar carro"/>
+                <Formcriarcarro handleSubmit={createCarro} botaotxt="Cadastrar carro"/>
         </div>
         </div>
         <footer>

@@ -1,16 +1,37 @@
+import {useState} from 'react'
+
 import Input from '../../Components/Form/Input'
 import Botaocriarcarro from '../../Components/Form/Botaocriarcarro';
 
 import './Formcriarcarro.css';
 
-function Formcriarcarro({botaotxt}) {
+function Formcriarcarro({handleSubmit, botaotxt, carroData}) {
+    const [carro, setCarro] = useState(carroData || {})
+
+
+    const submit = (e) => {
+        e.preventDefault()
+        handleSubmit(carro)
+    }
+
+    function handleChange(e) {
+        setCarro({ ...carro, [e.target.name]: e.target.value })
+    }
+
     return(
-        <form className="form">
-            <Input type="text" text="Seu nome" name="name" placeholder="Insira o seu nome"/>
-            <Input type="text" text="Modelo do carro" name="modelo" placeholder="Insira o modelo do carro"/>
-            <Input type="text" text="Ano de fabricação" name="ano" placeholder="Insira o ano de fabricação"/>
-            <Input type="text" text="Preço por dia" name="preço" placeholder="Insira o custo por dia de aluguel"/>
-            <Input type="text" text="Tipo de câmbio" name="cambio" placeholder="Insira o tipo de câmbio"/>
+        <form onSubmit={submit} className="form">
+            <Input type="text" text="Seu nome" name="dono" placeholder="Insira o seu nome" handleOnChange={handleChange} value={carro.dono}/>
+            
+            <Input type="text" text="Modelo do carro" name="modelo" placeholder="Insira o modelo do carro" handleOnChange={handleChange} value={carro.modelo}/>
+
+            <Input type="text" text="Ano de fabricação" name="ano" placeholder="Insira o ano de fabricação" handleOnChange={handleChange} value={carro.ano}/>
+
+            <Input type="text" text="Cidade" name="cidade" placeholder="Insira a cidade" handleOnChange={handleChange} value={carro.cidade}/>
+
+            <Input type="text" text="Preço por dia" name="preço" placeholder="Insira o custo por dia de aluguel" handleOnChange={handleChange} value={carro.preco}/>
+
+            <Input type="text" text="Mais detalhes sobre o carro" name="detalhes" placeholder="Insira detalhes sobre o carro" handleOnChange={handleChange} value={carro.detalhe}/>
+
 
             <Botaocriarcarro text={botaotxt}/>
         </form>
