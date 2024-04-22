@@ -6,11 +6,9 @@ import FAQ from '../FAQ/index';
 import Contatos from '../Contatos/index';
 import Login from '../Login/Login'
 import Alugar from '../Aluguel';
-import Planos from '../Planos/planos';
 import Footer from "../../Components/Footer/footer";
-import HeaderMain from "../../Components/Header";
-import Historico from "../Pagamento/historico";
-import Home from "../Home/home";
+
+
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const AppRouter =() => {
@@ -32,10 +30,9 @@ export const AppRouter =() => {
               <Route path="/login"><Login /></Route>
               <Route path={`/Aluguel/:id`}><Alugar/></Route>
               <Route path="/"><Principal /></Route>
-              <Route path="/home"><Home /></Route>
               <Route path="/pagamento"><Pagamento /></Route>
-              <Route path="/planos"><Planos /></Route>
-              <Route path="/historico"><Historico /></Route>
+             
+              
               </Switch>
       </div>
       <Footer />
