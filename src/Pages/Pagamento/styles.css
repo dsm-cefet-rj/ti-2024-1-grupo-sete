@@ -1,8 +1,6 @@
 .pagamentos {
     padding: 0;
     margin: 10px;
-<<<<<<< Updated upstream
-=======
 }
 
 .button-voltar{
@@ -21,5 +19,4 @@
     box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
     transform: scale(1.05);
     color: #ffffff;
->>>>>>> Stashed changes
 }
