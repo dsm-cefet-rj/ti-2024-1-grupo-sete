@@ -51,6 +51,7 @@
     flex-wrap: wrap; /* Allow wrapping to multiple lines if needed */
     justify-content: space-between; /* Distribute cards evenly */
     align-items: flex-start; /* Align cards vertically from the top */
+    margin-top: 10px;
 
   }
 

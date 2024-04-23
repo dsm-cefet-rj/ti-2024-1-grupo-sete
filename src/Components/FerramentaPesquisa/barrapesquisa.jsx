@@ -6,14 +6,18 @@ import { addDays, eachDayOfInterval } from "date-fns";
 import carros from '../Carros/carros';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import useAluguelStore from "../Zustand/storeAluguel";
 
 
 
-export default function BarraPesquisa({busca, setBusca, diasEntreDatas, setDiasEntreDatas}) {
+export default function BarraPesquisa() {
+  const setBusca = useAluguelStore((state=> state.setBuscar));
+  const busca = useAluguelStore((state=> state.buscar));
     const [digita, setDigita] = useState(busca);
     const onChange = (event) => {
         setDigita(event.target.value);
     }
+
 
     const onSearch = (searchTerm) => {
         setDigita(searchTerm);
@@ -25,12 +29,12 @@ export default function BarraPesquisa({busca, setBusca, diasEntreDatas, setDiasE
   const [range, setRange] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 1),
       key: 'selection'
     }
   ])
 
-
+  const setDiasAluguel = useAluguelStore((state) => state.setDiasAluguel);
 
     const [open, setOpen] = useState(false)
 
@@ -42,11 +46,10 @@ export default function BarraPesquisa({busca, setBusca, diasEntreDatas, setDiasE
         document.addEventListener("click", hideOnClickOutside, true)
     
         // Atualizar os dias entre datas sempre que o intervalo for alterado
-        console.log(diasEntreDatas);
         const startDate = range[0].startDate;
         const endDate = range[0].endDate;
         const dias = eachDayOfInterval({ start: startDate, end: endDate });
-        setDiasEntreDatas(dias);
+        setDiasAluguel(dias);
     
       }, [range])
 
