@@ -42,7 +42,10 @@ export default function Pesquisa() {
         <BarraPesquisa
         />
       </div>
-      <h1 className='t1'>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
+      <h1 className='t1'>
+    {busca ? `Busca para: Cidade "${busca}" e para ${diasEntreDatas.length} dias (${primeiroDia} até ${ultimoDia})` : 'Busca para: ' + diasEntreDatas.length + ' dias (' + primeiroDia + ' até ' + ultimoDia + ')'}
+</h1>
+
       <Row >
 
         {Object.keys(carros).filter(
@@ -79,7 +82,7 @@ export default function Pesquisa() {
 
                     <p className="preco"> Preço </p>
                     <h1 className="preco">R$ {carro.preco}/dia</h1>
-                    <div className= "buttonDetails"><button className="butDet" type="submit"> Mais Detalhes </button> </div>
+                    <div className= "buttonDetails"><button className="btn btn-primary" type="submit"> Mais Detalhes </button> </div>
 
                   </CardText>
                 </CardBody>

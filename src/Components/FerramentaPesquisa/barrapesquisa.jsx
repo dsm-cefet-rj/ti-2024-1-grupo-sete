@@ -7,6 +7,8 @@ import carros from '../Carros/carros';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import useAluguelStore from "../Zustand/storeAluguel";
+import { pt } from "date-fns/locale";
+import "./style.css";
 
 
 
@@ -80,7 +82,7 @@ export default function BarraPesquisa() {
                     <h4 className="t4">Cidade</h4> 
                     <div className="organiza">
                       <input type="text" value={digita} onChange={onChange} />
-                      <button className="butBusc" onClick={()=>onSearch(digita)}> Buscar </button>
+                      <button className= "botaoBuscaPesquisa" onClick={()=>onSearch(digita)}> Buscar </button>
                     </div>
                 </div>
                 <div className="dropdown">
@@ -113,9 +115,11 @@ export default function BarraPesquisa() {
                                     onChange={item => {setRange([item.selection]);
                                                     }}
                                     editableDateInputs={true}
+                                    minDate = {new Date()}
                                     moveRangeOnFirstSelection={false}
                                     ranges={range}
                                     months={1}
+                                    locale={pt}
                                     direction="horizontal"
                                     className="calendarElement"
                                 />
