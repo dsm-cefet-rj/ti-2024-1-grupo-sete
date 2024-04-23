@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import HeaderMain from "../../Components/Header"
 import Footer from "../../Components/Footer/footer"
-
+import Formcriarcarro from "../../Pages/Formcriarcarro/Formcriarcarro"
 import styles from "./Atualizardadoscarro.module.css"
 
 function Atualizardadoscarro() {
@@ -56,7 +56,7 @@ function Atualizardadoscarro() {
                 </div>
             ) : (
                 <div className={styles.carro_info}>
-                    <p>Form</p>
+                    <p><Formcriarcarro/></p>
                 </div>
             )}
         </div>

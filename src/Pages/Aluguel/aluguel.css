@@ -18,6 +18,8 @@
     text-align: center;
 }
 
+
+
 .titulo h2{
     font-weight: bolder;
 }
@@ -122,6 +124,7 @@
     border-radius: 10px;
     background-image: linear-gradient(to bottom, #0000, #C2C1C1);
     padding: 5px;
+    margin: 0 70px;
     /*justify-content: center;
     align-items: center;*/
 }

@@ -46,7 +46,7 @@ export default function Alugar(props){
                 </div>
             </div>
 
-            <div className="container ">
+            <div className="container">
                 <div className="diasAluguel">
                     <p className="titulo2">Dias que deseja alugar:</p>
                     <div className="container-item-dias">
@@ -57,7 +57,7 @@ export default function Alugar(props){
                 </div>
             </div>
 
-            <div className="container">
+            <div className="container-preco">
                 <div className="precos">
                     <p className="total">Total a pagar: R$ {total} </p>
                 </div>
