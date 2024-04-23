@@ -3,7 +3,6 @@ import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import { Link, useParams} from "react-router-dom/cjs/react-router-dom";
 import carros from "../../Components/Carros/carros";
-//import Detalhes from "../Detalhes/Detalhes";
 import './aluguel.css';
 import useAluguelStore from "../../Components/Zustand/storeAluguel";
 
@@ -35,8 +34,7 @@ export default function Alugar(props){
             <div className="titulo">
                 <h2>Detalhes do Pedido</h2>
             </div>
-            
-            <div className="container">
+            <div className="containerAluguel">
                 <div className="colunm coluna-1">
                     <img src={carro?.Image} className="img-carro"/>
                 </div>  
@@ -44,13 +42,11 @@ export default function Alugar(props){
                     <p className="item"> <b>Proprietário: </b> {carro?.dono}</p>
                     <p className="item"> <b>Modelo: </b>{carro?.modelo} {carro?.ano}</p>
                     <p className="item"> <b>Cidade: </b> {carro?.cidade}</p>
-                    <p className="item"> <b>Câmbio: </b>{carro?.cambio}</p>
-                    <p className="item"> <b>Motor: </b>{carro?.motor} </p>
                     <p className="item"> <b>Preço/dia: </b>R$ {carro?.preco}</p>
                 </div>
             </div>
 
-            <div className="container ">
+            <div className="containerAluguel">
                 <div className="diasAluguel">
                     <p className="titulo2">Dias que deseja alugar:</p>
                     {diasArray.map((dia, index) => (
@@ -59,7 +55,7 @@ export default function Alugar(props){
                 </div>
             </div>
 
-            <div className="container">
+            <div className="containerAluguel">
                 <div className="precos">
                     <p className="total">total a pagar: R$ {total} </p>
                 </div>
@@ -69,7 +65,7 @@ export default function Alugar(props){
                 <Link className="pagPag" aria-current="page" to={`/detalhes/${id}`}>
                     <button  className="button-voltar">voltar</button>
                 </Link>
-                <Link className="pagPag" aria-current="page" to="../Pagamento/Pagamento">
+                <Link className="pagPag" aria-current="page" to="../Pagamento">
                     <button className="button-confirm">confirmar</button>
                 </Link>
             </div>

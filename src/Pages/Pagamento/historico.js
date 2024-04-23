@@ -14,7 +14,9 @@ export default function Historico() {
         <>
         <HeaderMain/>
             <div className="pagamentos">
-                <h2>Histórico de pagamentos</h2>
+                <div className='titulo'>
+                    <h2>Histórico de pagamentos</h2>
+                </div>
                 <Table>
                     <thead>
                         <tr>
@@ -35,7 +37,6 @@ export default function Historico() {
                         </tr>
                     </tbody>
                 </Table>
-
             </div>
             <div className="button-container">
                 <Link className="pagPag" aria-current="page" to={'/pagamento'}>

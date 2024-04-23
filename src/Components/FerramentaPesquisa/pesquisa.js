@@ -42,7 +42,7 @@ export default function Pesquisa() {
         <BarraPesquisa
         />
       </div>
-      <h1>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
+      <h1 className='t1'>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
       <Row >
 
         {Object.keys(carros).filter(
@@ -68,7 +68,7 @@ export default function Pesquisa() {
                     alt={carro.modelo}
                     onError={(error) => console.error('Erro ao carregar imagem:', error)}
                   />
-                  <CardTitle><h2>{carro.modelo}</h2></CardTitle>
+                  <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
                   <CardText>
 
                     <p>Ano: {carro.ano}</p>
@@ -79,6 +79,7 @@ export default function Pesquisa() {
 
                     <p className="preco"> Preço </p>
                     <h1 className="preco">R$ {carro.preco}/dia</h1>
+                    <div className= "buttonDetails"><button className="butDet" type="submit"> Mais Detalhes </button> </div>
 
                   </CardText>
                 </CardBody>

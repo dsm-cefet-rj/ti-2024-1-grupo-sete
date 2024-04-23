@@ -13,11 +13,43 @@
   align-items: center; /* Center content horizontally */
 }
 
+input{
+  border: 2px solid #336A8A;
+  border-radius: 6px;
+  color: #336A8A;
+  height: 25px;
+}
+
+.organiza{
+  display:inline-flex;
+  gap: 3px;
+}
+
 .qual-cidade {
   margin: 30px;
+  color: #524c4c;
+  width: 100%;
+  margin: 17px;
+  padding: 10px;
+  font-size: 2em;
+  text-align: center; 
 }
 .container-pesquisa {
   margin-bottom: 30px;
+}
+
+.t1{
+  color: #524c4c;
+  text-align: center;
+}
+
+.titleCard{
+  text-align: center;
+  text-decoration: underline;
+}
+
+.t4{
+  color: #524c4c;
 }
 
 .link {
@@ -94,18 +126,42 @@
   display: flex;
 }
 
-button {
-  border: 2px solid black;
+.butDet {
+  border: 2px solid var(--cor4);
+  padding: 7px;
   border-radius: 12px;
   transition-duration: 0.7s;
-  margin: 20px;
-  padding: 1px 5px;
+  color: var(--cor4);
+  width:100px;
+  height: 40px;
+  font-size:12px;
 }
 
-button:hover {
-  background-color: rgb(51, 106, 138);
+.butDet:hover {
   cursor: pointer;
-  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+  background-color: var(--cor4);
+  box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+  transform: scale(1.05);
+  color: #ffffff;
+
+}
+.butBusc {
+  border: 2px solid var(--cor4);
+  padding: 4px;
+  border-radius: 6px;
+  transition-duration: 0.7s;
+  color: var(--cor4);
+  width:50px;
+  height: 25px;
+  font-size:x-small;
+}
+
+.butBusc:hover {
+  cursor: pointer;
+  background-color: var(--cor4);
+  box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+  transform: scale(1.05);
+  color: #ffffff;
 
 }
 

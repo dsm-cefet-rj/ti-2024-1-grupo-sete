@@ -3,6 +3,18 @@
     margin: 10px;
 }
 
+.titulo{
+    text-decoration-line: overline;
+    text-decoration-color: var(--cor5);
+    color: #524c4c;
+    width: 100%;
+    margin: 17px;
+    margin-top: 50px;
+    padding: 10px;
+    font-size: 2em;
+    text-align: center;
+}
+
 .button-voltar{
     border: 2px solid var(--cor4);
     padding: 7px;
@@ -12,6 +24,7 @@
     width:100px;
     height: 40px;
     font-size: small;
+    margin-top: 15px;
 }
 .button-voltar:hover {
     cursor: pointer;

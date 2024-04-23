@@ -77,9 +77,11 @@ export default function BarraPesquisa() {
           <h1 className="qual-cidade">Qual cidade e data deseja?</h1>
             <Card className="container-pesquisa">
                 <div className="dentro-pesquisa">
-                    <h4>Cidade </h4> 
-                    <input type="text" value={digita} onChange={onChange} />
-                    <button onClick={()=>onSearch(digita)}> Buscar </button>
+                    <h4 className="t4">Cidade</h4> 
+                    <div className="organiza">
+                      <input type="text" value={digita} onChange={onChange} />
+                      <button className="butBusc" onClick={()=>onSearch(digita)}> Buscar </button>
+                    </div>
                 </div>
                 <div className="dropdown">
                 {[...new Set(Object.values(carros).map(item => item.cidade))]
@@ -97,7 +99,7 @@ export default function BarraPesquisa() {
                       ))}
                 </div>
                 <div className="calendarWrap">
-                      <h4>Dias para alugar</h4>
+                      <h4 className="t4">Dias para alugar</h4>
                       <input
                         value={`${format(range[0].startDate, "dd/MM/yyyy")} ATÉ ${format(range[0].endDate, "dd/MM/yyyy")}`}
                         readOnly

@@ -12,3 +12,13 @@ img{
 p{
     text-align: center;
 }
+
+.carCar{
+    color: #524c4c;
+    width: 100%;
+    margin: 17px;
+    margin-top: 50px;
+    padding: 10px;
+    font-size: 2em;
+    text-align: center;
+}

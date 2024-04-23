@@ -18,7 +18,9 @@ export default function CarrosselCarro(props){
     return(       
         <>
         <div>
-            <h4>Alguns Carros Disponíveis</h4>
+            <div className="carCar">
+                <h2>Alguns Carros Disponíveis</h2>
+            </div> 
             <Carousel  indicators={false} variant="dark">
                 <Carousel.Item>
                     <img className="carro" src= {BMW}/>

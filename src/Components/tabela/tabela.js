@@ -54,12 +54,12 @@ export default function Tabela(params) {
     return (
         <>
             <Container>
-                <div>
+                <div className='titulo'>
                     <h1>Formulário de Pagamentos</h1>
                 </div>
                 
                 <Form.Group controlId="formCardHolder">
-                    <Form.Label>Titular</Form.Label>
+                    <Form.Label className='pag'>Titular: </Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Nome Completo"
@@ -71,7 +71,7 @@ export default function Tabela(params) {
 
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formCardNumber">
-                        <Form.Label>Carro</Form.Label>
+                        <Form.Label className='pag'>Carro: </Form.Label>
                         <Form.Control
                             aria-label="Default select example"
                             type="text"
@@ -84,7 +84,7 @@ export default function Tabela(params) {
                     </Form.Group>
 
                     <Form.Group controlId="formExpirationDate">
-                        <Form.Label>Valor diário</Form.Label>
+                        <Form.Label className='pag'>Valor diário: </Form.Label>
                         <Form.Control
                             aria-label="Default select example"
                             type="text"
@@ -96,7 +96,7 @@ export default function Tabela(params) {
                     </Form.Group>
 
                     <Form.Group controlId="formCVV">
-                        <Form.Label>Quantidade de dias</Form.Label>
+                        <Form.Label className='pag'>Quantidade de dias: </Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="5 dias"
@@ -107,7 +107,7 @@ export default function Tabela(params) {
                     </Form.Group>
 
                     <Form.Group controlId="formExpirationDate">
-                        <Form.Label>Total a Pagar</Form.Label>
+                        <Form.Label className='pag'>Total a Pagar: </Form.Label>
                         <Form.Control
                             aria-label="Default select example"
                             type="text"
@@ -119,7 +119,7 @@ export default function Tabela(params) {
                     </Form.Group>
 
                     <Form.Group controlId="formCardNumber">
-                        <Form.Label>Forma de pagamento</Form.Label>
+                        <Form.Label className='pag'>Forma de pagamento: </Form.Label>
                         <Form.Select
                             aria-label="Default select example"
                             placeholder=""
@@ -147,20 +147,20 @@ export default function Tabela(params) {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Carro Alugado</th>
-                        <th>Valor total</th>
-                        <th>Método</th>
+                        <th className='pag'>Nome</th>
+                        <th className='pag'>Carro Alugado</th>
+                        <th className='pag'>Valor total</th>
+                        <th className='pag'>Método</th>
                         <th>Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
                 {registros?.map((registro, index) => (
                         <tr key={index}>
-                            <td>{registro?.nome}</td>
-                            <td>{registro?.carro}</td>
-                            <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(registro?.valorDiario * registro?.quantDias)}</td>
-                            <td>{registro?.formPagamento}</td>
+                            <td className='pag'>{registro?.nome}</td>
+                            <td className='pag'>{registro?.carro}</td>
+                            <td className='pag'>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(registro?.valorDiario * registro?.quantDias)}</td>
+                            <td className='pag'>{registro?.formPagamento}</td>
                             <td><Link to={`/historico/${index}`}><button className='visu'>Visualizar</button></Link></td>
                         </tr>
                 ))}
