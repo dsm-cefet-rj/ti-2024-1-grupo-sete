@@ -11,9 +11,8 @@ function Criarcarro() {
 
     function createCarro(carro) {
 
-        
         carro.diasAlugado = []
-
+        
         fetch("http://localhost:4000/carros", {
             method: 'POST',
             headers: {
@@ -24,7 +23,7 @@ function Criarcarro() {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log(data)
-                history.push('/carros', { message: 'Projeto criado com sucesso'})
+                history.push('/carros', { message: 'Seu carro foi cadastrado com sucesso!'})
             })
             .catch((err) => console.log(err))
     }
@@ -33,11 +32,11 @@ function Criarcarro() {
         <>
         <HeaderMain/>
         <div className="all">
-        <div className="criarcarro-container">
-            <h2>Cadastrar carro</h2>
-            <p>Cadastre aqui seu carro para ser alugado</p>
+            <div className="criarcarro-container">
+                <h2>Cadastrar carro</h2>
+                <p>Cadastre aqui seu carro para ser alugado</p>
                 <Formcriarcarro handleSubmit={createCarro} botaotxt="Cadastrar carro"/>
-        </div>
+            </div>
         </div>
         <footer>
             <Footer/>

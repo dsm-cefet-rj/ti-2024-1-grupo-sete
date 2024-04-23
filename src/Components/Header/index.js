@@ -37,7 +37,7 @@ return(
                 Mais informações
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem><Link className="nav-link" aria-current="page" to="/sobre-nos">Sobre Nós</Link></DropdownItem>
+                <DropdownItem><Link className="nav-link" aria-current="page" to="/atualizarcarro">Edite seu carro</Link></DropdownItem>
                 <DropdownItem><Link className="nav-link" aria-current="page" to="/FAQ">FAQ</Link></DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem><Link className="nav-link" aria-current="page" to="/contatos">Contatos</Link></DropdownItem>

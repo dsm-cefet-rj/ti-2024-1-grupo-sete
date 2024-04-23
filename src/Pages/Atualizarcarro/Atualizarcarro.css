@@ -1,0 +1,16 @@
+.carro-container {
+
+}
+
+.carro-titulo {
+    margin-top: 3em;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.carro{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}

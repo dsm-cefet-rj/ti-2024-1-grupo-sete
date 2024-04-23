@@ -1,7 +1,7 @@
 import Detalhes from '../Detalhes/Detalhes';
 import Pagamento from '../Pagamento/Pagamento';
 import Principal from '../Principal/Principal';
-import SobreNos from '../SobreNos/index';
+import Atualizarcarro from '../Atualizarcarro/Atualizarcarro';
 import FAQ from '../FAQ/index';
 import Contatos from '../Contatos/index';
 import Login from '../Login/Login';
@@ -22,7 +22,7 @@ export const AppRouter =() => {
               <Switch>
               <Route path="/pagamento"><Pagamento /></Route>
               <Route path={`/detalhes/:id`}><Detalhes /></Route>
-              <Route path="/sobre-nos"><SobreNos/></Route>
+              <Route path="/atualizarcarro"><Atualizarcarro/></Route>
               <Route path="/FAQ"><FAQ/></Route>
               <Route path="/contatos"><Contatos/></Route>
               <Route path="/login"><Login /></Route>

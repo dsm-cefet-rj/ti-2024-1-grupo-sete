@@ -8,10 +8,13 @@ import './Formcriarcarro.css';
 function Formcriarcarro({handleSubmit, botaotxt, carroData}) {
     const [carro, setCarro] = useState(carroData || {})
 
-
     const submit = (e) => {
         e.preventDefault()
         handleSubmit(carro)
+        if (carro.dono==='' || carro.preco==='' || carro.cidade==='' || carro.modelo==='') {
+            console.error('Por favor, preencha todos os campos.');
+            return;
+        }
     }
 
     function handleChange(e) {
@@ -32,6 +35,7 @@ function Formcriarcarro({handleSubmit, botaotxt, carroData}) {
 
             <Input type="text" text="Mais detalhes sobre o carro" name="detalhes" placeholder="Insira detalhes sobre o carro" handleOnChange={handleChange} value={carro.detalhe}/>
 
+            <Input type="file" text="Foto do carro" name="foto" placeholder="Insira uma foto do carro" handleOnChange={handleChange} value={carro.Image}/>
 
             <Botaocriarcarro text={botaotxt}/>
         </form>

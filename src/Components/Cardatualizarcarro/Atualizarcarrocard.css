@@ -1,0 +1,71 @@
+.carro-card{
+    background-color: rgb(228, 225, 225);
+    padding: 1em;
+    border: 1px solid #7a7a7a;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 2%;
+}
+
+.carro-card h4 {
+    color: #2a2929;
+    padding: .4em;
+    margin-bottom: .7em;
+    font-size: 1.4em;
+}
+
+.carro-card p {
+    color: rgb(93, 91, 91);
+    margin-bottom: 1em;
+}
+
+.carro-card p span {
+    font-weight: bold;
+}
+
+.carro-card-action {
+    margin-top: 1.2em;
+    display: flex;
+    
+    justify-items: center;
+}
+
+.carro-card-action a {
+
+}
+
+.carro-card-action-link {
+    text-decoration: none;
+}
+
+.carro-card-action button {
+    text-decoration: none;
+    border: 2px solid rgb(51, 106, 138);
+    background-color: rgb(193, 193, 194);
+    color: rgb(51, 106, 138);
+    font-size: .9em;
+    padding: .6em 1em;
+    margin: 0 0.5em;
+    cursor: pointer;
+    border: 1px solid #222;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+}
+
+.carro-card-action svg {
+    margin-right: .5em;
+}
+
+.carro-card-action a:hover {
+
+}   
+
+.carro-card-action button:hover {
+    background-color: rgb(51, 106, 138);
+    transform: scale(1.05);
+    box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+    color: #ffffff;
+}
