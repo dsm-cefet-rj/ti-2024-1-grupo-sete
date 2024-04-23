@@ -11,8 +11,9 @@
 
 .form_control input {
     padding: .7em;
-    border-radius: 0;
+    border-radius: 7px;
     border: none;
+    min-height: 50px;
 }
 
 .form_control input::placeholder {

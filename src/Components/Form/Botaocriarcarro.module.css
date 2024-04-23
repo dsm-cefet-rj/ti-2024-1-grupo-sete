@@ -22,6 +22,7 @@
     border-radius: 12px;
     transition-duration: 0.7s;
     color: var(--cor4);
+    margin-top: 0.7em;
 }
 
 .btn:hover {

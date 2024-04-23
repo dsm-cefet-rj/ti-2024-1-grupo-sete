@@ -78,42 +78,9 @@ export default function Detalhes() {
 
             <ul className="flex-container-3">
                 <li className="flex-container-item-3">
-                    <p>Média de consumo estrada: {carro?.consumoEstrada}</p>
-                </li>
-
-                <li className="flex-container-item-3">
-                    <p>Média de consumo cidade: {carro?.consumoCidade}</p>
-                </li>
-
-                <li className="flex-container-item-3">
-                    <p>Câmbio: {carro?.cambio}</p>
-                </li>
-
-                <li className="flex-container-item-3">
-                    <p>{carro?.multimidia}</p>
-                </li>
-
-                <li className="flex-container-item-3">
-                    <p>Motor: {carro?.motor}</p>
-                </li>
-
-                <li className="flex-container-item-3">
-                    <p>{carro?.detalheAdicional}</p>
+                    <p>{carro?.detalhe}</p>
                 </li>
             </ul>
-            </div>
-
-            
-            <div className="data">
-                <div className="data-titulo">
-                    <h3>Datas Indisponíveis:</h3>
-                </div>
-                <div className="data-container-datas">
-                    <div className="data-item">
-                    <p>De {carro?.diaAlugadoInicio} até {carro?.diaAlugadoFinal}</p>
-                    </div>
-                </div>
-                
             </div>
         </div>
 

@@ -1,4 +1,4 @@
-import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
+import FiatUno21 from '../../Assets/fiat-uno21.jpg';
 import FiatUno22 from '../../Assets/fiat-uno22.jpg';
 import FordKa from '../../Assets/FordKa.jpg';
 import FordKa2 from '../../Assets/FordKa2.jpg';
@@ -7,7 +7,7 @@ import Bmw2 from '../../Assets/bmw2.JPG';
 import Mercedes from '../../Assets/Mercedes.jpg';
 import Mercedes2 from '../../Assets/Mercedes2.jpg';
 import FiatUno from '../../Assets/fiat-uno.jpg';
-import FiatUno2 from '../../Assets/Fiat-uno2.jpg';
+import FiatUno2 from '../../Assets/fiat-uno2.jpg';
 import Tesla from '../../Assets/Tesla.jpg';
 import Tesla2 from '../../Assets/Tesla2.jpg'
 import Honda from '../../Assets/honda.jpg';
@@ -22,14 +22,7 @@ const carros = {
         dono: "Julio Cesar Mendonça",
         cidade: "Rio de Janeiro, RJ",
         preco: 120.00,
-        diaAlugadoInicio: "10/04/2024",
-        diaAlugadoFinal: "10/05/2024",
-        consumoEstrada: "15 km/L",
-        consumoCidade: "11km/L",
-        motor: "1.0",
-        cambio: "Manual",
-        multimidia: "Rádio e bluetooth",
-        detalheAdicional: "Direção hidráulica",
+        detalhe: "Direção hidráulica, Rádio e bluetooth, , consumo médio 13km/l e câmbio manual",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -41,14 +34,7 @@ const carros = {
         dono: "Augusto Neves",
         cidade: "Mogi das Cruzes, SP",
         preco: 180.00,
-        diaAlugadoInicio: "12/10/2024",
-        diaAlugadoFinal: "12/12/2024",
-        consumoEstrada: "12km/L",
-        consumoCidade: "15km/L",
-        motor: "1.0",
-        cambio: "Manual",
-        multimidia: "Rádio e bluetooth",
-        detalheAdicional: "Direção Elétrica",
+        detalhe: "Direção Elétrica, rádio e bluetooth, motor 1.0, câmbio manual e consumo médio de 14km/l",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -60,14 +46,7 @@ const carros = {
         dono: "Rogério Teixeira",
         cidade: "Volta Redonda, RJ",
         preco: 450.00,
-        diaAlugadoInicio: "01/10/2024",
-        diaAlugadoFinal: "01/11/2024",
-        consumoEstrada: "14 km/L",
-        consumoCidade: "11km/L",
-        motor: "2.0",
-        cambio: "Automática",
-        multimidia: "Sistema multimídia MBUX",
-        detalheAdicional: "Direção autônoma",
+        detalhe: "Direção autônoma, sistema multimídia MBUX, motor 2.0, câmbio automático e consumo médio de 12km/l",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -79,14 +58,7 @@ const carros = {
         dono: "Marcos Pimentel",
         cidade: "Florianópolis, SC",
         preco: 690.00,
-        diaAlugadoInicio: "01/05/2024",
-        diaAlugadoFinal: "01/07/2024",
-        consumoEstrada: "13 km/L",
-        consumoCidade: "11km/L",
-        motor: "2.0",
-        cambio: "Automática com modo manual de 8 marchas",
-        multimidia: "Central Multimídia 7 polegadas conexão Android Auto e Apple CarPlay",
-        detalheAdicional: "Direção elétrica",
+        detalhe: "Direção elétrica, Central Multimídia 7 polegadas conexão Android Auto e Apple CarPlay, Automática com modo manual de 8 marchas, motor 2.0 e consumo médio de 12km/l",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -105,7 +77,7 @@ const carros = {
         motor: "2.0",
         cambio: "Automático",
         multimidia: "Central Multimídia 7 polegadas conexão Android Auto e Apple CarPlay",
-        detalheAdicional: "Controle adaptativo de velocidade de cruzeiro",
+        detalhe: "Controle adaptativo de velocidade de cruzeiro",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -124,7 +96,7 @@ const carros = {
         motor: "2.0",
         cambio: "Automático",
         multimidia: "Central Multimídia 12 polegadas",
-        detalheAdicional: "Sistema Autopilot",
+        detalhe: "Sistema Autopilot",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
     },
 
@@ -143,7 +115,7 @@ const carros = {
         motor: "1.0",
         cambio: "Manual",
         multimidia: "Rádio e bluetooth",
-        detalheAdicional: "Direção elétrica",
+        detalhe: "Direção elétrica",
         diasAlugado: ["10/06/2024","11/06/2024","12/06/2024", "13/06/2024","14/06/2024"]
         
     },

@@ -6,7 +6,7 @@
       "Image2": "Fiat-uno2.jpg",
       "modelo": "Fiat Uno",
       "ano": "2014",
-      "dono": "Julio Cesar Mendonça",
+      "dono": "João da Silva",
       "cidade": "Rio de Janeiro, RJ",
       "preco": "120",
       "detalhe": "consumoEstrada: 15 km/L, consumoCidade: 11km/L, cambio: Manual, multimidia: Rádio e bluetooth",
@@ -24,7 +24,7 @@
       "Image2": "FordKa2.jpg",
       "modelo": "Ford Ka",
       "ano": "2017",
-      "dono": "Augusto Neves",
+      "dono": "João da Silva",
       "cidade": "Mogi das Cruzes, SP",
       "preco": "180",
       "detalhe": "consumoEstrada: 15 km/L, consumoCidade: 11km/L, cambio: Manual, multimidia: Rádio e bluetooth",
@@ -35,37 +35,6 @@
         "13/06/2024",
         "14/06/2024"
       ]
-    },
-    {
-      "id": "7b9a",
-      "dono": "Leo",
-      "modelo": "Mercedes",
-      "ano": "2021",
-      "cidade": "Nova",
-      "preço": "800",
-      "detalhe": "Cambio automatico piloto semi automatico Direção elétrica",
-      "foto": "C:\\fakepath\\Horário Monitoria 2.png",
-      "diasAlugado": []
-    },
-    {
-      "id": "0294",
-      "dono": "Leonardo",
-      "modelo": "Corolla",
-      "ano": "2021",
-      "cidade": "Nova",
-      "preço": "700",
-      "detalhe": "Cambio automatico, piloto semi automatico, Direção elétrica",
-      "diasAlugado": []
-    },
-    {
-      "id": "4231",
-      "dono": "Leonardo",
-      "modelo": "Corolla",
-      "cidade": "Nova",
-      "preço": "700",
-      "diasAlugado": [],
-      "detalhe": " ",
-      "ano": " "
     }
   ]
 }
