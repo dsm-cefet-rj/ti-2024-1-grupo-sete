@@ -176,3 +176,12 @@ input{
   margin-top: 20px;
  /* Adiciona 10px de margem abaixo de cada elemento h4 */
 }
+
+.descricao-busca {
+  font-size: 1.7em;
+  text-align: center;
+  color:rgb(51, 106, 138);
+  margin-bottom: 2%;
+  margin-right: 2%;
+  margin-left: 2%;
+}

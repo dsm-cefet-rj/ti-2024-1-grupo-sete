@@ -46,8 +46,7 @@ export default function Alugar(props){
                 </div>
             </div>
 
-
-            <div className="containerAluguel">
+            <div className="container ">
                 <div className="diasAluguel">
                     <p className="titulo2">Dias que deseja alugar:</p>
                     {diasArray.map((dia, index) => (
@@ -56,7 +55,7 @@ export default function Alugar(props){
                 </div>
             </div>
 
-            <div className="containerAluguel">
+            <div className="container">
                 <div className="precos">
                     <p className="total">total a pagar: R$ {total} </p>
                 </div>
