@@ -44,7 +44,7 @@ export default function Pesquisa() {
             setDiasEntreDatas={setDiasEntreDatas}
         />
       </div>
-      <h1>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
+      <h1 className='descricao-busca'>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
       <Row >
 
         {Object.keys(carros).filter(

@@ -7,6 +7,7 @@ import Contatos from '../Contatos/index';
 import Login from '../Login/Login';
 import Alugar from '../Aluguel';
 import Criarcarro from '../Criarcarro/Criarcarro';
+import Atualizardadoscarro from '../Atualizardadoscarro/Atualizardadoscarro'
 import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const AppRouter =() => {
@@ -28,7 +29,9 @@ export const AppRouter =() => {
               <Route path="/login"><Login /></Route>
               <Route path={`/Aluguel/:id`}><Alugar/></Route>
               <Route path="/criarcarro"><Criarcarro /></Route>
+              <Route path="/atualizardadoscarro/:id"><Atualizardadoscarro/></Route>
               <Route path="/"><Principal /></Route>
+              
 
               
 

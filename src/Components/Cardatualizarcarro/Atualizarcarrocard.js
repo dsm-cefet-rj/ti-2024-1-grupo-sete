@@ -19,16 +19,15 @@ function Atualizarcarrocard({id, dono, modelo, ano, cidade, preco, handleRemove}
                 <span>R$:</span> {preco}/dia
             </p>
             <div className="carro-card-action">
-                <Link className="carro-card-action-link" to="/">
+                <Link className="carro-card-action-link" to={`/atualizardadoscarro/${id}`}>
                     <button>
                     <BsPencil/> Editar
                     </button>
                 </Link>
-                <Link className="carro-card-action-link" to="/">
                 <button onClick={remove}>
                     <BsFillTrashFill/> Remover
                 </button>
-                </Link>
+                
             </div>
         </div>
     )
