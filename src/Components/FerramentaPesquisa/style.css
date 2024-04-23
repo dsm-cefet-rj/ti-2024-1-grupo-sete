@@ -108,4 +108,14 @@ button:hover {
 
 }
 
+.dentro-pesquisa h4 {
+  margin-bottom: 20px;
+ /* Adiciona 10px de margem abaixo de cada elemento h4 */
+}
 
+
+.calendarWrap h4{
+  margin-bottom: 20px;
+  margin-top: 20px;
+ /* Adiciona 10px de margem abaixo de cada elemento h4 */
+}

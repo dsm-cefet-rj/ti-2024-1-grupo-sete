@@ -4,8 +4,7 @@ import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import carros from "../../Components/Carros/carros";
 import Carousel from 'react-bootstrap/Carousel';
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom";
-
+import { Link, useParams, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { FaUser, FaCar, FaCity, FaDollarSign } from 'react-icons/fa';
 
 import "./Detalhes.css";
@@ -13,8 +12,11 @@ import "./Detalhes.css";
 export default function Detalhes() {
   
     const {id } = useParams();
+    const history = useHistory();
     const [carro, setCarro] = useState();
-  
+    
+
+
     useEffect(() => {
       const carroOfList = carros[id];
       setCarro(carroOfList)
@@ -24,6 +26,10 @@ export default function Detalhes() {
     console.log('paraams: ', id)
     console.log('Car: ', carro)
     console.log('Modelo: ', carro?.modelo)
+
+    const handleButtonClick = (id) => {
+        history.push(`/aluguel/${id}`);
+      };
   
 
     return(      
@@ -117,7 +123,7 @@ export default function Detalhes() {
             <button className="button-voltar">
                 <Link className="pagPag" aria-current="page" to={'/'}>Voltar</Link>
             </button>
-            <button className="button-alugar">
+            <button className="button-alugar" onClick={() => handleButtonClick(id)}>
                 <Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>Alugar</Link>
             </button>
         </div>

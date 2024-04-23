@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
-
-import '../Pagamento/Pagamento';
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom";
+import { Link, useParams} from "react-router-dom/cjs/react-router-dom";
 import carros from "../../Components/Carros/carros";
 //import Detalhes from "../Detalhes/Detalhes";
 import './aluguel.css';
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
 
 
 export default function Alugar(props){
     const {id } = useParams();
     const [carro, setCarro] = useState();
+
+    const diasArray = useAluguelStore((state) => state.diasAluguel);
     
   
     useEffect(() => {
       const carroOfList = carros[id];
-      setCarro(carroOfList)
+      setCarro(carroOfList);
     }, [])
     
     
@@ -24,7 +25,7 @@ export default function Alugar(props){
     console.log('Car: ', carro)
     console.log('Modelo: ', carro?.modelo)
     
-    let dias = 5;
+    let dias = diasArray.length;
     const total = dias*(carro?.preco);
 
     return(      
@@ -71,7 +72,7 @@ export default function Alugar(props){
                     <Link className="pagPag" aria-current="page" to={`/detalhes/${id}`}>Voltar</Link>
                 </button>
                 <button className="button-confirm">
-                    <Link className="pagPag" aria-current="page" to="../Pagamento/Pagamento">Confirmar</Link>
+                    <Link className="pagPag" aria-current="page" to="../Pagamento">Confirmar</Link>
                 </button>
                 
             </div>

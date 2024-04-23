@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root{
+    --cor1: rgb(54, 54, 228);
+    --cor2: rgb(105, 105, 230);
+    --cor3: aliceblue;
+    --cor4: rgb(51, 106, 138);
+    --cor5: rgb(159, 156, 156);
+    --cor6: rgb(193, 193, 194);
+    --cor7: rgb(228, 225, 225);
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+.btn {
+    background-color: rgb(193, 193, 194);
+    padding: 0.7em 1.2em;
+    border: 2px solid var(--cor4);
+    border-radius: 12px;
+    transition-duration: 0.7s;
+    color: var(--cor4);
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: var(--cor4);
+    box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+    transform: scale(1.05);
+    color: #ffffff;
+}

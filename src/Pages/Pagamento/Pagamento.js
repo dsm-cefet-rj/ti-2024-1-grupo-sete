@@ -1,23 +1,20 @@
 import React from 'react';
-import Tabela from '../../Components/Tabela/tabela';
+import Tabela from '../../Components/tabela/tabela';
 import "./styles.css";
-import { Button } from 'react-bootstrap';
+import HeaderMain from '../../Components/Header';
+import Footer from '../../Components/Footer/footer';
 
-export function Pagamento() {
-  const adicionarPagamento = (e) => {
-    
-  };
+export function Pagamentos() {
+
 
   return (
-    <div className="pagamento">
-      <Button variant="primary" onClick={adicionarPagamento()}>
-        Adicionar
-      </Button>
-      <p>Pagamento</p>
-      <Tabela />
+    <div className="pagamentos">
+      <HeaderMain />;
+      <Tabela />;
+      <Footer />;
 
     </div>
   );
 }
 
-export default Pagamento;
+export default Pagamentos;

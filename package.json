@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
+    "json-server": "^1.0.0-alpha.23",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-date-range": "^2.0.0-alpha.4",
@@ -16,13 +17,15 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
     "reactstrap": "^9.2.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "json-server --watch db.json --port 4000"
   },
   "eslintConfig": {
     "extends": [
