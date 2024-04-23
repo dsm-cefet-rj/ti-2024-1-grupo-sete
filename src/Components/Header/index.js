@@ -27,7 +27,7 @@ return(
         <Link className="nav-link" aria-current="page" to="/">Home</Link>
         </li>
         <li className="nav-item">
-        <Link className="nav-link" aria-current="page" to="/">Alugue seu carro</Link>
+        <Link className="nav-link" aria-current="page" to="/historico">Historico de Aluguéis</Link>
         </li>
         <li className="nav-item">
         <Link className="nav-link" aria-current="page" to="/criarcarro">Cadastre seu carro</Link>

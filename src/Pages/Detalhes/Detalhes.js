@@ -7,8 +7,6 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link, useParams, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { FaUser, FaCar, FaCity, FaDollarSign } from 'react-icons/fa';
 
-import "./Detalhes.css";
-
 export default function Detalhes() {
   
     const {id } = useParams();

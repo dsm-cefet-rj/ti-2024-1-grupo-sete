@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
 import { Container, Form } from 'react-bootstrap';
 import useAluguelStore from '../Zustand/storeAluguel';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import {Link} from 'react-router-dom';
 import './tabela.css'
+import HistoricoTabela from '../historico/historicoTabela';
 
 
 export default function Tabela(params) {
@@ -143,29 +143,8 @@ export default function Tabela(params) {
                     </div>
                 </Form>
             </Container>
-
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th className='pag'>Nome</th>
-                        <th className='pag'>Carro Alugado</th>
-                        <th className='pag'>Valor total</th>
-                        <th className='pag'>Método</th>
-                        <th>Detalhes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {registros?.map((registro, index) => (
-                        <tr key={index}>
-                            <td className='pag'>{registro?.nome}</td>
-                            <td className='pag'>{registro?.carro}</td>
-                            <td className='pag'>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(registro?.valorDiario * registro?.quantDias)}</td>
-                            <td className='pag'>{registro?.formPagamento}</td>
-                            <td><Link to={`/historico/${index}`}><button className='visu'>Visualizar</button></Link></td>
-                        </tr>
-                ))}
-                </tbody>
-            </Table>
+            
+            <HistoricoTabela />
         </>
     )
 }

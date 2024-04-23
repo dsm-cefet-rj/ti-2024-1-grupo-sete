@@ -8,6 +8,7 @@ import Login from '../Login/Login';
 import Alugar from '../Aluguel';
 import Criarcarro from '../Criarcarro/Criarcarro';
 import{ BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import HistoricoDetalhes from '../Pagamento/historicoDetalhes';
 import Historico from '../Pagamento/historico';
 
 export const AppRouter =() => {
@@ -24,7 +25,8 @@ export const AppRouter =() => {
               <Route path="/login"><Login /></Route>
               <Route path={`/Aluguel/:id`}><Alugar/></Route>
               <Route path="/criarcarro"><Criarcarro /></Route>
-              <Route path={"/historico/:index"}><Historico /></Route>
+              <Route path={"/historico/:index"}><HistoricoDetalhes /></Route>
+              <Route path="/historico"><Historico /></Route>
               <Route path="/"><Principal /></Route>
 
               

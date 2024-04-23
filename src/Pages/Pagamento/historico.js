@@ -1,49 +1,18 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
-import "./styles.css";
+import HistoricoTabela from '../../Components/historico/historicoTabela';
 import HeaderMain from '../../Components/Header';
 import Footer from '../../Components/Footer/footer';
-import useAluguelStore from '../../Components/Zustand/storeAluguel';
-import { useParams, Link } from 'react-router-dom/cjs/react-router-dom';
 
-export default function Historico() {
-    const dados = useAluguelStore((state => state.registros));
-    const {index} = useParams();
+export function Historico() {
 
-    return (
-        <>
-        <HeaderMain/>
-            <div className="pagamentos">
-                <div className='titulo'>
-                    <h2>Histórico de pagamentos</h2>
-                </div>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Carro Alugado</th>
-                            <th>Valor diário</th>
-                            <th>Dias Alugado</th>
-                            <th>Forma de pagamento</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{dados[index].nome}</td>
-                            <td>{dados[index].carro}</td>
-                            <td>{dados[index].valorDiario}</td>
-                            <td>{dados[index].quantDias}</td>
-                            <td>{dados[index].formPagamento}</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-            <div className="button-container">
-                <Link className="pagPag" aria-current="page" to={'/pagamento'}>
-                    <button className="button-voltar">Voltar</button>
-                </Link>
-            </div>
-            <Footer></Footer>
-        </>
-    );
+
+  return (
+    <div className="historico">
+      <HeaderMain />
+      <HistoricoTabela/>
+      <Footer />
+    </div>
+  );
 }
+
+export default Historico;
