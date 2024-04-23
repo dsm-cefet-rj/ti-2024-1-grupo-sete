@@ -49,15 +49,17 @@ export default function Alugar(props){
             <div className="container ">
                 <div className="diasAluguel">
                     <p className="titulo2">Dias que deseja alugar:</p>
+                    <div className="container-item-dias">
                     {diasArray.map((dia, index) => (
                         <span key={index} className="item"> {new Date(dia).toLocaleDateString()}</span>
                     ))}
+                    </div>
                 </div>
             </div>
 
             <div className="container">
                 <div className="precos">
-                    <p className="total">total a pagar: R$ {total} </p>
+                    <p className="total">Total a pagar: R$ {total} </p>
                 </div>
             </div>
             
