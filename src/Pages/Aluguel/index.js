@@ -36,46 +36,44 @@ export default function Alugar(props){
                 <h2>Detalhes do Pedido</h2>
             </div>
             
-            <section className="flex-container-1">
-                <img src={carro?.Image} className="img-carro"/>
-            </section>
+            <div className="container">
+                <div className="colunm coluna-1">
+                    <img src={carro?.Image} className="img-carro"/>
+                </div>  
+                <div className="culunm coluna-2">
+                    <p className="item"> <b>Proprietário: </b> {carro?.dono}</p>
+                    <p className="item"> <b>Modelo: </b>{carro?.modelo} {carro?.ano}</p>
+                    <p className="item"> <b>Cidade: </b> {carro?.cidade}</p>
+                    <p className="item"> <b>Câmbio: </b>{carro?.cambio}</p>
+                    <p className="item"> <b>Motor: </b>{carro?.motor} </p>
+                    <p className="item"> <b>Preço/dia: </b>R$ {carro?.preco}</p>
+                </div>
+            </div>
 
+            <div className="container ">
+                <div className="diasAluguel">
+                    <p className="titulo2">Dias que deseja alugar:</p>
+                    {diasArray.map((dia, index) => (
+                        <span key={index} className="item"> {new Date(dia).toLocaleDateString()}</span>
+                    ))}
+                </div>
+            </div>
 
-            <section className="flex-container-2">
-                <ul>
-                    <li className="flex-item">
-                        <p>Proprietário: {carro?.dono}</p>
-                    </li>
-                    <li className="flex-item">
-                        <p>Modelo: {carro?.modelo} {carro?.ano}</p>
-                    </li>
-                    <li className="flex-item">
-                        <p>Cidade: {carro?.cidade}</p>
-                    </li>
-                    <li className="flex-item">
-                        <p>Preço/dia: R$ {carro?.preco}</p>
-                    </li>
-                    <li className="flex-item">
-                        <p>Câmbio: {carro?.cambio}</p>
-                    </li>
-                    <li className="flex-item">
-                        <p>Motor: {carro?.motor} </p>
-                    </li>
-                    <li className="flex-item">
-                        <p>total a pagar: R$ {total} </p>
-                    </li>
-                </ul>
-            </section>
+            <div className="container">
+                <div className="precos">
+                    <p className="total">total a pagar: R$ {total} </p>
+                </div>
+            </div>
             
             <div className="button-container">
-                <button className="button-voltar">
-                    <Link className="pagPag" aria-current="page" to={`/detalhes/${id}`}>Voltar</Link>
-                </button>
-                <button className="button-confirm">
-                    <Link className="pagPag" aria-current="page" to="../Pagamento">Confirmar</Link>
-                </button>
-                
+                <Link className="pagPag" aria-current="page" to={`/detalhes/${id}`}>
+                    <button  className="button-voltar">voltar</button>
+                </Link>
+                <Link className="pagPag" aria-current="page" to="../Pagamento/Pagamento">
+                    <button className="button-confirm">confirmar</button>
+                </Link>
             </div>
+            
 
         </body>
 

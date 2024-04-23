@@ -38,10 +38,10 @@ export default function Historico() {
 
             </div>
             <div className="button-container">
-            <button className="button-voltar">
-                <Link className="pagPag" aria-current="page" to={'/pagamento'}>Voltar</Link>
-            </button>
-        </div>
+                <Link className="pagPag" aria-current="page" to={'/pagamento'}>
+                    <button className="button-voltar">Voltar</button>
+                </Link>
+            </div>
             <Footer></Footer>
         </>
     );

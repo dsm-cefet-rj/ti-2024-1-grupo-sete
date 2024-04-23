@@ -79,8 +79,6 @@ export default function Pesquisa() {
 
                     <p className="preco"> Preço </p>
                     <h1 className="preco">R$ {carro.preco}/dia</h1>
-                    <div className= "buttonDetails"><button className="btn btn-primary" type="submit"> Mais Detalhes </button> </div>
-
 
                   </CardText>
                 </CardBody>

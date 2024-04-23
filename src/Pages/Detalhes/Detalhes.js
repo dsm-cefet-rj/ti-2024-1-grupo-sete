@@ -120,12 +120,12 @@ export default function Detalhes() {
         </div>
 
         <div className="button-container">
-            <button className="button-voltar">
-                <Link className="pagPag" aria-current="page" to={'/'}>Voltar</Link>
-            </button>
-            <button className="button-alugar" onClick={() => handleButtonClick(id)}>
-                <Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>Alugar</Link>
-            </button>
+            <Link className="pagPag" aria-current="page" to={'/'}>
+                <button className="button-voltar">Voltar</button>
+            </Link>
+            <Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>
+                <button className="button-alugar" onClick={() => handleButtonClick(id)}>Alugar</button>
+            </Link>
         </div>
 
         </body>

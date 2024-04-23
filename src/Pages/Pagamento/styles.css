@@ -1,4 +1,25 @@
 .pagamentos {
     padding: 0;
     margin: 10px;
+<<<<<<< Updated upstream
+=======
+}
+
+.button-voltar{
+    border: 2px solid var(--cor4);
+    padding: 7px;
+    border-radius: 12px;
+    transition-duration: 0.7s;
+    color: var(--cor4);
+    width:100px;
+    height: 40px;
+    font-size: small;
+}
+.button-voltar:hover {
+    cursor: pointer;
+    background-color: var(--cor4);
+    box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
+    transform: scale(1.05);
+    color: #ffffff;
+>>>>>>> Stashed changes
 }

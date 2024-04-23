@@ -3,6 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import { Container, Form } from 'react-bootstrap';
 import useAluguelStore from '../Zustand/storeAluguel';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import './tabela.css'
 
 
 export default function Tabela(params) {
@@ -53,7 +54,10 @@ export default function Tabela(params) {
     return (
         <>
             <Container>
-                <h1>Formulário de Pagamentos</h1>
+                <div>
+                    <h1>Formulário de Pagamentos</h1>
+                </div>
+                
                 <Form.Group controlId="formCardHolder">
                     <Form.Label>Titular</Form.Label>
                     <Form.Control
@@ -129,9 +133,14 @@ export default function Tabela(params) {
                             <option value="Boleto">Boleto</option>
                         </Form.Select>
                     </Form.Group>
-                    <Button variant="primary" type="submit" className='mb-2 mt-2'>
-            Pagar
-        </Button>
+                    <div className='button-container'>
+                        <Link className="PagPrin" aria-current="page" to='/'>
+                            <button  className="button-cancel">cancelar</button>
+                        </Link>
+                        <button type="submit" className='butPagar'>
+                            Pagar
+                        </button>
+                    </div>
                 </Form>
             </Container>
 
@@ -152,7 +161,7 @@ export default function Tabela(params) {
                             <td>{registro?.carro}</td>
                             <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(registro?.valorDiario * registro?.quantDias)}</td>
                             <td>{registro?.formPagamento}</td>
-                            <td><Link to={`/historico/${index}`}><Button>Visualizar</Button></Link></td>
+                            <td><Link to={`/historico/${index}`}><button className='visu'>Visualizar</button></Link></td>
                         </tr>
                 ))}
                 </tbody>

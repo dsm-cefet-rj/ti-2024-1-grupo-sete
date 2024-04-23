@@ -9,10 +9,9 @@ export function Pagamentos() {
 
   return (
     <div className="pagamentos">
-      <HeaderMain />;
-      <Tabela />;
-      <Footer />;
-
+      <HeaderMain />
+      <Tabela />
+      <Footer />
     </div>
   );
 }

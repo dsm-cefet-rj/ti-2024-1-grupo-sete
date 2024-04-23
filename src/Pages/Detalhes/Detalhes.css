@@ -83,14 +83,9 @@
 
 .aluPag{
     font-size: 2.4em;
-    text-decoration: none;
     text-align: center;
     color: var(--cor4);
     margin: 20px;
-}
-
-.aluPag:hover{
-    color: #ffffff;
 }
 
 .button-container {
@@ -106,6 +101,9 @@
     border-radius: 12px;
     transition-duration: 0.7s;
     color: var(--cor4);
+    width:100px;
+    height: 40px;
+    font-size: small;
 }
 .button-alugar:hover {
     cursor: pointer;
@@ -121,13 +119,16 @@
     border-radius: 12px;
     transition-duration: 0.7s;
     color: var(--cor4);
-    
+    width:100px;
+    height: 40px;
+    font-size: small;
 }
 .button-voltar:hover {
     cursor: pointer;
     background-color: var(--cor4);
     box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
     transform: scale(1.05);
+    color: #ffffff;
 }
 
 .detalhes-tecnicos-data {
