@@ -185,3 +185,13 @@ input{
   margin-right: 2%;
   margin-left: 2%;
 }
+.botaoBuscaPesquisa{
+  border: 2px solid var(--cor4);
+  border-radius: 10px;
+  transition-duration: 0.7s;
+  color: var(--cor4);
+  width:85px;
+  height: 27px;
+
+  font-size: small;
+}

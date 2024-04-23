@@ -24,7 +24,7 @@ export default function Tabela(params) {
         nome: "João da Silva",
         valorDiario: carro?.preco,
         quantDias: totalDias.length,
-        formPagamento: "default",
+        formPagamento: "Cartão",
     });
 
     
@@ -122,12 +122,11 @@ export default function Tabela(params) {
                         <Form.Label className='pag'>Forma de pagamento: </Form.Label>
                         <Form.Select
                             aria-label="Default select example"
-                            placeholder=""
+                            placeholder="Selecione a forma de pagamento"
                             name="cardNumber"
                             value={tipoPagamento}
                             onChange={handleSelectChange}
                         >
-                            <option>Selecione a forma de pagamento</option>
                             <option value="Cartão">Cartão</option>
                             <option value="Pix">Pix</option>
                             <option value="Boleto">Boleto</option>

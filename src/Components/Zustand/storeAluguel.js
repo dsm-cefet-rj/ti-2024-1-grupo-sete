@@ -10,7 +10,7 @@ const useAluguelStore = create((set) => ({
     nome: "João da Silva",
     valorDiario: null,
     quantDias: 0,
-    formPagamento: "default",
+    formPagamento: "Cartão",
   },
   setBuscar: (busca) => set({buscar: busca}),
   setCarroId: (carro) => set({ carroId: carro }),
