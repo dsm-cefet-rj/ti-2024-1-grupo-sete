@@ -1,29 +1,20 @@
+import React from 'react';
 import { Table } from 'react-bootstrap';
-import { useState } from 'react';
 import "./styles.css";
+import HeaderMain from '../../Components/Header';
+import Footer from '../../Components/Footer/footer';
+import useAluguelStore from '../../Components/Zustand/storeAluguel';
+import { useParams, Link } from 'react-router-dom/cjs/react-router-dom';
 
-export default function Historico(params) {
-    const [dados] = useState(
-        {
-            carro: 'Ford KA',
-            nome: 'José Silva Ribeiro',
-            valorDiario: '5,00',
-            quantDias: '4',
-            formPagamento: 'Pix',
-        },
-        {
-            carro: 'Ford Fiesta',
-            nome: 'Afonso Silva Ribeiro',
-            valorDiario: '5,00',
-            quantDias: '2',
-            formPagamento: 'Cartão',
-        },
-    );
+export default function Historico() {
+    const dados = useAluguelStore((state => state.registros));
+    const {index} = useParams();
 
     return (
         <>
-            <div className="pagamento">
-                <h2>Histórico de pagamento</h2>
+        <HeaderMain/>
+            <div className="pagamentos">
+                <h2>Histórico de pagamentos</h2>
                 <Table>
                     <thead>
                         <tr>
@@ -35,18 +26,23 @@ export default function Historico(params) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr key={dados.nome}>
-                            <td>{dados.nome}</td>
-                            <td>{dados.carro}</td>
-                            <td>{dados.valorDiario}</td>
-                            <td>{dados.quantDias}</td>
-                            <td>{dados.formPagamento}</td>
+                        <tr>
+                            <td>{dados[index].nome}</td>
+                            <td>{dados[index].carro}</td>
+                            <td>{dados[index].valorDiario}</td>
+                            <td>{dados[index].quantDias}</td>
+                            <td>{dados[index].formPagamento}</td>
                         </tr>
                     </tbody>
                 </Table>
 
             </div>
-
+            <div className="button-container">
+            <button className="button-voltar">
+                <Link className="pagPag" aria-current="page" to={'/pagamento'}>Voltar</Link>
+            </button>
+        </div>
+            <Footer></Footer>
         </>
     );
 }

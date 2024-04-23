@@ -3,8 +3,9 @@ import carros from '../Carros/carros';
 import BarraPesquisa from './barrapesquisa';
 import format from 'date-fns/format';
 import './style.css';
+import useAluguelStore from '../Zustand/storeAluguel';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
-import{ BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
@@ -22,26 +23,23 @@ function containsArray(array1, array2) {
 }
 
 export default function Pesquisa() {
-  const [busca, setBusca] = useState("");
-  const [diasEntreDatas, setDiasEntreDatas] = useState([]);
-  const history = useHistory();
-  console.log(busca);
+  const busca = useAluguelStore((state => state.buscar));
+  const diasEntreDatas = useAluguelStore((state) => state.diasAluguel);
+  const setCarroId = useAluguelStore((state) => state.setCarroId);
+  //console.log(busca);
 
-  const handleCardClick = (carroId) => {
-    history.push(`/aluguel/${carroId}`, { selectedDiasEntreDatas: diasEntreDatas });
-  };
 
   let primeiroDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
+
+  const handleCardClick = (carroId) => {
+    setCarroId(carros[carroId]);
+  };
 
   return (
     <div>
       <div>
         <BarraPesquisa
-            busca={busca}
-            setBusca={setBusca}
-            diasEntreDatas={diasEntreDatas}
-            setDiasEntreDatas={setDiasEntreDatas}
         />
       </div>
       <h1>Busca para: Cidade "{busca}" e para {diasEntreDatas.length} dias ({primeiroDia} até {ultimoDia})</h1>
@@ -49,7 +47,7 @@ export default function Pesquisa() {
 
         {Object.keys(carros).filter(
           ((carroId) =>{
-            if(busca === "") return true;
+            if(busca === "" || busca === null) return true;
             const busca2 = busca.toLowerCase();
             const carroCompar = carros[carroId].cidade.toLowerCase();
             return carroCompar.includes(busca2);
@@ -62,7 +60,7 @@ export default function Pesquisa() {
           const carro = carros[carroId];
           return (
             <Col xs={12} md={6} lg={4} key={index}>
-              <Card onClick={() => handleCardClick(carroId)} className="card-carros">
+              <Card className="card-carros" onClick={() => handleCardClick(carroId)}>
                 <Link to={`/detalhes/${carroId}`} className="link">
                 <CardBody >
                   <CardImg

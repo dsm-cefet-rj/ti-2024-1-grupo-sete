@@ -7,18 +7,14 @@ import Contatos from '../Contatos/index';
 import Login from '../Login/Login';
 import Alugar from '../Aluguel';
 import Criarcarro from '../Criarcarro/Criarcarro';
-import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import{ BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Historico from '../Pagamento/historico';
 
 export const AppRouter =() => {
     return(
         <Router>
     <div>
-        <nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/pagamento">Pagamento</Link></li>
-            </ul>
-        </nav>
+
               <Switch>
               <Route path="/pagamento"><Pagamento /></Route>
               <Route path={`/detalhes/:id`}><Detalhes /></Route>
@@ -28,6 +24,7 @@ export const AppRouter =() => {
               <Route path="/login"><Login /></Route>
               <Route path={`/Aluguel/:id`}><Alugar/></Route>
               <Route path="/criarcarro"><Criarcarro /></Route>
+              <Route path={"/historico/:index"}><Historico /></Route>
               <Route path="/"><Principal /></Route>
 
               
