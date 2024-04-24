@@ -2,7 +2,8 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import HeaderMain from "../../Components/Header"
 import Footer from "../../Components/Footer/footer"
-import Formcriarcarro from "../../Pages/Formcriarcarro/Formcriarcarro"
+import Formcriarcarro from '../../Pages/Formcriarcarro/Formcriarcarro';
+import Message from "../../Components/Message/Message"
 import styles from "./Atualizardadoscarro.module.css"
 
 function Atualizardadoscarro() {
@@ -11,6 +12,8 @@ function Atualizardadoscarro() {
 
     const [carro, setCarro] = useState([])
     const [showCarroForm, setShowCarroForm] = useState(false)
+    const [message, setMessage] = useState()
+    const [type, setType] = useState()
 
     useEffect(() => {
         fetch(`http://localhost:4000/carros/${id}`, {
@@ -25,6 +28,25 @@ function Atualizardadoscarro() {
         .catch(err => console.log(err))
     }, [id])
 
+    function editPost(carro) {
+        fetch(`http://localhost:4000/carros/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(carro),
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+            setCarro(data)
+            setShowCarroForm(false)
+            setMessage('Seu carro foi atualizado com sucesso!')
+            setType('success')
+            
+        })
+        .catch(err => console.log(err))
+    }
+
     function toggleCarroForm() {
         setShowCarroForm(!showCarroForm)
     }
@@ -32,6 +54,7 @@ function Atualizardadoscarro() {
     return (
         <>
         <HeaderMain></HeaderMain>
+        {message && <Message type={type} msg={message}/>}
         <div className={styles.carro_details}>
         <div className={styles.details_container}>
             <h1>Dono: {carro.dono}</h1>
@@ -56,7 +79,7 @@ function Atualizardadoscarro() {
                 </div>
             ) : (
                 <div className={styles.carro_info}>
-                    <p><Formcriarcarro/></p>
+                    <p><Formcriarcarro handleSubmit={editPost} botaotxt={"Concluir edição"} carroData={carro}/></p>
                 </div>
             )}
         </div>

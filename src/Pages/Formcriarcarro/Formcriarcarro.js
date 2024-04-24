@@ -31,12 +31,16 @@ function Formcriarcarro({handleSubmit, botaotxt, carroData}) {
 
             <Input type="text" text="Cidade" name="cidade" placeholder="Insira a cidade" handleOnChange={handleChange} value={carro.cidade}/>
 
-            <Input type="text" text="Preço por dia" name="preço" placeholder="Insira o custo por dia de aluguel" handleOnChange={handleChange} value={carro.preco}/>
+            <Input type="text" text="Preço por dia" name="preco" placeholder="Insira o custo por dia de aluguel" handleOnChange={handleChange} value={carro.preco}/>
 
-            <Input type="text" text="Mais detalhes sobre o carro" name="detalhes" placeholder="Insira detalhes sobre o carro" handleOnChange={handleChange} value={carro.detalhe}/>
-            <div className="input-file">
-            <Input type="file" text="Foto do carro" name="foto" placeholder="Insira uma foto do carro" handleOnChange={handleChange} value={carro.Image}/>
-            </div>
+            <Input type="text" text="Mais detalhes sobre o carro" name="detalhe" placeholder="Insira detalhes sobre o carro" handleOnChange={handleChange} value={carro.detalhe}/>
+
+
+            {/*<div className="input-file">
+            <Input type="file" text="Foto do carro" name="Image" placeholder="Insira uma foto do carro" handleOnChange={handleChange} value={carro.Image}/>
+             </div>*/}
+
+
             <Botaocriarcarro text={botaotxt}/>
         </form>
     )

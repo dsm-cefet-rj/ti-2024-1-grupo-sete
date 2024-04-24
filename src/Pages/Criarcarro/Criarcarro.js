@@ -12,8 +12,8 @@ function Criarcarro() {
     function createCarro(carro) {
 
         carro.diasAlugado = []
-        carro.detalhe = " "
-        carro.ano = " "
+        //carro.detalhe = " "
+        //carro.ano = " "
         
         fetch("http://localhost:4000/carros", {
             method: 'POST',
