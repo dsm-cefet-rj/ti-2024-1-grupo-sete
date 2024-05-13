@@ -1,52 +1,42 @@
 import { Table } from 'react-bootstrap';
-import { useState } from 'react';
+import React from 'react';
 import "./styles.css";
+import { Link } from 'react-router-dom';
+import useAluguelStore from '../../components/Zustand/storeAluguel';
 
 export default function Historico(params) {
-    const [dados] = useState(
-        {
-            carro: 'Ford KA',
-            nome: 'José Silva Ribeiro',
-            valorDiario: '5,00',
-            quantDias: '4',
-            formPagamento: 'Pix',
-        },
-        {
-            carro: 'Ford Fiesta',
-            nome: 'Afonso Silva Ribeiro',
-            valorDiario: '5,00',
-            quantDias: '2',
-            formPagamento: 'Cartão',
-        },
-    );
+
+    const registros = useAluguelStore((state => state.registros));
 
     return (
         <>
-            <div className="pagamentos">
-                <h2>Histórico de pagamentos</h2>
-                <Table>
+            <div className='historicoTabela'>
+                <h1>Histórico de Aluguéis</h1>
+
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Nome</th>
                             <th>Carro Alugado</th>
-                            <th>Valor diário</th>
-                            <th>Dias Alugado</th>
-                            <th>Forma de pagamento</th>
+                            <th>Valor total</th>
+                            <th>Método</th>
+                            <th>Detalhes</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr key={dados.nome}>
-                            <td>{dados.nome}</td>
-                            <td>{dados.carro}</td>
-                            <td>{dados.valorDiario}</td>
-                            <td>{dados.quantDias}</td>
-                            <td>{dados.formPagamento}</td>
-                        </tr>
+                        {registros?.map((registro, index) => (
+                            <tr key={index}>
+                                <td>{registro?.nome}</td>
+                                <td>{registro?.carro}</td>
+                                <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(registro?.valorDiario * registro?.quantDias)}</td>
+                                <td>{registro?.formPagamento}</td>
+                                <td><Link to={`/historico/${index}`}><button className='visu'>Visualizar</button></Link></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
-
             </div>
-
         </>
+
     );
 }

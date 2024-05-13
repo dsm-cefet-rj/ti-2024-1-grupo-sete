@@ -1,0 +1,220 @@
+.row {
+  padding: 10px 30px;
+  /* Adjust values as needed */
+}
+
+.pesquisa {
+  justify-content: center;
+  /* Center content horizontally */
+  align-items: center;
+  /* Center content vertically */
+}
+
+.pesquisa-conteudo {
+  display: flex;
+  /* Enable flexbox layout for content */
+  flex-direction: column;
+  /* Arrange elements vertically */
+  align-items: center;
+  /* Center content horizontally */
+}
+
+input {
+  border: 2px solid #336A8A;
+  border-radius: 6px;
+  color: #336A8A;
+  height: 25px;
+}
+
+.organiza {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.qual-cidade {
+  margin: 30px;
+  color: #524c4c;
+  width: 100%;
+  margin: 17px;
+  padding: 10px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.container-pesquisa {
+  margin-bottom: 30px;
+}
+
+.t1 {
+  color: #524c4c;
+  text-align: center;
+}
+
+.titleCard {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.t4 {
+  color: #524c4c;
+}
+
+.link {
+  text-decoration: none;
+  color: rgb(51, 106, 138);
+}
+
+.card-carros {
+  position: relative;
+  transition: transform 0.3s ease;
+  width: '15rem';
+}
+
+
+.card {
+  background-image: linear-gradient(to bottom, #0000, rgb(193, 193, 194));
+  /* Example gradient from red to blue */
+  background-size: cover;
+  /* Cover the entire card area */
+  display: flex;
+  /* Enable flexbox layout for card content */
+  flex-direction: column;
+  /* Arrange elements vertically by default */
+  align-items: center;
+  /* Center content horizontally */
+  padding: 20px;
+  /* Add some padding for content spacing */
+}
+
+
+.card-carros:hover {
+  transform: scale(1.05);
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow wrapping to multiple lines if needed */
+  justify-content: space-between;
+  /* Distribute cards evenly */
+  align-items: flex-start;
+  /* Align cards vertically from the top */
+  margin-top: 10px;
+
+}
+
+.card-body {
+  flex: 1;
+  /* Allow the card body to grow and fill available space */
+}
+
+.card-text {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.card-img {
+  max-width: 100%;
+  /* Allow images to scale down to fit the container */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+.preco {
+  color: rgb(35, 78, 101);
+  display: flex;
+  justify-content: center;
+  /* Center content horizontally */
+  align-items: center;
+  /* Center content vertically */
+  font-size: x-large;
+  font-weight: bolder;
+  margin: -3px;
+  padding-bottom: 10px;
+
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.buttonDetails {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.butDet {
+  border: 2px solid var(--cor4);
+  padding: 7px;
+  border-radius: 12px;
+  transition-duration: 0.7s;
+  color: var(--cor4);
+  width: 100px;
+  height: 40px;
+  font-size: 12px;
+}
+
+.butDet:hover {
+  cursor: pointer;
+  background-color: var(--cor4);
+  box-shadow: 0 8px 11px 0 rgba(0, 0, 0, 0.24), 0 14px 50px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(1.05);
+  color: #ffffff;
+
+}
+
+.butBusc {
+  border: 2px solid var(--cor4);
+  padding: 4px;
+  border-radius: 6px;
+  transition-duration: 0.7s;
+  color: var(--cor4);
+  width: 50px;
+  height: 25px;
+  font-size: x-small;
+}
+
+.butBusc:hover {
+  cursor: pointer;
+  background-color: var(--cor4);
+  box-shadow: 0 8px 11px 0 rgba(0, 0, 0, 0.24), 0 14px 50px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(1.05);
+  color: #ffffff;
+
+}
+
+.dentro-pesquisa h4 {
+  margin-bottom: 20px;
+  /* Adiciona 10px de margem abaixo de cada elemento h4 */
+}
+
+
+.calendarWrap h4 {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  /* Adiciona 10px de margem abaixo de cada elemento h4 */
+}
+
+.descricao-busca {
+  font-size: 1.7em;
+  text-align: center;
+  color: rgb(51, 106, 138);
+  margin-bottom: 2%;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+
+.botaoBuscaPesquisa {
+  border: 2px solid var(--cor4);
+  border-radius: 10px;
+  transition-duration: 0.7s;
+  color: var(--cor4);
+  width: 85px;
+  height: 27px;
+
+  font-size: small;
+}

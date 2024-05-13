@@ -4,8 +4,21 @@ import Planos from '../planos/planos';
 import Footer from "../../components/footer/footer";
 import HeaderMain from "../../components/header/header";
 import Historico from "../pagamentos/historico";
-import Home from "../home/home";
+
 import Forms from "../../components/forms/forms";
+import { Principal } from "../principal";
+import Faq from "../faq";
+import Criarcarro from "../criarCarro";
+import Atualizarcarro from "../atualizarCarro/atualizarCarro";
+import Atualizardadoscarro from "../atualizarCarro/atualizarDadosCarro/atualizarDadosCarro";
+import Contatos from "../contatos";
+import Detalhes from "../detalhes";
+import Alugar from "../aluguel";
+import HistoricoDetalhes from "../pagamentos/historicoDetalhes";
+import Clientes from "../clientes";
+import AtualizarDadosCliente from "../clientes/atualizarClientes/atualizarDadosClientes/atualizarDadosClientes";
+import CadastrarClientes from "../clientes/cadastrarClientes/cadastrarClientes";
+import AtualizarClientes from "../clientes/atualizarClientes/atualizarClientes";
 
 export const AppRouter = () => {
     return (
@@ -13,19 +26,23 @@ export const AppRouter = () => {
             <HeaderMain />
             <div>
                 <Routes>
-                    <Route exact path="/" Component={Home}></Route>
+                    <Route exact path="/" Component={Principal}></Route>
                     <Route path="/pagamentos" Component={Pagamentos}></Route>
-                    <Route path="/pagamentos/:id" Component={Pagamentos}></Route>
                     <Route path="/planos" Component={Planos}></Route>
                     <Route path="/historico" Component={Historico}></Route>
                     <Route path="/forms" Component={Forms}></Route>
-                    {/* <Route path="/detalhes"><Detalhes /></Route>
-                    <Route path="/sobre-nos"><SobreNos /></Route> */}
-                    {/* <Route path="/FAQ"><FAQ /></Route>
-                    <Route path="/contatos"><Contatos /></Route>
-                    <Route path="/login"><Login /></Route> */}
-                    {/* <Route path="/Aluguel"><Alugar /></Route> */}
-
+                    <Route path="/faq" Component={Faq}></Route>
+                    <Route path="/criarcarro" Component={Criarcarro}></Route>
+                    <Route path="/registar" Component={CadastrarClientes}></Route>
+                    <Route path="/atualizarcarro" Component={Atualizarcarro}></Route>
+                    <Route path={`/atualizardadoscarro/:id`} Component={Atualizardadoscarro}></Route>
+                    <Route path="/contatos" Component={Contatos}></Route>
+                    <Route path={`/detalhes/:id`} Component={Detalhes}></Route>
+                    <Route path={`/aluguel/:id`} Component={Alugar}></Route>
+                    <Route path={"/historico/:index"} Component={HistoricoDetalhes}></Route>
+                    <Route path="/listarcliente" Component={Clientes}></Route>
+                    <Route path="/atualizarcliente" Component={AtualizarClientes}></Route>
+                    <Route path={`/atualizardadoscliente/:id`} Component={AtualizarDadosCliente}></Route>
                 </Routes>
             </div>
             <Footer />

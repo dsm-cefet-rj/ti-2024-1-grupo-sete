@@ -3,6 +3,8 @@ import './header.css';
 import Logo from "../../assets/Logo2.png";
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Nav } from "reactstrap";
 import { Link } from "react-router-dom";
+import { FaPersonCirclePlus } from "react-icons/fa6";
+import { RiLoginBoxLine } from "react-icons/ri";
 
 
 export default function HeaderMain(props) {
@@ -22,20 +24,21 @@ export default function HeaderMain(props) {
                         <Collapse isOpen={isOpen} navbar>
                             <Nav className="me-auto" navbar>
                                 <li className="nav-item">
-                                    <Link className="nav-link" aria-current="page" to="/">Home</Link>
+                                    <Link className="nav-link" aria-current="page" to="/">Início</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" aria-current="page" to="/">Alugue seu carro</Link>
+                                    <Link className="nav-link" aria-current="page" to="/historico">Historico de Aluguéis</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" aria-current="page" to="/planos">Planos</Link>
+                                    <Link className="nav-link" aria-current="page" to="/criarcarro">Cadastre seu carro</Link>
                                 </li>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         Mais informações
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        <DropdownItem><Link className="nav-link" aria-current="page" to="/sobre-nos">Sobre Nós</Link></DropdownItem>
+                                        <DropdownItem><Link className="nav-link" aria-current="page" to="/listarcliente">Clientes</Link></DropdownItem>
+                                        <DropdownItem><Link className="nav-link" aria-current="page" to="/atualizarcarro">Edite seu carro</Link></DropdownItem>
                                         <DropdownItem><Link className="nav-link" aria-current="page" to="/FAQ">FAQ</Link></DropdownItem>
                                         <DropdownItem divider />
                                         <DropdownItem><Link className="nav-link" aria-current="page" to="/contatos">Contatos</Link></DropdownItem>
@@ -44,10 +47,10 @@ export default function HeaderMain(props) {
                             </Nav>
                             <Nav navbar>
                                 <li className="nav-item">
-                                    <Link className="nav-link" aria-current="page" to="/">Cadastre-se</Link>
+                                    <Link className="nav-link" aria-current="page" to="/"><FaPersonCirclePlus className="fa-cadastro" /> Cadastre-se</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link " aria-current="page" to="/login">Login</Link>
+                                    <Link className="nav-link " aria-current="page" to="/login"><RiLoginBoxLine className="fa-login" /> Login</Link>
                                 </li>
                             </Nav>
                         </Collapse>

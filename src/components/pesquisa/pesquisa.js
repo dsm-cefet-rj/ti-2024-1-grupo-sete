@@ -1,18 +1,96 @@
-import Form from 'react-bootstrap/Form';
+import React from 'react';
+import carros from '../carros/carros';
+import BarraPesquisa from './barrapesquisa';
+import format from 'date-fns/format';
+import './style.css';
+import useAluguelStore from '../Zustand/storeAluguel';
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
-export function Pesquisa(_params) {
+function containsArray(array1, array2) {
+    for (let i = 0; i < array1.length; i++) {
+        const elemento = format(array1[i], "dd/MM/yyyy");
+
+        if (array2.includes(elemento)) {
+            console.log("bateu");
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+export function Pesquisa() {
+    const busca = useAluguelStore((state => state.buscar));
+    const diasEntreDatas = useAluguelStore((state) => state.diasAluguel);
+    const setCarroId = useAluguelStore((state) => state.setCarroId);
+    //console.log(busca);
+
+
+    let primeiroDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
+    let ultimoDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
+
+    const handleCardClick = (carroId) => {
+        setCarroId(carros[carroId]);
+    };
+
     return (
         <>
-            <Form.Label htmlFor="searchItems">Buscar</Form.Label>
-            <Form.Control
-                type="search"
-                id="searchItems"
-                aria-describedby="searchItens"
-                style={{width: 500, padding:5}}
-            />
-            <Form.Text id="searchItens" muted>
-                Pesquise por itens
-            </Form.Text>
+            <div>
+                <div>
+                    <BarraPesquisa />
+                </div>
+                <h1 className='t1'>
+                    {busca ? `Busca para: Cidade "${busca}" e para ${diasEntreDatas.length} dias (${primeiroDia} até ${ultimoDia})` : 'Busca para: ' + diasEntreDatas.length + ' dias (' + primeiroDia + ' até ' + ultimoDia + ')'}
+                </h1>
+
+                <Row >
+                    {Object.keys(carros).filter(
+                        ((carroId) => {
+                            if (busca === "" || busca === null) return true;
+                            const busca2 = busca.toLowerCase();
+                            const carroCompar = carros[carroId].cidade.toLowerCase();
+                            return carroCompar.includes(busca2);
+                        })
+                    ).filter(
+                        ((carroId) => {
+                            return !containsArray(diasEntreDatas, carros[carroId].diasAlugado);
+                        })
+                    ).map((carroId, index) => {
+                        const carro = carros[carroId];
+                        return (
+                            <Col xs={12} md={6} lg={4} key={index}>
+                                <Card className="card-carros" onClick={() => handleCardClick(carroId)}>
+                                    <Link to={`/detalhes/${carroId}`} className="link">
+                                        <CardBody >
+                                            <CardImg
+                                                src={carro.Image}
+                                                alt={carro.modelo}
+                                                onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                                            />
+                                            <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
+                                            <CardText>
+                                                <span>Ano: {carro.ano}</span>
+                                                <span>Dono: {carro.dono}</span>
+                                                <span>Cidade: {carro.cidade}</span>
+
+                                                <span className="preco"> Preço </span>
+                                                <span className="preco">R$ {carro.preco}/dia</span>
+
+                                                <button className="buttonDetails btn btn-primary" type="submit"> Mais Detalhes </button>
+
+
+                                            </CardText>
+                                        </CardBody>
+                                    </Link>
+                                </Card>
+                            </Col>
+                        );
+                    })}
+                </Row>
+            </div>
+
         </>
     );
 }
