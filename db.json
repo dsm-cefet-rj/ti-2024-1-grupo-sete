@@ -1,4 +1,33 @@
 {
+  "clientes": [
+    {
+      "id": "c7b9",
+      "nome": " Ana Ferreira Azevedo",
+      "telefone": "21995434003",
+      "endereco": "Rua 1 Numero 2",
+      "cpf": "091.688.461-93",
+      "dataNasc": "01/12/1992",
+      "cnh": "23215858290"
+    },
+    {
+      "id": "4783",
+      "nome": "Laura Costa",
+      "telefone": "21993173764",
+      "cpf": "091.688.461-93",
+      "endereco": "Rua 10 Numero 9",
+      "dataNasc": "06/12/1996",
+      "cnh": "23215858290"
+    },
+    {
+      "id": "fc1b",
+      "nome": "teste890",
+      "telefone": "55219954340",
+      "cpf": "091.688.434-90",
+      "endereco": "Rua 20 Numero 11",
+      "dataNasc": "01/10/1999",
+      "cnh": "23214559590"
+    }
+  ],
   "carros": [
     {
       "id": "1",
@@ -48,7 +77,12 @@
     },
     {
       "id": "4e7d",
-      "dono": "Leonardo",
+      "dono": "Aline da Silva Ribeiro",
+      "modelo": "Tesla Model 3",
+      "ano": "2023",
+      "cidade": "Rio de Janeiro",
+      "preco": "30",
+      "detalhe": "As opções mais racionais  para a compra de um carro",
       "diasAlugado": []
     }
   ]
