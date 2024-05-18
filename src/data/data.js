@@ -7,7 +7,7 @@ export const carrosData = [
         "ano": 2022,
         "cor": "Azul",
         "preco": 400.00,
-        "img": require('../../src/assets/Ferrari.jpeg'),
+        "img": require('../../src/Assets/Ferrari.jpeg'),
         "detalhe": "Direção hidráulica, Rádio e bluetooth, , consumo médio 18km/l, Mini TV ",
         "diasAlugado": [
             "10/06/2024", "11/06/2024", "12/06/2024", "13/06/2024", "14/06/2024",
@@ -22,7 +22,7 @@ export const carrosData = [
         "ano": 2019,
         "cor": "Preto",
         "preco": 280.00,
-        "img": require('../../src/assets/honda.jpg'),
+        "img": require('../../src/Assets/honda.jpg'),
         "detalhe": "Direção hidráulica, Rádio e bluetooth, , consumo médio 13km/l e câmbio manual",
         "diasAlugado": [
             "10/06/2024", "11/06/2024", "12/06/2024", "13/06/2024", "14/06/2024",
@@ -37,7 +37,7 @@ export const carrosData = [
         "ano": 2018,
         "cor": "Vermelho",
         "preco": 270.00,
-        "img": require('../../src/assets/FordKa.jpg'),
+        "img": require('../../src/Assets/FordKa.jpg'),
         "detalhe": "Direção hidráulica, Rádio e bluetooth, , consumo médio 13km/l e câmbio manual",
         "diasAlugado": [
             "10/06/2024", "11/06/2024", "12/06/2024", "13/06/2024", "14/06/2024",
@@ -52,7 +52,7 @@ export const carrosData = [
         "ano": 2021,
         "cor": "Cinza",
         "preco": 400.00,
-        "img": require('../../src/assets/Mercedes.jpg'),
+        "img": require('../../src/Assets/Mercedes.jpg'),
         "detalhe": "Direção hidráulica, Rádio e bluetooth, , consumo médio 15km/l ",
         "diasAlugado": [
             "10/06/2024", "11/06/2024", "12/06/2024", "13/06/2024", "14/06/2024",
@@ -67,7 +67,7 @@ export const carrosData = [
         "ano": 2022,
         "cor": "Cinza Claro",
         "preco": 400.00,
-        "img": require('../../src/assets/Tesla.jpg'),
+        "img": require('../../src/Assets/Tesla.jpg'),
         "detalhe": "Direção hidráulica, Rádio e bluetooth, , consumo médio 18km/l e Mini TV",
         "diasAlugado": [
             "10/06/2024", "11/06/2024", "12/06/2024", "13/06/2024", "14/06/2024",
@@ -77,8 +77,8 @@ export const carrosData = [
     },
     {
         "id": 6,
-        "img": require('../../src/assets/fiat-uno.jpg'),
-        "img2": require('../../src/assets/Fiat-uno2.jpg'),
+        "img": require('../../src/Assets/fiat-uno.jpg'),
+        "img2": require('../../src/Assets/Fiat-uno2.jpg'),
         "modelo": "Fiat Uno",
         "ano": "2014",
         "dono": "João da Silva",
@@ -93,8 +93,8 @@ export const carrosData = [
     },
 
     {
-        "img": require('../../src/assets/FordKa.jpg'),
-        "img2": require('../../src/assets/FordKa2.jpg'),
+        "img": require('../../src/Assets/FordKa.jpg'),
+        "img2": require('../../src/Assets/FordKa2.jpg'),
         "modelo": "Ford Ka",
         "ano": "2017",
         "dono": "João da Silva",
