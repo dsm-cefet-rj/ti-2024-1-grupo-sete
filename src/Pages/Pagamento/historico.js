@@ -4,7 +4,7 @@ import "./styles.css";
 import { Link } from 'react-router-dom';
 import useAluguelStore from '../../Components/Zustand/storeAluguel';
 
-export default function Historico() {
+export default function Historico(params) {
 
     const registros = useAluguelStore((state => state.registros));
 
