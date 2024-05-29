@@ -2,9 +2,9 @@ import { Table } from 'react-bootstrap';
 import React from 'react';
 import "./styles.css";
 import { Link } from 'react-router-dom';
-import useAluguelStore from '../../components/Zustand/storeAluguel';
+import useAluguelStore from '../../Components/Zustand/storeAluguel';
 
-export default function Historico(params) {
+export default function Historico() {
 
     const registros = useAluguelStore((state => state.registros));
 
