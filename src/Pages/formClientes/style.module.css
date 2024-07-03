@@ -1,8 +1,144 @@
 .form {
-    width: 100%;
-    margin: 2em 0;
+	max-width: 600px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.input-file {
-    margin-bottom: 5em;
+.form h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
 }
+
+.form .formGroup {
+	margin-bottom: 15px;
+}
+
+.form .formGroup label {
+	display: block;
+	margin-bottom: 5px;
+	color: #555;
+}
+
+.form .formGroup input {
+	width: calc(100% - 20px);
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.form .formGroup input:focus {
+	border-color: #007bff;
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.form .buttonContainer {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.form .buttonContainer button {
+	padding: 10px 20px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.form .buttonContainer button:hover {
+	background-color: #0056b3;
+}
+
+*storeAluguel.js* import {
+	create
+}
+
+from 'zustand';
+import FordKa from './../../Assets/FordKa.jpg'
+import FiatUno from './../../Assets/Fiat-uno21.jpg'
+
+const useAluguelStore=create((set)=> ({
+
+		buscar: "",
+		carroId: null,
+		diasAluguel: [],
+		dados: {
+			carro: null,
+			nome: "João da Silva",
+			valorDiario: null,
+			quantDias: 0,
+			formPagamento: "Cartão",
+		}
+
+		,
+		setBuscar: (busca)=> set({
+			buscar: busca
+
+		}),
+	setCarroId: (carro)=> set({
+		carroId: carro
+
+	}),
+setDiasAluguel: (dias)=> set({
+	diasAluguel: dias
+
+}),
+setDados: (novosDados)=> set((state)=> ({
+		dados: {
+			...state.dados, ...novosDados
+		}
+
+	})),
+registros: [ {
+	carro: 'Ford KA',
+	nome: 'João da Silva',
+	valorDiario: 500,
+	quantDias: 4,
+	formPagamento: 'Pix',
+	status: 'Alugado',
+	imageUrl: FordKa
+}
+
+,
+{
+carro: 'Fiat Uno',
+nome: 'João da Silva',
+valorDiario: 300,
+quantDias: 2,
+formPagamento: 'Cartão',
+status: 'Devolvido',
+imageUrl: FiatUno
+}
+
+],
+adicionarRegistro: (novoRegistro)=> set((state)=> ({
+		registros: [...state.registros, novoRegistro]
+
+	})),
+renovarAluguel: (index, dias)=> set((state)=> {
+		const updatedRegistros=[...state.registros];
+
+		updatedRegistros[index]= {
+			...updatedRegistros[index],
+			quantDias: updatedRegistros[index].quantDias + dias
+		}
+
+		;
+
+		return {
+			registros: updatedRegistros
+		}
+
+		;
+	})
+}));
+
+export default useAluguelStore;
