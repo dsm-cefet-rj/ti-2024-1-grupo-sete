@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Input from '../../../Components/Form/Input';
-import Botaocriarcarro from "../../../Components/Form/Botaocriarcarro";
+import Input from '../../Components/Form/Input';
+import Botaocriarcarro from "../../Components/Form/Botaocriarcarro";
 import './style.module.css';
 
 const initialClienteData = {
