@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from '../../Components/Form/Input';
 import Botaocriarcarro from "../../Components/Form/Botaocriarcarro";
-import './style.module.css';
+import styles from './style.module.css';
 
 const initialClienteData = {
     nome: "",
@@ -58,20 +58,11 @@ function FormClientes({
         }));
     };
 
-    return ( <
-        form onSubmit = {
-            handleFormSubmit
-        }
-        className = {
-            styles.form
-        } >
-        <
-        h2 > Cadastro de Clientes < /h2> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+    return ( 
+        <form onSubmit = {handleFormSubmit} className = {styles.form}>
+        <h2>Cadastro de Clientes</h2> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "Nome"
         name = "nome"
         placeholder = "Insira o nome completo"
@@ -80,14 +71,10 @@ function FormClientes({
         }
         value = {
             cliente.nome
-        }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        }/> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "Telefone"
         name = "telefone"
         placeholder = "Insira o telefone"
@@ -97,13 +84,10 @@ function FormClientes({
         value = {
             cliente.telefone
         }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        /> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "CPF"
         name = "cpf"
         placeholder = "Insira o CPF"
@@ -113,13 +97,10 @@ function FormClientes({
         value = {
             cliente.cpf
         }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        /> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "Rua"
         name = "rua"
         placeholder = "Insira a rua"
@@ -129,13 +110,10 @@ function FormClientes({
         value = {
             cliente.endereco.rua
         }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        /> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "Número"
         name = "numero"
         placeholder = "Insira o número"
@@ -145,13 +123,12 @@ function FormClientes({
         value = {
             cliente.endereco.numero
         }
-        /> <
-        /div> <
-        div className = {
+        /> 
+        </div> 
+        <div className = {
             styles.formGroup
         } >
-        <
-        Input type = "text"
+        <Input type = "text"
         text = "Estado"
         name = "estado"
         placeholder = "Insira o estado"
@@ -161,13 +138,10 @@ function FormClientes({
         value = {
             cliente.endereco.estado
         }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        /> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "Data de Nascimento"
         name = "dataNasc"
         placeholder = "Insira a data de nascimento"
@@ -177,13 +151,10 @@ function FormClientes({
         value = {
             cliente.dataNasc
         }
-        /> <
-        /div> <
-        div className = {
-            styles.formGroup
-        } >
-        <
-        Input type = "text"
+        /> 
+        </div> 
+        <div className = {styles.formGroup}>
+        <Input type = "text"
         text = "CNH"
         name = "cnh"
         placeholder = "Insira número de CNH"
@@ -193,18 +164,12 @@ function FormClientes({
         value = {
             cliente.cnh
         }
-        /> <
-        /div> <
-        div className = {
-            styles.buttonContainer
-        } >
-        <
-        Botaocriarcarro text = {
-            botaotxt
-        }
-        /> <
-        /div> <
-        /form>
+        /> 
+        </div> 
+        <div className = {styles.buttonContainer}>
+        <Botaocriarcarro text = {botaotxt}/> 
+        </div> 
+        </form>
     );
 }
 
