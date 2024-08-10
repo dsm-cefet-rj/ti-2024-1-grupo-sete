@@ -1,7 +1,7 @@
 import React from 'react'
 import '../style.css';
 import { useNavigate } from 'react-router-dom';
-import FormClientes from '../formClientes/formClientes';
+import FormClientes from '../Pages/formClientes/formClientes';
 
 export default function CadastrarClientes() {
     const history = useNavigate()
