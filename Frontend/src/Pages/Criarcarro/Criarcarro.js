@@ -23,8 +23,12 @@ function Criarcarro() {
         })
             .then((resp) => resp.json())
             .then((data) => {
-                console.log(data)
-                history.push('/carros', { message: 'Seu carro foi cadastrado com sucesso!'})
+                console.log(data);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Isso adiciona uma rolagem suave
+                });
+                history.push('/', { message: 'Seu carro foi cadastrado com sucesso!'})
             })
             .catch((err) => console.log(err))
     }
