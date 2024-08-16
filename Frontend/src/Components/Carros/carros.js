@@ -14,7 +14,7 @@ import Honda from '../../Assets/honda.jpg';
 import Honda2 from '../../Assets/Honda2.jpeg';
  
 const carros = {
-   1: {
+   4: {
         Image: FiatUno,
         Image2: FiatUno2,
         modelo: "Fiat Uno",
@@ -30,7 +30,7 @@ const carros = {
           ]
     },
 
-    2: {
+    5: {
         Image: FordKa,
         Image2: FordKa2,
         modelo: "Ford Ka",
@@ -46,7 +46,7 @@ const carros = {
           ]
     },
 
-    3: {
+    6: {
         Image: Mercedes,
         Image2: Mercedes2,
         modelo: "Mercedes",
@@ -62,7 +62,7 @@ const carros = {
           ]
     },
 
-    4: {
+    7: {
         Image: Bmw,
         Image2: Bmw2,
         modelo: "BMW",
@@ -78,7 +78,7 @@ const carros = {
           ]
     },
 
-    5: {
+    8: {
         Image: Honda,
         Image2: Honda2,
         modelo: "Honda Civic",
@@ -101,7 +101,7 @@ const carros = {
           ]
     },
 
-    6: {
+    9: {
         Image: Tesla,
         Image2: Tesla2,
         modelo: "Tesla",
@@ -124,7 +124,7 @@ const carros = {
           ]
     },
 
-    7: {
+    10: {
         Image: FiatUno21,
         Image2: FiatUno22,
         modelo: "Fiat Uno",
