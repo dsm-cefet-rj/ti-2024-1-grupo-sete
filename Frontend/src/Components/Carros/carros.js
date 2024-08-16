@@ -15,7 +15,7 @@ import Honda2 from '../../Assets/Honda2.jpeg';
  
 const carros = {
    1: {
-        Image: FiatUno,
+        Image: "https://dicas.olx.com.br/wp-content/uploads/2024/03/cores-de-carros.jpg",
         Image2: FiatUno2,
         modelo: "Fiat Uno",
         ano: "2014",

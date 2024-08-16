@@ -24,6 +24,7 @@ function FormClientes({
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        /* debbuger */
         if (cliente.nome === '' || cliente.telefone === '' || cliente.cpf === '' ||
             cliente.endereco.rua === '' || cliente.endereco.numero === '' || cliente.endereco.estado === '' ||
             cliente.dataNasc === '' || cliente.cnh === '') {
