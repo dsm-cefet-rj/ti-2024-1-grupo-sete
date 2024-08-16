@@ -1,58 +1,108 @@
 import React, { useState } from "react";
-import './Login.css'
-import logo from '../../Assets/logo2-200-recortado.png'
+import axios from "axios";
+import "./Login.css";
+import logo from "../../Assets/logo2-200-recortado.png";
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
 
-function Login(){
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
 
-    return (
-        <div className="all">
-        <div className="container">
-            <div className="container-login">
-                <div className="wrap-login">
-                    <form className="login-form">
-                        <span className="login-form-title">Bem Vindo!</span>
-                        <span className="login-form-title">
-                            <img src={logo} alt="Logo" />
-                        </span>
+  const handleLogin = async (email, senha) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/clientes/login', {
+        email,
+        password: senha,
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
 
-                        <div className="wrap-input">
-                            <input 
-                            className={email !== "" ? 'has-val input' : 'input'} 
-                            type="email" 
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            />
-                            <span className="focus-input" data-placeholder="E-mail"></span>
-                        </div>
+      const { token, user } = response.data;
+      console.log('Login bem-sucedido!', token, user);
+      
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', user.id); 
 
-                        <div className="wrap-input">
-                            <input
-                             className={senha !== "" ? 'has-val input' : 'input'} 
-                             type="Senha" 
-                             value={senha}
-                            onChange={e => setSenha(e.target.value)}
-                             />
-                            <span className="focus-input" data-placeholder="Senha"></span>
-                        </div>
+      
+      setEmail("");
+      setSenha("");
+      setError(""); 
 
-                        <div className="container-login-form-btn">
-                            <button className="login-form-btn">Login</button>
-                        </div>
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.msg || "Erro no login. Tente novamente.");
+      } else {
+        setError("Erro ao tentar fazer login: " + error.message);
+      }
+    }
+  };
 
-                        <div className="text-center">
-                            <span className="txt1">Não possui conta?</span>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(""); 
+    handleLogin(email, senha);
+  };
 
-                            <a className="txt2 "href="#">Criar conta.</a>
-                        </div>
+  return (
+    <>
+      <div className="page-container">
+        <HeaderMain />
+        <div className="content-wrap">
+          <form className="form" onSubmit={handleSubmit}>
+            <span className="login-form-title">Bem Vindo!</span>
+            <span className="login-form-title">
+              <img src={logo} alt="Logo" />
+            </span>
 
-                    </form>
-                </div>
+            <div className="wrap-input">
+              <input
+                className={email !== "" ? "has-val input" : "input"}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <span className="focus-input" data-placeholder="E-mail"></span>
             </div>
+
+            <div className="wrap-input">
+              <input
+                className={senha !== "" ? "has-val input" : "input"}
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required 
+              />
+              <span className="focus-input" data-placeholder="Senha"></span>
+            </div>
+
+            {error && <p className="error">{error}</p>}
+
+            <div className="container-login-form-btn">
+              <button className="login-form-btn">Login</button>
+            </div>
+
+            <div className="text-center">
+              <span className="txt1">Não possui conta?</span>
+              <a className="txt2" href="#">
+                Criar conta.
+              </a>
+            </div>
+          </form>
         </div>
-        </div>
-    )
+        <footer>
+          <Footer />
+        </footer>
+      </div>
+    </>
+  );
 }
 
-export default Login
+export default Login;

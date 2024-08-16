@@ -16,7 +16,6 @@ import './style.css';
 
 export default function CarrosselCarro(props){
     return(       
-        <>
         <div>
             <div className="carCar">
                 <h2>Alguns Carros Disponíveis</h2>
@@ -42,5 +41,5 @@ export default function CarrosselCarro(props){
                 </Carousel.Item>
             </Carousel>
         </div>
-    </>);
+);
 }

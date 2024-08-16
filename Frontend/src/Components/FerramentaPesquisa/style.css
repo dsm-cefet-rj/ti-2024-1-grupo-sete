@@ -1,16 +1,16 @@
 
 .row {
-  padding: 10px 30px; /* Adjust values as needed */
+  padding: 10px 30px; 
 }
 .pesquisa {
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
+  justify-content: center; 
+  align-items: center; 
 }
 
 .pesquisa-conteudo {
-  display: flex; /* Enable flexbox layout for content */
-  flex-direction: column; /* Arrange elements vertically */
-  align-items: center; /* Center content horizontally */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
 input{

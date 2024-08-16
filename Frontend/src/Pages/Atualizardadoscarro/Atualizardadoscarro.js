@@ -7,9 +7,7 @@ import Message from "../../Components/Message/Message"
 import styles from "./Atualizardadoscarro.module.css"
 
 function Atualizardadoscarro() {
-
     const { id } = useParams()
-
     const [carro, setCarro] = useState([])
     const [showCarroForm, setShowCarroForm] = useState(false)
     const [message, setMessage] = useState()
