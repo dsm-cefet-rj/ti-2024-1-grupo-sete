@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import carros from '../Carros/carros';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import BarraPesquisa from './barrapesquisa';
 import format from 'date-fns/format';
 import './style.css';
 import useAluguelStore from '../Zustand/storeAluguel';
-import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col, Container } from 'reactstrap';
-import{ BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
+import { Link } from "react-router-dom";
+import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
+import FordKa from '../../Assets/FordKa.jpg';
+import Bmw from '../../Assets/bmw.png';
+import Mercedes from '../../Assets/Mercedes.jpg';
+import FiatUno from '../../Assets/fiat-uno.jpg';
+import Tesla from '../../Assets/Tesla.jpg';
+import Honda from '../../Assets/honda.jpg';
 
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
@@ -23,69 +30,78 @@ function containsArray(array1, array2) {
 }
 
 export default function Pesquisa() {
-  const busca = useAluguelStore((state => state.buscar));
-  const diasEntreDatas = useAluguelStore((state) => state.diasAluguel);
+  const [carros, setCarros] = useState([]);
+  const busca = useAluguelStore((state) => state.buscar);
+  const diasEntreDatas = useAluguelStore((state) => state?.diasAluguel);
   const setCarroId = useAluguelStore((state) => state.setCarroId);
-  //console.log(busca);
 
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/cars')  
+      .then(response => {
+        setCarros(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar dados dos carros:', error);
+      });
+  }, []);
 
-  let primeiroDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
-  let ultimoDia = diasEntreDatas.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
+  let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
+  let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
 
   const handleCardClick = (carroId) => {
-    setCarroId(carros[carroId]);
+    setCarroId(carros.find(carro => carro.id === carroId));
+  };
+
+  const imagensCarros = {
+    4: FiatUno,
+    5: FordKa,
+    6: Mercedes,
+    7: Bmw,
+    8: Honda,
+    9: Tesla,
+    10: FiatUno21,
   };
 
   return (
     <div>
       <div>
-        <BarraPesquisa
-        />
+        <BarraPesquisa />
       </div>
       <h1 className='t1'>
-    {busca ? `Busca para: Cidade "${busca}" e para ${diasEntreDatas.length} dias (${primeiroDia} até ${ultimoDia})` : 'Busca para: ' + diasEntreDatas.length + ' dias (' + primeiroDia + ' até ' + ultimoDia + ')'}
-</h1>
+        {busca ? `Busca para: Cidade "${busca}" e para ${diasEntreDatas?.length} dias (${primeiroDia} até ${ultimoDia})` : `Busca para: ${diasEntreDatas.length} dias (${primeiroDia} até ${ultimoDia})`}
+      </h1>
 
-      <Row >
-
-        {Object.keys(carros).filter(
-          ((carroId) =>{
-            if(busca === "" || busca === null) return true;
-            const busca2 = busca.toLowerCase();
-            const carroCompar = carros[carroId].cidade.toLowerCase();
-            return carroCompar.includes(busca2);
-          })
-        ).filter(
-          ((carroId) =>{
-            return !containsArray(diasEntreDatas,carros[carroId].diasAlugado);
-          })
-        ).map((carroId, index) => {
-          const carro = carros[carroId];
+      <Row>
+        {carros.filter((carro) => {
+          if (!busca) return true;
+          const buscaLower = busca.toLowerCase();
+          const carroCidadeLower = carro.cidade.toLowerCase();
+          return carroCidadeLower.includes(buscaLower);
+        }).filter((carro) => {
+          return !containsArray(diasEntreDatas, carro.diasAlugado);
+        }).map((carro, index) => {
           return (
             <Col xs={12} md={6} lg={4} key={index}>
-              <Card className="card-carros" onClick={() => handleCardClick(carroId)}>
-                <Link to={`/detalhes/${carroId}`} className="link">
-                <CardBody >
-                  <CardImg
-                    src={carro.Image}
-                    alt={carro.modelo}
-                    onError={(error) => console.error('Erro ao carregar imagem:', error)}
-                  />
-                  <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
-                  <CardText>
-
-                    <p>Ano: {carro.ano}</p>
-                    <p>Dono: {carro.dono}</p>
-                    <p>Cidade: {carro.cidade}</p>
-
-
-
-                    <p className="preco"> Preço </p>
-                    <h1 className="preco">R$ {carro.preco}/dia</h1>
-                    <div className= "buttonDetails"><button className="btn btn-primary" type="submit"> Mais Detalhes </button> </div>
-
-                  </CardText>
-                </CardBody>
+              <Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
+                <Link to={`/detalhes/${carro.id}`} className="link">
+                  <CardBody>
+                    <CardImg
+                      src={imagensCarros[carro.id]} 
+                      alt={carro.modelo}
+                      onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                    />
+                    <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
+                    <CardText>
+                      <p>Ano: {carro.ano}</p>
+                      <p>Dono: {carro.dono}</p>
+                      <p>Cidade: {carro.cidade}</p>
+                      <p className="preco">Preço</p>
+                      <h1 className="preco">R$ {carro.preco}/dia</h1>
+                      <div className="buttonDetails">
+                        <button className="btn btn-primary" type="submit">Mais Detalhes</button>
+                      </div>
+                    </CardText>
+                  </CardBody>
                 </Link>
               </Card>
             </Col>
