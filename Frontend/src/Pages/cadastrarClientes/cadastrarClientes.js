@@ -17,7 +17,7 @@ export default function CadastrarClientes() {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log(data)
-                history('/listarcliente', { message: 'Seu carro foi cadastrado com sucesso!' })
+                history.push('/', { message: 'Seu carro foi cadastrado com sucesso!' })
             })
             .catch((err) => console.log(err))
     }
