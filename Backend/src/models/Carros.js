@@ -3,31 +3,31 @@ import mongoose from 'mongoose';
 const CarrosSchema = new mongoose.Schema({
     modelo: {
         type: String,
-        require: true
+        require: true,
     },
     ano: {
         type: String,
-        require: true
+        require: true,
     },
     cidade: {
         type: String,
-        require: true
+        require: true,
     },
 
 
     precoPorDia: {
-        type: Int,
-        require: true
+        type: Number,
+        require: true,
     },
 
 
     detalhes: {
         type: String,
-        require: true
+        require: true,
     },
     fotoLink1: {
         type: String,
-        require: true
+        require: true,
     },
     // fotoLink2: {
     //     type: String,
@@ -36,23 +36,22 @@ const CarrosSchema = new mongoose.Schema({
 
 
     diasAlugado: {
-        type: Date,
-        require: false
+        type: String,
     },
 
 
     dataCriado: {
         type: Date,
-        require: true
+        default: Date.now(),
     },
 
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true,
     }
 });
 
-const Carros = mongoose.Model("Carros", CarrosSchema)
+const Carros = mongoose.model("Carros", CarrosSchema)
 
 export default Carros;
