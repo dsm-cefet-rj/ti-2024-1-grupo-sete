@@ -35,9 +35,9 @@ export const authMiddleware = (req, res, next) => {
             if(!user || !user.id) {
                 return res.status(401).send({message: "Token inválido!"});
             }
-    
+            //req.userId vai ser usado em carros.controller para passar o id do usuario criador do carro
             req.userId = user.id;
-        
+            
             return next();
         });
     } catch(err){
