@@ -1,30 +1,8 @@
-import {createService, findAllService} from "../services/carros.service.js"
+import {createService, findAllService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
     try{
-        const { authorization } = req.headers;
-        
-        if(!authorization){
-            return res.send(401);
-        }
-
-        const parts = authorization.split(" ");
-
-        if(parts.length!== 2){
-            return res.send(401);
-        }
-
-        const [schema, token] = parts;
-
-        if(parts.length!== 2){
-            return res.send(401);
-        }
-        
-        if(schema !== "Bearer"){
-            return res.send(401);
-        }
-
         const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
 
         if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1){
@@ -40,8 +18,8 @@ const create = async (req, res) => {
             fotoLink1,
             diasAlugado,
             dataCriado,
-            user: { _id: "66c07fb2d5c9cb46c4f66281" },
-        })
+            user: req.userId,
+        });
 
         res.send(201);
     }catch(err) {

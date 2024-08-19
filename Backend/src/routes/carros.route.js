@@ -1,9 +1,10 @@
 import express from 'express';
-import {create, findAll} from '../controllers/carros.controller.js';
-
 const route = express.Router();
 
-route.post("/", create);
+import {create, findAll} from '../controllers/carros.controller.js';
+import {authMiddleware} from '../middlewares/auth.middleware.js';
+
+route.post("/", authMiddleware, create);
 route.get("/", findAll);
 
 export default route;
