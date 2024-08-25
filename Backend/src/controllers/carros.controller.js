@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -86,7 +86,8 @@ const findAll = async (req, res) => {
 };
 
 const topCarros = async (req, res) => {
-    const carros = await topCarrosService();
+    try{
+        const carros = await topCarrosService();
     console.log(carros)
 
     if(!carros){
@@ -109,6 +110,35 @@ const topCarros = async (req, res) => {
             userEmail: carrosItem.user.email,
         })),
     });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
 };
 
-export { create, findAll, topCarros };
+const findById = async (req, res) => {
+    try{
+        const {id} = req.params;
+        const carros = await findByIdService(id);
+
+        return res.send({
+            carros: {
+                id: carros._id,
+                modelo: carros.modelo,
+                ano: carros.ano,
+                cidade: carros.cidade, 
+                precoPorDia: carros.precoPordia,
+                detalhes: carros.detalhes,
+                fotoLink1: carros.fotoLink1,
+                diasAlugado: carros.diasAlugado,
+                dataCriado: carros.dataCriado,
+                userName: carros.user.name,
+                // userEndereco: carrosItem.user.endereco,
+                userEmail: carros.user.email,
+            },
+        });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, topCarros, findById };
