@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -199,4 +199,29 @@ const byUser = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById, searchByModelo, byUser };
+const update = async (req, res) => {
+    try{
+        //Atributos do carro que serão atualizados (não necessariamente todos, mas pelo menos 1)
+        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado} = req.body;
+        const {id} = req.params;
+
+        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1 && !diasAlugado){
+            res.status(400).send({ message: "Preencha pelo menos 1 campo para editar o seu carro" });
+        }
+
+        const carros = await findByIdService(id);
+
+        //Compara o id do usuário que criou o(s) carro(s) com o id de quem está logado(userId)
+        if(String(carros.user._id) !== req.userId){
+            res.status(400).send({ message: "Você não pode editar este carro" });
+        }
+
+        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado);
+
+        return res.send({message: "Carro editado com sucesso"});
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, topCarros, findById, searchByModelo, byUser, update };

@@ -29,4 +29,11 @@ const byUserService = (id) => Carros.find({user: id})
     .sort({_id: -1})
     .populate("user");
 
-export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService };
+const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado) => 
+    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado},
+    {
+        rawResult: true,
+    } 
+    );
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService };
