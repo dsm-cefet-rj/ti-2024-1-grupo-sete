@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -224,4 +224,24 @@ const update = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById, searchByModelo, byUser, update };
+const apagarCarro = async (req, res) => {
+    try{
+        const {id} = req.params;
+
+        const carros = await findByIdService(id);
+
+        //Compara o id do usuário que criou o(s) carro(s) com o id de quem está logado(userId)
+        if(String(carros.user._id) !== req.userId){
+            res.status(400).send({ message: "Você não pode deletar este carro" });
+        }
+
+        await apagarCarroService(id);
+
+        return res.send({message: "Carro deletado com sucesso"});
+
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, topCarros, findById, searchByModelo, byUser, update, apagarCarro };

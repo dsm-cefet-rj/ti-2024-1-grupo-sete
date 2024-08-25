@@ -36,4 +36,7 @@ const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1
     } 
     );
 
-export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService };
+//{_id: id} procura pelo _id e passa o id que recebi pelo parâmetro
+const apagarCarroService = (id) => Carros.findOneAndDelete({_id: id});
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService };
