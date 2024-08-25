@@ -87,26 +87,27 @@ const findAll = async (req, res) => {
 
 const topCarros = async (req, res) => {
     const carros = await topCarrosService();
+    console.log(carros)
 
     if(!carros){
         return res.status(400).send({ message: "Não há carros cadastrados" });
     }
 
     res.send({
-        carros: {
-            id: carros._id,
-            modelo: carros.modelo,
-            ano: carros.ano,
-            cidade: carros.cidade, 
-            precoPorDia: carros.precoPordia,
-            detalhes: carros.detalhes,
-            fotoLink1: carros.fotoLink1,
-            diasAlugado: carros.diasAlugado,
-            dataCriado: carros.dataCriado,
-            userName: carros.user.name,
+        results: carros.map((carrosItem) => ({
+            id: carrosItem._id,
+            modelo: carrosItem.modelo,
+            ano: carrosItem.ano,
+            cidade: carrosItem.cidade, 
+            precoPorDia: carrosItem.precoPordia,
+            detalhes: carrosItem.detalhes,
+            fotoLink1: carrosItem.fotoLink1,
+            diasAlugado: carrosItem.diasAlugado,
+            dataCriado: carrosItem.dataCriado,
+            userName: carrosItem.user.name,
             // userEndereco: carrosItem.user.endereco,
-            userEmail: carros.user.email,      
-        },
+            userEmail: carrosItem.user.email,
+        })),
     });
 };
 

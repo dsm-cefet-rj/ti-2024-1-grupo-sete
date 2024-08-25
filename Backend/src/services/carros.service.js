@@ -10,6 +10,6 @@ const findAllService = (offset, limit) => Carros.find().sort({_id: -1}).skip(off
 
 const countCarros = () => Carros.countDocuments();
 
-const topCarrosService = () => Carros.findOne().sort({_id: -1}).populate("user");
+const topCarrosService = () => Carros.find().sort({_id: -1}).populate("user").limit(3);
 
 export {createService, findAllService, countCarros, topCarrosService};
