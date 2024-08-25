@@ -14,4 +14,14 @@ const topCarrosService = () => Carros.find().sort({_id: -1}).populate("user").li
 
 const findByIdService = (id) => Carros.findById(id).populate("user");
 
-export { createService, findAllService, countCarros, topCarrosService, findByIdService };
+
+//$regex: `{modelo || ""}` significa que pode mandar nome do modelo completo ou parte dele
+//$options: "i" significa que é case Insensitive
+const searchByModeloService = (modelo) => 
+    Carros.find({
+        modelo: {$regex: `${modelo || ""}`, $options: "i"},
+    })
+    .sort({_id: -1})
+    .populate("user");
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService };

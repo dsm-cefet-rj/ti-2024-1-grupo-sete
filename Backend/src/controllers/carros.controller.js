@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -88,28 +88,28 @@ const findAll = async (req, res) => {
 const topCarros = async (req, res) => {
     try{
         const carros = await topCarrosService();
-    console.log(carros)
+        console.log(carros)
 
-    if(!carros){
-        return res.status(400).send({ message: "Não há carros cadastrados" });
-    }
+        if(!carros){
+            return res.status(400).send({ message: "Não há carros cadastrados" });
+        }
 
-    res.send({
-        results: carros.map((carrosItem) => ({
-            id: carrosItem._id,
-            modelo: carrosItem.modelo,
-            ano: carrosItem.ano,
-            cidade: carrosItem.cidade, 
-            precoPorDia: carrosItem.precoPordia,
-            detalhes: carrosItem.detalhes,
-            fotoLink1: carrosItem.fotoLink1,
-            diasAlugado: carrosItem.diasAlugado,
-            dataCriado: carrosItem.dataCriado,
-            userName: carrosItem.user.name,
-            // userEndereco: carrosItem.user.endereco,
-            userEmail: carrosItem.user.email,
-        })),
-    });
+        res.send({
+            results: carros.map((carrosItem) => ({
+                id: carrosItem._id,
+                modelo: carrosItem.modelo,
+                ano: carrosItem.ano,
+                cidade: carrosItem.cidade, 
+                precoPorDia: carrosItem.precoPordia,
+                detalhes: carrosItem.detalhes,
+                fotoLink1: carrosItem.fotoLink1,
+                diasAlugado: carrosItem.diasAlugado,
+                dataCriado: carrosItem.dataCriado,
+                userName: carrosItem.user.name,
+                // userEndereco: carrosItem.user.endereco,
+                userEmail: carrosItem.user.email,
+            })),
+        });
     }catch(err) {
         res.status(500).send({message: err.message});
     }
@@ -141,4 +141,35 @@ const findById = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById };
+const searchByModelo = async (req, res) => {
+    try{
+        const {modelo} = req.query;
+
+        const carros = await searchByModeloService(modelo);
+        console.log(carros);
+        if(carros.length === 0){
+            return res.status(400).send({ message: "Não há carros cadastrados" });
+        }
+
+        return res.send({
+            results: carros.map((carrosItem) => ({
+                id: carrosItem._id,
+                modelo: carrosItem.modelo,
+                ano: carrosItem.ano,
+                cidade: carrosItem.cidade, 
+                precoPorDia: carrosItem.precoPordia,
+                detalhes: carrosItem.detalhes,
+                fotoLink1: carrosItem.fotoLink1,
+                diasAlugado: carrosItem.diasAlugado,
+                dataCriado: carrosItem.dataCriado,
+                userName: carrosItem.user.name,
+                // userEndereco: carrosItem.user.endereco,
+                userEmail: carrosItem.user.email,
+            })),
+        });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, topCarros, findById, searchByModelo };
