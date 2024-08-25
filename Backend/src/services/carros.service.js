@@ -1,4 +1,4 @@
-import Carros from "../models/Carros.js"
+import Carros from "../models/Carros.js";
 
 const createService = (body) => Carros.create(body);
 
@@ -10,4 +10,8 @@ const findAllService = (offset, limit) => Carros.find().sort({_id: -1}).skip(off
 
 const countCarros = () => Carros.countDocuments();
 
-export {createService, findAllService, countCarros};
+const topCarrosService = () => Carros.find().sort({_id: -1}).populate("user").limit(3);
+
+const findByIdService = (id) => Carros.findById(id).populate("user");
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService };
