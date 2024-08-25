@@ -24,4 +24,9 @@ const searchByModeloService = (modelo) =>
     .sort({_id: -1})
     .populate("user");
 
-export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService };
+//Procura carros por meio de 1 user 
+const byUserService = (id) => Carros.find({user: id})
+    .sort({_id: -1})
+    .populate("user");
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService };

@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -172,4 +172,31 @@ const searchByModelo = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById, searchByModelo };
+//Procura carros por meio de 1 user 
+const byUser = async (req, res) => {
+    try{
+        const id = req.userId;
+        const carros = await byUserService(id);
+
+        return res.send({
+            results: carros.map((carrosItem) => ({
+                id: carrosItem._id,
+                modelo: carrosItem.modelo,
+                ano: carrosItem.ano,
+                cidade: carrosItem.cidade, 
+                precoPorDia: carrosItem.precoPordia,
+                detalhes: carrosItem.detalhes,
+                fotoLink1: carrosItem.fotoLink1,
+                diasAlugado: carrosItem.diasAlugado,
+                dataCriado: carrosItem.dataCriado,
+                userName: carrosItem.user.name,
+                // userEndereco: carrosItem.user.endereco,
+                userEmail: carrosItem.user.email,
+            })),
+        });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, topCarros, findById, searchByModelo, byUser };
