@@ -54,9 +54,9 @@ const findAll = async (req, res) => {
         const previousUrl = previous != null ? `${currentUrl}?limit=${limit}&offset=${previous}` : null;
         //ate aqui talvez nao seja usado
     
-        if (carros.length == 0) {
-            return res.status(400).send({ message: "Não há carros cadastrados." });
-        }
+        // if (carros.length == 0) {
+        //     return res.status(400).send({ message: "Não há carros cadastrados." });
+        // }
     
         //Faz o envio da url com limit e offset para paginacao de dados e uma especie de personalizacao dos atributos do user que criou o carro 
         res.send({

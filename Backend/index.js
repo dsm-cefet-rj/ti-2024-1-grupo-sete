@@ -3,9 +3,13 @@ import connectDatabase from './src/database/db.js';
 import userRoute from './src/routes/user.route.js';
 import authRoute from './src/routes/auth.route.js';
 import carrosRoute from './src/routes/carros.route.js';
+//import "dotenv/config";
+//require('dotenv').config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 
-const port = 3004;
+const port = process.env.PORT || 3004;
 const app = express();
 
 connectDatabase();
