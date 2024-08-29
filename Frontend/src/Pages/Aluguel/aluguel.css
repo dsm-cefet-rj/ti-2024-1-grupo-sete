@@ -1,4 +1,4 @@
-:root {
+:root{
   --cor1: rgb(54, 54, 228);
   --cor2: rgb(105, 105, 230);
   --cor3: aliceblue;
@@ -6,7 +6,7 @@
   --cor5: rgb(159, 156, 156);
 }
 
-.titulo {
+.titulo{
   text-decoration-line: overline;
   text-decoration-color: var(--cor5);
   color: #524c4c;
@@ -18,11 +18,13 @@
   text-align: center;
 }
 
-.titulo h2 {
+
+
+.titulo h2{
   font-weight: bolder;
 }
 
-.titulo2 {
+.titulo2{
   text-decoration-line: overline;
   text-decoration-color: var(--cor5);
   color: rgb(82, 76, 76);
@@ -36,8 +38,9 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   text-align: center;
+
 }
-.img-carro {
+.img-carro{
   box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
   border-radius: 10px;
   border: solid 3px rgba(0, 0, 0, 0.28);
@@ -46,7 +49,7 @@
   margin: 20px;
 }
 
-.pagPag {
+.pagPag{
   font-size: 2.4em;
   text-align: center;
   color: var(--cor4);
@@ -59,55 +62,56 @@
   margin: 1px;
   margin-bottom: 50px;
   gap: 20px;
+  
 }
-.button-confirm {
+.button-confirm{
   border: 2px solid var(--cor4);
   padding: 7px;
   border-radius: 12px;
   transition-duration: 0.7s;
   color: var(--cor4);
-  width: 100px;
+  width:100px;
   height: 40px;
   font-size: small;
+  
 }
 .button-confirm:hover {
   cursor: pointer;
   background-color: var(--cor4);
-  box-shadow: 0 8px 11px 0 rgba(0, 0, 0, 0.24),
-    0 14px 50px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
   transform: scale(1.05);
   color: #ffffff;
 }
 
-.button-voltar {
+.button-voltar{
   border: 2px solid var(--cor4);
   padding: 7px;
   border-radius: 12px;
   transition-duration: 0.7s;
   color: var(--cor4);
-  width: 100px;
+  width:100px;
   height: 40px;
   font-size: small;
 }
 .button-voltar:hover {
   cursor: pointer;
   background-color: var(--cor4);
-  box-shadow: 0 8px 11px 0 rgba(0, 0, 0, 0.24),
-    0 14px 50px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 8px 11px 0 rgba(0,0,0,0.24), 0 14px 50px 0 rgba(0,0,0,0.19);
   transform: scale(1.05);
   color: #ffffff;
 }
 
+
 .item {
   align-items: center;
-  font-size: 1em;
+  font-size: 1.0em;
 
   padding-bottom: 8px;
   color: var(--cor4);
   min-width: 100px;
 }
 
-.total {
+.total{
   text-align: center;
   color: var(--cor4);
   margin: 10px;
@@ -115,32 +119,54 @@
   font-weight: bolder;
 }
 
-.diasAluguel {
+.diasAluguel{
   border: 2px solid var(--cor4);
   border-radius: 10px;
-  background-image: linear-gradient(to bottom, #0000, #c2c1c1);
+  background-image: linear-gradient(to bottom, #0000, #C2C1C1);
   padding: 5px;
   margin: 0 70px;
+  /*justify-content: center;
+  align-items: center;*/
 }
 
 .containerAluguel {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  gap: 20px; /* Espaço entre as colunas */
+  justify-content: center; /* Centraliza horizontalmente */
   align-items: center;
   margin: 15px;
 }
 
 .column {
-  flex: 1 1 50%;
+  flex: 1 1 50%; /* Cada coluna toma 50% da largura do container */
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: center;
 }
 
+/* Media query para telas menores */
 @media (max-width: 600px) {
   .column {
-    flex: 1 1 100%;
+    flex: 1 1 100%; /* Em telas pequenas, cada coluna toma 100% da largura */
   }
 }
+
+.container {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.diasAluguel {
+  text-align: center; /* Centraliza o texto */
+}
+
+.input-dias {
+  width: 50px;
+  padding: 5px;
+  margin-left: 10px; /* Pode ser removido se não quiser espaço à esquerda */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+

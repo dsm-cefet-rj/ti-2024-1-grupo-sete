@@ -1,53 +1,140 @@
-import { useHistory } from 'react-router-dom';
-import Formcriarcarro from '../../Pages/Formcriarcarro/Formcriarcarro';
+import React, { useState } from "react";
+import Input from "../../Components/Form/Input";
+import { Button } from "reactstrap";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
-import './Criarcarro.css';
+import "./Criarcarro.css";
+import axios from "axios"; 
 
-function Criarcarro() {
+function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
+  const [carro, setCarro] = useState(carroData || {});
+  const [submitted, setSubmitted] = useState(false); 
 
-    const history = useHistory()
-
-    function createCarro(carro) {
-
-        carro.diasAlugado = []
-        //carro.detalhe = " "
-        //carro.ano = " "
-        
-        fetch("http://localhost:4000/carros", {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify(carro)
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data);
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth' // Isso adiciona uma rolagem suave
-                });
-                history.push('/', { message: 'Seu carro foi cadastrado com sucesso!'})
-            })
-            .catch((err) => console.log(err))
+  const submit = (e) => {
+    e.preventDefault();
+    if (
+      carro.dono === "" ||
+      carro.preco === "" ||
+      carro.cidade === "" ||
+      carro.modelo === ""
+    ) {
+      console.error("Por favor, preencha todos os campos.");
+      return;
     }
 
-    return(
-        <>
-        <HeaderMain/>
-        <div className="all">
-            <div className="criarcarro-container">
-                <h2>Cadastrar carro</h2>
-                <p>Cadastre aqui seu carro para ser alugado</p>
-                <Formcriarcarro handleSubmit={createCarro} botaotxt="Cadastrar carro"/>
+
+    const carroComCliente = { ...carro, clienteId };
+
+
+    const token = localStorage.getItem("token"); 
+
+    axios
+      .post(`http://localhost:5000/api/newCars`, carroComCliente, {
+        headers: {
+          'x-auth-token': token, 
+        },
+      })
+      .then((response) => {
+        console.log("Carro cadastrado com sucesso:", response.data);
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.error("Erro ao cadastrar carro:", error);
+      });
+  };
+
+  function handleChange(e) {
+    setCarro({ ...carro, [e.target.name]: e.target.value });
+  }
+
+  return (
+    <>
+      <div className="page-container">
+        <HeaderMain />
+        <form onSubmit={submit} className="form">
+          {submitted ? (
+            <div className="thank-you-message">
+              <h2>Obrigado pelo envio dos dados!</h2>
+              <p>Em breve estaremos entrando em contato após a análise.</p>
             </div>
-        </div>
+          ) : (
+            <>
+              <h2>Cadastrar carro</h2>
+              <h6 style={{ textAlign: "center", marginBottom: "25px" }}>
+                Cadastre aqui seu carro para ser alugado
+              </h6>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Seu nome"
+                  name="dono"
+                  placeholder="Insira o seu nome"
+                  handleOnChange={handleChange}
+                  value={carro.dono}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Modelo do carro"
+                  name="modelo"
+                  placeholder="Insira o modelo do carro"
+                  handleOnChange={handleChange}
+                  value={carro.modelo}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Ano de fabricação"
+                  name="ano"
+                  placeholder="Insira o ano de fabricação"
+                  handleOnChange={handleChange}
+                  value={carro.ano}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Cidade"
+                  name="cidade"
+                  placeholder="Insira a cidade"
+                  handleOnChange={handleChange}
+                  value={carro.cidade}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Preço por dia"
+                  name="preco"
+                  placeholder="Insira o custo por dia de aluguel"
+                  handleOnChange={handleChange}
+                  value={carro.preco}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Mais detalhes sobre o carro"
+                  name="detalhe"
+                  placeholder="Insira detalhes sobre o carro"
+                  handleOnChange={handleChange}
+                  value={carro.detalhe}
+                />
+              </div>
+              <div className="buttonContainer">
+                <Button type="submit">Enviar para análise</Button>
+              </div>
+            </>
+          )}
+        </form>
         <footer>
-            <Footer/>
+          <Footer />
         </footer>
-        </>
-    )
+      </div>
+    </>
+  );
 }
 
-export default Criarcarro
+export default Criarcarro;
