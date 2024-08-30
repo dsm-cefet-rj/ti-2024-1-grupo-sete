@@ -1,5 +1,5 @@
 .form {
-  max-width: 600px;
+  max-width: 500px;
   margin: 50px auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -55,4 +55,19 @@
 
 .form .buttonContainer button:hover {
   background-color: #0056b3;
+}
+
+.footer {
+  background-color: var(--cor4);
+  color: white;
+  text-align: center;
+}
+.content-wrap {
+  flex: 1;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
