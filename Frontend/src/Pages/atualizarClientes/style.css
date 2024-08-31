@@ -1,57 +1,29 @@
-.carro_details {
-    padding: 2em;
-    background-color: rgb(228, 225, 225);
-}
-
-.carro_details h1,
-.carro_details h2,
-.carro_details p{
-    margin-bottom: 0.5em;
-}
-
-.carro_details h1 {
-    font-size: 2.4em;
-    color: #222;
-    padding: 0.4em;
-}
-
-.carro_details span {
-    font-weight: bold;
-}
-
-.details_container,
-.service_form_container {
-    border-bottom: 1px solid #7a7a7a;
-    margin-bottom: 1.2em;
-    padding-bottom: 1.2em;
+.content-wrap {
+    max-width: 1500px; 
+    margin: 0 auto; 
+  }
+  
+  .alert {
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-}
-
-.btn {
-    background-color: rgb(193, 193, 194);
-    border: 2px solid rgb(51, 106, 138);
-    font-size: 1.7em;
-    color: rgb(51, 106, 138);
-    padding: 0.5em 1em;
-    text-decoration: none;
-    transition: 0.5s;
-    cursor: pointer;
-    max-height: 70px;
-    border-radius: 8px;
-}
-
-.btn:hover {
-    background-color: rgb(51, 106, 138);
-    transform: scale(1.05);
-    color: #ffffff;
-
-}
-
-.carro_info {
-    width: 100%;
-    border-top: 1px solid #7A7A7A;
-    padding-top: 1.2em;
-    font-size: 1.7em;
-}
+    gap: 20px;
+  }
+  
+  .card {
+    flex: 1 1 calc(33.333% - 20px); 
+  }
+  
+  .form-container {
+    max-width: 800px; 
+    margin: 20px auto; 
+  }
+  
