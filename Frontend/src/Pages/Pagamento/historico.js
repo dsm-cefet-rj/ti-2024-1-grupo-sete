@@ -1,13 +1,32 @@
+import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import React from "react";
 import "./styles.css";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import HeaderMain from "../../Components/Header";
-import useAluguelStore from "../../Components/Zustand/storeAluguel";
 import Footer from "../../Components/Footer/footer";
 
-export default function Historico(params) {
-  const registros = useAluguelStore((state) => state.registros);
+const Historico = () => {
+  const [registros, setRegistros] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    async function carregarRegistros() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/registros', {
+          headers: {
+            'x-auth-token': token,
+          },
+        });
+        setRegistros(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar registros:", error.response ? error.response.data : error.message);
+      }
+    }
+  
+    carregarRegistros();
+  }, [token]);
 
   return (
     <div className="page-container">
@@ -25,7 +44,9 @@ export default function Historico(params) {
                 <th>Carro Alugado</th>
                 <th>Valor total</th>
                 <th>Método</th>
-                <th>Status</th>
+                {/* Remove a coluna de Status */}
+                <th>Data de Locação</th>
+                <th>Hora de Locação</th>
                 <th>Detalhes</th>
               </tr>
             </thead>
@@ -37,21 +58,12 @@ export default function Historico(params) {
                   <td>
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
-                      currency: "BRL"
+                      currency: "BRL",
                     }).format(registro?.valorDiario * registro?.quantDias)}
                   </td>
                   <td>{registro?.formPagamento}</td>
-                  <td>
-                    {registro?.status === "Alugado" && (
-                      <span className="status-alugado">Alugado</span>
-                    )}
-                    {registro?.status === "Devolvido" && (
-                      <span className="status-devolvido">Devolvido</span>
-                    )}
-                    {registro?.status === "Pendente" && (
-                      <span className="status-pendente">Pendente</span>
-                    )}
-                  </td>
+                  <td>{registro?.dataLocacao}</td>
+                  <td>{registro?.horaLocacao}</td>
                   <td>
                     <Link to={`/historico/${index}`}>
                       <button className="visu">Visualizar</button>
@@ -66,4 +78,6 @@ export default function Historico(params) {
       <Footer className="footer" />
     </div>
   );
-}
+};
+
+export default Historico;
