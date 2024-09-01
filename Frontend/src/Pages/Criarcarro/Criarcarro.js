@@ -4,9 +4,26 @@ import { Button } from "reactstrap";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./Criarcarro.css";
-import axios from "axios"; 
+import {criarCarro} from "../Services/carrosServices.js" ;
 
 function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
+  const postCarro = (carroComCliente) => {
+    try{
+      console.log("POST CARRO AQUI", carroComCliente);
+      const response = criarCarro(carroComCliente);
+      console.log("\n\n\LOG DO RESPONSE\n\n", response.data);
+      const {carroCriado} = response.data;
+      //const { token, user } = response.data;
+      console.log("Carro cadastrado com sucesso:", carroCriado);
+      setSubmitted(true);
+
+    }catch(error){
+      console.error("Erro ao cadastrar carro:", error);
+    };
+  }
+
+
+
   const [carro, setCarro] = useState(carroData || {});
   const [submitted, setSubmitted] = useState(false); 
 
@@ -24,25 +41,27 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
       return;
     }
 
+    const carroComCliente = { ...carro };
+    //console.log("CARRO COM CLIENTE:", carroComCliente);
 
-    const carroComCliente = { ...carro, clienteId };
-
+    const token = localStorage.getItem('token'); 
     console.log("XUXA TESTEEEEEEEEEEE", carro, token);
-    const token = localStorage.getItem("token"); 
 
-    axios
-    .post(`http://localhost:5000/carros`, {modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, precoPorDia: carro.preco, detalhes: carro.detalhe, fotoLink1: carro.fotoLink1}, {
-        headers: {
-          'x-auth-token': token, 
-        },
-      })
-      .then((response) => {
-        console.log("Carro cadastrado com sucesso:", response.data);
-        setSubmitted(true);
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar carro:", error);
-      });
+    postCarro(carro);
+
+    // axios
+    // .post(`http://localhost:5000/carros/`, {modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, precoPorDia: carro.preco, detalhes: carro.detalhe, fotoLink1: carro.fotoLink1}, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`
+    //     }
+    //   })
+    //   .then((response) => {
+    //     console.log("Carro cadastrado com sucesso:", response.data);
+    //     setSubmitted(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Erro ao cadastrar carro:", error);
+    //   });
   };
 
   function handleChange(e) {

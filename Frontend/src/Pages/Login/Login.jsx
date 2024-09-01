@@ -24,9 +24,9 @@ function Login() {
           'Expires': '0'
         }
       });
-
+      console.log(response.data);
       const { token, user } = response.data;
-      console.log("XUXA", response.data);
+      //console.log("XUXA", response.data);
       console.log('Login bem-sucedido!', token);
       
       localStorage.setItem('token', token);
@@ -51,7 +51,7 @@ function Login() {
     e.preventDefault();
     setError(""); 
     handleLogin(email, senha);
-    console.log("XUXA", email, senha);
+    //console.log("XUXA", email, senha);
   };
 
   return (
