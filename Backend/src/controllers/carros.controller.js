@@ -21,7 +21,7 @@ const create = async (req, res) => {
             user: req.userId,
             //req.userId está em authMiddleware
         });
-        console.log("XUXAAAAAAAAAAAAAA\n\n\n\n", carro);
+        console.log("Requisição okay\n\n\n\n", carro);
         res.status(201).send(carro);
     }catch(err) {
         res.status(500).send({message: err.message});
