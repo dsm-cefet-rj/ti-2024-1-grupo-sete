@@ -36,7 +36,7 @@ const CarrosSchema = new mongoose.Schema({
 
 
     diasAlugado: {
-        type: String,
+        type: Array,
     },
 
 

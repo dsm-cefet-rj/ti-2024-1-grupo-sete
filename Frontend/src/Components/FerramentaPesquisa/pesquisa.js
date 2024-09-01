@@ -13,6 +13,7 @@ import Mercedes from '../../Assets/Mercedes.jpg';
 import FiatUno from '../../Assets/fiat-uno.jpg';
 import Tesla from '../../Assets/Tesla.jpg';
 import Honda from '../../Assets/honda.jpg';
+import { getAllCarrosByUser } from '../../Pages/Services/carrosServices';
 
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
@@ -34,15 +35,22 @@ export default function Pesquisa() {
   const busca = useAluguelStore((state) => state.buscar);
   const diasEntreDatas = useAluguelStore((state) => state?.diasAluguel);
   const setCarroId = useAluguelStore((state) => state.setCarroId);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/cars')  
-      .then(response => {
-        setCarros(response.data);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar dados dos carros:', error);
-      });
+    const fetchCarros = async () => {
+      try {
+        const data = await getAllCarrosByUser();
+        console.log("Carros encontrados:", data);
+        setCarros(data.data.results);
+      } catch (error) {
+        console.error("Erro ao buscar carros:", error);
+        setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+        setCarros([]); 
+      }
+    };
+  
+    fetchCarros();
   }, []);
 
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
@@ -76,9 +84,10 @@ export default function Pesquisa() {
           if (!busca) return true;
           const buscaLower = busca.toLowerCase();
           const carroCidadeLower = carro.cidade.toLowerCase();
+          console.log(`Busca: ${buscaLower}, Cidade do carro: ${carroCidadeLower}`);
           return carroCidadeLower.includes(buscaLower);
         }).filter((carro) => {
-          return !containsArray(diasEntreDatas, carro.diasAlugado);
+          return true;//!containsArray(diasEntreDatas, carro.diasAlugado);
         }).map((carro, index) => {
           return (
             <Col xs={12} md={6} lg={4} key={index}>
