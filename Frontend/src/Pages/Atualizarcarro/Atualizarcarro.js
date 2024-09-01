@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Form } from "react-bootstrap";
-import axios from "axios";
+import { getAllCarrosByUser } from "../Services/carrosServices";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./Atualizarcarro.css";
@@ -11,21 +11,14 @@ export default function AtualizarCarros() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-  
     const fetchCarros = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/clientesCars', {
-          headers: {
-            'x-auth-token': token,
-          },
-        });
-        
-        const data = response.data;
+        const data = await getAllCarrosByUser();
         console.log("Carros encontrados:", data);
-        setCarros(Array.isArray(data) ? data : [data]);
+        setCarros(data.data.results);
       } catch (error) {
         console.error("Erro ao buscar carros:", error);
+        setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
         setCarros([]); 
       }
     };
@@ -33,164 +26,78 @@ export default function AtualizarCarros() {
     fetchCarros();
   }, []);
   
-  
-
-  const handleEdit = (carro) => {
-    setEditingCarro(carro);
-  };
-
-  const handleSave = async (e) => {
-    const token = localStorage.getItem('token');
-    e.preventDefault();
-
-    if (!editingCarro || !editingCarro.id) {
-      console.error('ID do carro é necessário para atualizar');
-      return;
-    }
-
-    const carroAtualizado = { ...editingCarro }; 
-    try {
-      const response = await axios.put(`http://localhost:5000/api/cars/${editingCarro.id}`, carroAtualizado, {
-        headers: {
-          'x-auth-token': token, 
-        },
-      });
-      const updatedCarro = response.data;
-
-      setCarros(carros.map(carro => carro.id === updatedCarro.id ? updatedCarro : carro));
-      setMessage('Carro atualizado com sucesso!');
-      setEditingCarro(null);
-    } catch (error) {
-      console.error('Erro ao atualizar carro:', error);
-      setMessage('Erro ao atualizar carro');
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditingCarro(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleCancel = () => {
-    setEditingCarro(null);
-  };
-
   return (
-    <div className="page-container">
+    <div>
       <HeaderMain />
-      <div className="content-wrap">
-        {message && <div className="alert alert-success">{message}</div>}
-        <div className="table-container">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Modelo</th>
-                <th>Ano</th>
-                <th>Dono</th>
-                <th>Cidade</th>
-                <th>Preço</th>
-                <th>Detalhe</th>
-                <th>Ações</th>
+      <div className="container mt-4">
+        <h2>Atualizar Carros</h2>
+        {message && <div className="alert alert-danger">{message}</div>}
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Modelo</th>
+              <th>Marca</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {carros.map((carro) => (
+              <tr key={carro.id}>
+                <td>{carro.id}</td>
+                <td>{carro.modelo}</td>
+                <td>{carro.ano}</td>
+                <td>
+                  <Button
+                    variant="primary"
+                    onClick={() => setEditingCarro(carro)}
+                  >
+                    Editar
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {carros.length === 0 ? (
-                <tr>
-                  <td colSpan="8">Nenhum carro encontrado.</td>
-                </tr>
-              ) : (
-                carros.map(carro => (
-                  <tr key={carro.id}>
-                    <td>{carro.id}</td>
-                    <td>{carro.modelo}</td>
-                    <td>{carro.ano}</td>
-                    <td>{carro.dono}</td>
-                    <td>{carro.cidade}</td>
-                    <td>{carro.preco}</td>
-                    <td>{carro.detalhe}</td>
-                    <td>
-                      <Button onClick={() => handleEdit(carro)}>Editar</Button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
-        </div>
-
+            ))}
+          </tbody>
+        </Table>
         {editingCarro && (
-          <div className="form-container">
-            <Form onSubmit={handleSave}>
-              <h2>Editar Carro</h2>
-              <Form.Group controlId="id">
-                <Form.Label>ID</Form.Label>
-                <Form.Control
-                  readOnly
-                  type="text"
-                  name="id"
-                  value={editingCarro.id}
-                />
-              </Form.Group>
-              <Form.Group controlId="modelo">
-                <Form.Label>Modelo</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="modelo"
-                  value={editingCarro.modelo}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="ano">
-                <Form.Label>Ano</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="ano"
-                  value={editingCarro.ano}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="dono">
-                <Form.Label>Dono</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="dono"
-                  value={editingCarro.dono}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="cidade">
-                <Form.Label>Cidade</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cidade"
-                  value={editingCarro.cidade}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="preco">
-                <Form.Label>Preço</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="preco"
-                  value={editingCarro.preco}
-                  onChange={handleChange}
-                  step="0.01"
-                />
-              </Form.Group>
-              <Form.Group controlId="detalhe">
-                <Form.Label>Detalhe</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="detalhe"
-                  value={editingCarro.detalhe}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">Salvar</Button>
-              <Button variant="secondary" onClick={handleCancel}>Cancelar</Button>
-            </Form>
-          </div>
+          <Form>
+            <Form.Group controlId="formModelo">
+              <Form.Label>Modelo</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Digite o modelo"
+                value={editingCarro.modelo}
+                onChange={(e) =>
+                  setEditingCarro({ ...editingCarro, modelo: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="formMarca">
+              <Form.Label>Marca</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Digite a marca"
+                value={editingCarro.marca}
+                onChange={(e) =>
+                  setEditingCarro({ ...editingCarro, marca: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Button
+              variant="success"
+              onClick={() => {
+                // Handle save logic here
+              }}
+            >
+              Salvar
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setEditingCarro(null)}
+            >
+              Cancelar
+            </Button>
+          </Form>
         )}
       </div>
       <Footer />
