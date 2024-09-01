@@ -203,6 +203,9 @@ router.post("/login", (req, res) => {
 });
 
 
+
+
+//CHECK
 router.post("/clientes/login", (req, res) => {
   const { email, password } = req.body;
 

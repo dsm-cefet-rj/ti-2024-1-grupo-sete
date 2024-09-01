@@ -6,6 +6,7 @@ const login = async (req, res) => {
     const {email, senha} = req.body;
     try{
         const user = await loginService(email);
+        //console.log("XUXAAAAAAAAAAAAAAAAA", {user: { id: user.id, email: user.email }});
 
         //Valida email
         if(!user){
@@ -21,7 +22,13 @@ const login = async (req, res) => {
 
         const token = generateToken(user.id);
 
-        res.send({token});
+        res.send({token, 
+            user: { 
+                id: user.id, 
+                email: user.email,
+                name: user.name
+            }}
+        );
     } catch (err) {
         res.status(500).send(err.message);
     }

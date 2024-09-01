@@ -13,10 +13,12 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
   const submit = (e) => {
     e.preventDefault();
     if (
-      carro.dono === "" ||
+      carro.modelo === "" ||
+      carro.ano === "" ||
       carro.preco === "" ||
       carro.cidade === "" ||
-      carro.modelo === ""
+      carro.detalhe === "" ||
+      carro.fotolink1 === ""
     ) {
       console.error("Por favor, preencha todos os campos.");
       return;
@@ -25,11 +27,11 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
 
     const carroComCliente = { ...carro, clienteId };
 
-
+    console.log("XUXA TESTEEEEEEEEEEE", carro, token);
     const token = localStorage.getItem("token"); 
 
     axios
-      .post(`http://localhost:5000/api/newCars`, carroComCliente, {
+    .post(`http://localhost:5000/carros`, {modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, precoPorDia: carro.preco, detalhes: carro.detalhe, fotoLink1: carro.fotoLink1}, {
         headers: {
           'x-auth-token': token, 
         },
@@ -63,16 +65,6 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
               <h6 style={{ textAlign: "center", marginBottom: "25px" }}>
                 Cadastre aqui seu carro para ser alugado
               </h6>
-              <div className="formGroup">
-                <Input
-                  type="text"
-                  text="Seu nome"
-                  name="dono"
-                  placeholder="Insira o seu nome"
-                  handleOnChange={handleChange}
-                  value={carro.dono}
-                />
-              </div>
               <div className="formGroup">
                 <Input
                   type="text"
@@ -121,6 +113,16 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
                   placeholder="Insira detalhes sobre o carro"
                   handleOnChange={handleChange}
                   value={carro.detalhe}
+                />
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Link da foto do seu carro"
+                  name="fotolink1"
+                  placeholder="Insira o link da foto do seu carro"
+                  handleOnChange={handleChange}
+                  value={carro.fotolink1}
                 />
               </div>
               <div className="buttonContainer">

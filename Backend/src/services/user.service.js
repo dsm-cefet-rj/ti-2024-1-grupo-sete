@@ -11,14 +11,14 @@ const findByIdService = (id) => User.findById(id);
 const updateService = (
     id,
     name,
-    username,
     email,
     senha,
-    imagem
+    telefone,
+    endereco
 ) => 
     User.findOneAndUpdate(
     {_id: id},
-    {name, username, email, senha, imagem}
+    {name, email, senha, telefone, endereco}
 )
 
 export default {

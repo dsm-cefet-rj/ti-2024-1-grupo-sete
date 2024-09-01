@@ -24,8 +24,8 @@ export const authMiddleware = (req, res, next) => {
             return res.send(401);
         }
     
-        //Valida o token que está entre aspas !!Colocar este token na variável de ambiente com nome SECRET_JWT!!
-        jwt.verify(token, "9818f29b6e7219134d39b5f28b49ebba", async (error, decoded) => {
+        //Valida o token que está representado por process.env.CHAVE_JWT !!
+        jwt.verify(token, process.env.CHAVE_JWT, async (error, decoded) => {
             if(error){
                 return res.status(401).send({message: "Token inválido!"});
             }

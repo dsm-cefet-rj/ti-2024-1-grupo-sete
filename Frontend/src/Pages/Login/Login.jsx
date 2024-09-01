@@ -4,6 +4,7 @@ import "./Login.css";
 import logo from "../../Assets/logo2-200-recortado.png";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,9 +13,9 @@ function Login() {
 
   const handleLogin = async (email, senha) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/clientes/login', {
+      const response = await axios.post('http://localhost:5000/auth/', {
         email,
-        password: senha,
+        senha: senha,
       },
       {
         headers: {
@@ -25,10 +26,12 @@ function Login() {
       });
 
       const { token, user } = response.data;
-      console.log('Login bem-sucedido!', token, user);
+      console.log("XUXA", response.data);
+      console.log('Login bem-sucedido!', token);
       
       localStorage.setItem('token', token);
-      localStorage.setItem('userId', user.id); 
+      //console.log("XUXA TOKEN", localStorage.getItem('token'));
+      localStorage.setItem('userId', user.id);
 
       
       setEmail("");
@@ -48,6 +51,7 @@ function Login() {
     e.preventDefault();
     setError(""); 
     handleLogin(email, senha);
+    console.log("XUXA", email, senha);
   };
 
   return (
@@ -92,7 +96,7 @@ function Login() {
             <div className="text-center">
               <span className="txt1">Não possui conta?</span>
               <a className="txt2" href="#">
-                Criar conta.
+              <Link className="nav-link" aria-current="page" to="/clientes">Criar conta.</Link>
               </a>
             </div>
           </form>

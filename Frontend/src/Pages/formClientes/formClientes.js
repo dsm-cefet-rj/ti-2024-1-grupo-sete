@@ -9,11 +9,8 @@ import axios from "axios";
 const initialClienteData = {
   nome: "",
   email: "",
-  cpf: "",
   telefone: "",
-  endereco: { rua: "", numero: "", estado: "" },
-  dataNasc: "",
-  cnh: "",
+  endereco: "",
   senha: "",
 };
 
@@ -27,12 +24,7 @@ function FormClientes() {
     if (
       cliente.nome === "" ||
       cliente.telefone === "" ||
-      cliente.cpf === "" ||
-      cliente.endereco.rua === "" ||
-      cliente.endereco.numero === "" ||
-      cliente.endereco.estado === "" ||
-      cliente.dataNasc === "" ||
-      cliente.cnh === "" ||
+      cliente.endereco === "" ||
       cliente.email === "" ||
       cliente.senha === ""
     ) {
@@ -40,8 +32,7 @@ function FormClientes() {
       return;
     }
 
-    axios
-      .post("http://localhost:5000/api/newClientes", cliente)
+    axios.post("http://localhost:5000/user", { name: cliente.nome, email:cliente.email, senha: cliente.senha, telefone: cliente.telefone, endereco: cliente.endereco })
       .then((response) => {
         console.log("Cliente cadastrado com sucesso:", response.data);
         setSubmitted(true);
@@ -53,20 +44,10 @@ function FormClientes() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name in cliente.endereco) {
-      setCliente({
-        ...cliente,
-        endereco: {
-          ...cliente.endereco,
-          [name]: value,
-        },
-      });
-    } else {
       setCliente({
         ...cliente,
         [name]: value,
       });
-    }
   };
 
   return (
@@ -109,66 +90,18 @@ function FormClientes() {
               value={cliente.telefone}
             />
           </div>
+
           <div className={styles.formGroup}>
             <Input
               type="text"
-              text="CPF"
-              name="cpf"
-              placeholder="Insira o CPF"
+              text="Endereço"
+              name="endereco"
+              placeholder = "Insira seu endereço"
               handleOnChange={handleChange}
-              value={cliente.cpf}
+              value={cliente.endereco}
             />
           </div>
-          <div className={styles.formGroup}>
-            <Input
-              type="text"
-              text="Rua"
-              name="rua"
-              placeholder="Insira a rua"
-              handleOnChange={handleChange}
-              value={cliente.endereco.rua}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <Input
-              type="text"
-              text="Número"
-              name="numero"
-              placeholder="Insira o número"
-              handleOnChange={handleChange}
-              value={cliente.endereco.numero}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <Input
-              type="text"
-              text="Estado"
-              name="estado"
-              placeholder="Insira o estado"
-              handleOnChange={handleChange}
-              value={cliente.endereco.estado}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <Input
-              type="text"
-              text="Data de Nascimento"
-              name="dataNasc"
-              placeholder="Insira a data de nascimento"
-              handleOnChange={handleChange}
-              value={cliente.dataNasc}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <Input
-              type="text"
-              text="CNH"
-              name="cnh"
-              placeholder="Insira número de CNH"
-              handleOnChange={handleChange}
-              value={cliente.cnh}
-            />
-          </div>
+
           <div className={styles.formGroup}>
             <Input
               type="password"
