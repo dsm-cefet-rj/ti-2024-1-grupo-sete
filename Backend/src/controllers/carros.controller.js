@@ -3,6 +3,7 @@ import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
     try{
+        //const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
         const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
 
         if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1){
@@ -22,7 +23,16 @@ const create = async (req, res) => {
             //req.userId está em authMiddleware
         });
         console.log("XUXAAAAAAAAAAAAAA\n\n\n\n", carro);
-        res.status(201).send(carro);
+        // res.send({
+        //     id: carro._id,
+        //     modelo,
+        //     ano,
+        //     cidade,
+        //     precoPorDia,
+        //     detalhes,
+        //     fotoLink1
+        // });
+        res.send(201);
     }catch(err) {
         res.status(500).send({message: err.message});
     }

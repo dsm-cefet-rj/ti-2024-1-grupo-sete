@@ -5,24 +5,23 @@ import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./Criarcarro.css";
 import {criarCarro} from "../Services/carrosServices.js" ;
+import axios from "axios";
 
 function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
   const postCarro = (carroComCliente) => {
     try{
       console.log("POST CARRO AQUI", carroComCliente);
-      const response = criarCarro(carroComCliente);
-      console.log("\n\n\LOG DO RESPONSE\n\n", response.data);
-      const {carroCriado} = response.data;
-      //const { token, user } = response.data;
-      console.log("Carro cadastrado com sucesso:", carroCriado);
+      criarCarro(carroComCliente);
+      //console.log("\n\n\LOG DO RESPONSE\n\n", response.data);
+      //const {carroCriado} = response.data;
+      //const { token, user } = response.data;     
+      console.log("Carro cadastrado com sucesso:", carroComCliente);
       setSubmitted(true);
 
     }catch(error){
-      console.error("Erro ao cadastrar carro:", error);
+        console.error("Erro ao cadastrar carro:", error);
     };
   }
-
-
 
   const [carro, setCarro] = useState(carroData || {});
   const [submitted, setSubmitted] = useState(false); 
@@ -46,6 +45,22 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
 
     const token = localStorage.getItem('token'); 
     console.log("XUXA TESTEEEEEEEEEEE", carro, token);
+    
+
+    //{ modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, preco: carro.preco, detalhe: carro.detalhe, fotolink1: carro.fotolink1 }
+    // axios.post("http://localhost:5000/carros", { modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, preco: carro.preco, detalhe: carro.detalhe, fotolink1: carro.fotolink }, {
+    //   headers: {
+    //       Authorization: `Bearer ${token}`
+    //   },
+    //   })
+    //   .then((response) => {
+    //     console.log("Carro cadastrado com sucesso:", response.data);
+    //     setSubmitted(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Erro ao cadastrar carro:", error);
+    //   });
+
 
     postCarro(carro);
 

@@ -15,6 +15,9 @@ export function getAllCarrosByUser(){
 export async function criarCarro(body){
     const response = await axios.post(`${baseURL}/carros`, body, {
         headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
             Authorization: `Bearer ${token}`
         },
     });
