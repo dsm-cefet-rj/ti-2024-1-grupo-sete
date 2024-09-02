@@ -13,7 +13,7 @@ import Mercedes from '../../Assets/Mercedes.jpg';
 import FiatUno from '../../Assets/fiat-uno.jpg';
 import Tesla from '../../Assets/Tesla.jpg';
 import Honda from '../../Assets/honda.jpg';
-import { getAllCarrosByUser } from '../../Pages/Services/carrosServices';
+import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosServices';
 
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
@@ -40,15 +40,22 @@ export default function Pesquisa() {
   useEffect(() => {
     const fetchCarros = async () => {
       try {
-        const data = await getAllCarrosByUser();
+        const data = await getAllCarros();
         console.log("Carros encontrados:", data);
         setCarros(data.data.results);
+
+
+        console.log("PREÇO:", carros.precoPordia);
+
+        
       } catch (error) {
         console.error("Erro ao buscar carros:", error);
         setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
         setCarros([]); 
       }
     };
+
+    
   
     fetchCarros();
   }, []);
@@ -56,6 +63,7 @@ export default function Pesquisa() {
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
 
+  //função ativada quando clica em um card de carro
   const handleCardClick = (carroId) => {
     setCarroId(carros.find(carro => carro.id === carroId));
   };
@@ -95,17 +103,17 @@ export default function Pesquisa() {
                 <Link to={`/detalhes/${carro.id}`} className="link">
                   <CardBody>
                     <CardImg
-                      src={imagensCarros[carro.id]} 
+                      src={carro.fotoLink1} 
                       alt={carro.modelo}
                       onError={(error) => console.error('Erro ao carregar imagem:', error)}
                     />
                     <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
                     <CardText>
                       <p>Ano: {carro.ano}</p>
-                      <p>Dono: {carro.dono}</p>
+                      <p>Dono: {carro.userName}</p>
                       <p>Cidade: {carro.cidade}</p>
                       <p className="preco">Preço</p>
-                      <h1 className="preco">R$ {carro.preco}/dia</h1>
+                      <h1 className="preco">R$ {carro.precoPorDia}/dia</h1>
                       <div className="buttonDetails">
                         <button className="btn btn-primary" type="submit">Mais Detalhes</button>
                       </div>

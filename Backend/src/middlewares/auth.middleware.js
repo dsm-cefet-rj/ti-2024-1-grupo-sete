@@ -24,7 +24,7 @@ export const authMiddleware = (req, res, next) => {
         const [schema, token] = parts;
         
         if(schema !== "Bearer"){
-            console.log("AQUI BEARER", schema);
+            //console.log("AQUI BEARER", schema);
             return res.send(401);
         }
     
@@ -42,7 +42,7 @@ export const authMiddleware = (req, res, next) => {
             //req.userId vai ser usado em carros.controller para passar o id do usuario criador do carro
             req.userId = user.id;
 
-            console.log('USER: \n\n\n\n\n', user, req.userId, "\n\n\n\n");
+            //console.log('USER: \n\n\n\n\n', user, req.userId, "\n\n\n\n");
             return next();
         });
     } catch(err){

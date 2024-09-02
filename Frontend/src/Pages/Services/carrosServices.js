@@ -33,4 +33,13 @@ export async function criarCarro(body) {
     }
 }
 
+export function getAllCarros(){
+    const response = axios.get(`${baseURL}/carros/`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+    return response;
+} 
+
 

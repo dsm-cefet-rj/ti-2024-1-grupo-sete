@@ -25,7 +25,12 @@ const UserSchema = new mongoose.Schema({
     endereco: {
       type: String,
       required: true,
-  },
+    },
+    isAdm: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
 });
 //criptografa a senha 
 UserSchema.pre("save", async function (next){
