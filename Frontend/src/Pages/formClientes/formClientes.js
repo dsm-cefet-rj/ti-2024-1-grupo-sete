@@ -5,6 +5,9 @@ import HeaderMain from "../../Components/Header";
 import { Button } from "reactstrap";
 import Footer from "../../Components/Footer/footer";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 
 const initialClienteData = {
   nome: "",
@@ -18,6 +21,17 @@ function FormClientes() {
   const [cliente, setCliente] = useState(initialClienteData);
   const [submitted, setSubmitted] = useState(false);
 
+  const history = useHistory();
+  const timer = () => {
+    setTimeout(() => {
+      history.push('/login');  // Redireciona após o tempo definido
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Isso adiciona uma rolagem suave
+    });
+    }, 3000);  // 3000 ms = 3 segundos
+  };
+
   const submit = (e) => {
     e.preventDefault();
 
@@ -28,6 +42,11 @@ function FormClientes() {
       cliente.email === "" ||
       cliente.senha === ""
     ) {
+      toast.error("Por favor, preencha todos os campos.", {
+        position: "top-center",
+        autoClose: 2700,
+        }
+      );
       console.error("Por favor, preencha todos os campos.");
       return;
     }
@@ -38,9 +57,25 @@ function FormClientes() {
         setSubmitted(true);
       })
       .catch((error) => {
-        console.error("Erro ao cadastrar cliente:", error);
-      });
+        console.error("Erro ao cadastrar cliente:", error.response.data.message);
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 2700,
+          }
+        );
+      }
+    );
+
+    //Notificação
+    toast.success("Cadastro bem-sucedido!", {
+      position: "top-center",
+      autoClose: 2700,
+    });
+    timer();
+
   };
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +88,7 @@ function FormClientes() {
   return (
     <>
       <HeaderMain />
+      <ToastContainer/>
       {submitted ? (
         <div className={styles.thankYouMessage}>
           <p>Enviamos um e-mail para confirmação.</p>

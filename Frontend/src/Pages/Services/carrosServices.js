@@ -1,28 +1,30 @@
 import axios from "axios";
 
 const baseURL = "http://localhost:5000";
-const token = localStorage.getItem('token');
+//const token = localStorage.getItem('token');
 
 export function getAllCarrosByUser(){
+    const tokenGetCarrosByUser = localStorage.getItem('token');
     const response = axios.get(`${baseURL}/carros/byUser`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${tokenGetCarrosByUser}`
         },
     });
     return response;
 } 
 
 export async function criarCarro(body) {
-
-    if (!token) {
+    const tokenCria = localStorage.getItem('token');
+    if (!tokenCria) {
         throw new Error("Token não encontrado. Verifique se o usuário está autenticado.");
     }
 
     try {
         console.log("CRIAR CARRO AQUI", body);
+        
         const response = await axios.post(`${baseURL}/carros`, body, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${tokenCria}`
             },
         });
         console.log("Resposta do servidor:", response.data);
@@ -43,5 +45,18 @@ export function getAllCarros(){
     });
     return response;
 } 
+
+export async function findCarroById(id){
+    const tokenAll = localStorage.getItem('token');
+    console.log("\n\nDentro de findCarroById:\n\n", `http://localhost:5000/carros/${id}`);
+    console.log("\n\nTOKEN findCarroById:\n\n", tokenAll);
+    const response = await axios.get(`http://localhost:5000/carros/${id}`,
+    {
+        headers: {
+            Authorization: `Bearer ${tokenAll}`
+        },
+    });
+    return response;
+}
 
 

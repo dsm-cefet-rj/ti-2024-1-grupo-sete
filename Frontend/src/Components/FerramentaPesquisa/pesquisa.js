@@ -40,7 +40,7 @@ export default function Pesquisa() {
   useEffect(() => {
     const fetchCarros = async () => {
       try {
-        console.log("\n\n\nTOKEN EM FECTH CARROS:", localStorage.getItem('token'))
+        console.log("\n\n\nFETCH CARROS TOKEN:", localStorage.getItem('token'))
         const data = await getAllCarros();
         console.log("Carros encontrados:", data);
         setCarros(data.data.results);
@@ -59,7 +59,7 @@ export default function Pesquisa() {
     
   
     fetchCarros();
-  }, []);
+  }, [diasEntreDatas]);
 
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';

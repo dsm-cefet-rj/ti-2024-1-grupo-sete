@@ -5,6 +5,8 @@ import logo from "../../Assets/logo2-200-recortado.png";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
 
 
@@ -13,6 +15,15 @@ function Login() {
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
+  const timer = () => {
+    setTimeout(() => {
+      history.push('/');  // Redireciona após o tempo definido
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Isso adiciona uma rolagem suave
+    });
+    }, 3000);  // 3000 ms = 3 segundos
+  };
 
   const handleLogin = async (email, senha) => {
     try {
@@ -33,18 +44,29 @@ function Login() {
       console.log('Login bem-sucedido!', token);
       
       localStorage.setItem('token', token);
-      console.log("XUXA TOKEN", localStorage.getItem('token'));
+      //console.log("XUXA TOKEN", localStorage.getItem('token'));
       localStorage.setItem('userId', user.id);
-      history.push('/');
 
-      
+      toast.success("Login bem-sucedido!", {
+        position: "top-center",
+        autoClose: 2700,
+        }
+      );
+
       setEmail("");
       setSenha("");
       setError(""); 
+      timer();
 
     } catch (error) {
       if (error.response) {
-        setError(error.response.data.msg || "Erro no login. Tente novamente.");
+        setError(error.response.data.message || "Erro no login. Tente novamente.");
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 2700,
+          }
+        );
+        setError(error.response.data.message || "Erro no login. Tente novamente.");
       } else {
         setError("Erro ao tentar fazer login: " + error.message);
       }
@@ -62,6 +84,7 @@ function Login() {
     <>
       <div className="page-container">
         <HeaderMain />
+        <ToastContainer/>
         <div className="content-wrap">
           <form className="form" onSubmit={handleSubmit}>
             <span className="login-form-title">Bem Vindo!</span>

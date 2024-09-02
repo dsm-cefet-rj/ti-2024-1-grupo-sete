@@ -5,10 +5,24 @@ import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./Criarcarro.css";
 import {criarCarro} from "../Services/carrosServices.js" ;
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 
 function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
   const [carro, setCarro] = useState(carroData || {});
   const [submitted, setSubmitted] = useState(false); 
+
+  const history = useHistory();
+  const timer = () => {
+    setTimeout(() => {
+      //history.push('/');  // Redireciona após o tempo definido
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Isso adiciona uma rolagem suave
+      });
+    }, 3000);  // 3000 ms = 3 segundos
+  };
   
   const submit = async (e) => {
     e.preventDefault();
@@ -21,6 +35,10 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
       carro.fotoLink1 === ""
     ) {
       console.error("Por favor, preencha todos os campos.");
+      toast.warning("Por favor, preencha todos os campos.", {
+        position: "top-center",
+        autoClose: 2700,
+      });
       return;
     }
 
@@ -42,6 +60,12 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
       }catch(error){
         console.error("Erro ao cadastrar carro:", error);
       };
+    
+      toast.success("Carro cadastrado com sucesso!", {
+        position: "top-center",
+        autoClose: 2700,
+      });
+      timer();
 
 
     // axios
@@ -67,6 +91,7 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
     <>
       <div className="page-container">
         <HeaderMain />
+        <ToastContainer/>
         <form onSubmit={submit} className="form">
           {submitted ? (
             <div className="thank-you-message">
