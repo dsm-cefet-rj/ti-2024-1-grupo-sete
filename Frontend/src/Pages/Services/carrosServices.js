@@ -34,9 +34,11 @@ export async function criarCarro(body) {
 }
 
 export function getAllCarros(){
+    const tokenAll = localStorage.getItem('token');
+    console.log("\n\n\n\nGETALLCARROS TOKEN: ", tokenAll)
     const response = axios.get(`${baseURL}/carros/`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${tokenAll}`
         },
     });
     return response;

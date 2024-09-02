@@ -40,12 +40,13 @@ export default function Pesquisa() {
   useEffect(() => {
     const fetchCarros = async () => {
       try {
+        console.log("\n\n\nTOKEN EM FECTH CARROS:", localStorage.getItem('token'))
         const data = await getAllCarros();
         console.log("Carros encontrados:", data);
         setCarros(data.data.results);
 
 
-        console.log("PREÇO:", carros.precoPordia);
+        //console.log("PREÇO:", carros.results);
 
         
       } catch (error) {

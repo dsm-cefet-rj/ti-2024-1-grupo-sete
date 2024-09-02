@@ -5,11 +5,14 @@ import logo from "../../Assets/logo2-200-recortado.png";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import { useHistory } from 'react-router-dom';
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
+  const history = useHistory();
 
   const handleLogin = async (email, senha) => {
     try {
@@ -30,8 +33,9 @@ function Login() {
       console.log('Login bem-sucedido!', token);
       
       localStorage.setItem('token', token);
-      //console.log("XUXA TOKEN", localStorage.getItem('token'));
+      console.log("XUXA TOKEN", localStorage.getItem('token'));
       localStorage.setItem('userId', user.id);
+      history.push('/');
 
       
       setEmail("");

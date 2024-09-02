@@ -4,7 +4,7 @@ import {ObjectId} from "mongoose";
 const create = async (req, res) => {
     try{
         const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
-        console.log(precoPorDia.toString()) //ok
+        //console.log("É PREÇO!", precoPorDia) ok
 
         if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1){
             res.status(400).send({ message: "Preencha todos os campos" });
@@ -45,14 +45,13 @@ const findAll = async (req, res) => {
         //}
     
         const carros = await findAllService();
-        console.log("\n\n\n\nprecoPorDia\n\n\n\n", carros.precoPorDia);
         if(!carros){
             return res.status(400).send({ message: "Não há carros cadastrados" });
         }
 
-        const total = await countCarros();
+        //const total = await countCarros();
+        
         //const currentUrl = req.baseUrl
-    
         //const next = offset + limit;
         //const nextUrl = next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
     
@@ -72,7 +71,7 @@ const findAll = async (req, res) => {
                 modelo: carrosItem.modelo,
                 ano: carrosItem.ano,
                 cidade: carrosItem.cidade, 
-                precoPorDia: carrosItem.precoPordia,
+                precoPorDia: carrosItem.precoPorDia,
                 detalhes: carrosItem.detalhes,
                 fotoLink1: carrosItem.fotoLink1,
                 diasAlugado: carrosItem.diasAlugado,

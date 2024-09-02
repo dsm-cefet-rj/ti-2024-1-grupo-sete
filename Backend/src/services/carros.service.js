@@ -2,7 +2,7 @@ import Carros from "../models/Carros.js";
 
 const createService = (body) => Carros.create(body);
 
-const findAllService = () => Carros.find().sort({_id: -1}).populate("user").limit(50);
+const findAllService = () => Carros.find().sort({_id: -1}).populate("user").limit(20);
 //const findAllService = (offset, limit) => Carros.find().sort({_id: -1}).skip(offset).limit(limit).populate("user");
 //Sort ordena por meio de ID. -1 indica que está ordenando a partir do ultimo carro criado
 //offset seta o inicio da busca no banco de dados
