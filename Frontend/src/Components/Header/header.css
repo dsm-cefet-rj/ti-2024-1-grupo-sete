@@ -13,8 +13,8 @@
   font-size: 30px; /* Adjust font size of menu items */
   line-height: 2.5; /* Adjust spacing between items */
   z-index: 9999;
-
 }
+
 
 .dropdown-item{
   font-size: 20px; /* Adjust font size of menu items */
@@ -27,8 +27,18 @@
   z-index: 999;
 }
 
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
 .fa-cadastro{
   font-size: 1.24em;
+}
+
+.nav-link {
+  text-align: center; /* Centraliza o texto dentro dos links */
+  display: block; /* Faz o link ocupar a área do item da nav */
 }
 
 .fa-login {

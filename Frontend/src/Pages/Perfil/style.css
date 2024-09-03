@@ -1,0 +1,29 @@
+.content-wrap {
+    max-width: 1500px; 
+    margin: 0 auto; 
+  }
+  
+  .alert {
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    flex: 1 1 calc(33.333% - 20px); 
+  }
+  
+  .form-container {
+    max-width: 800px; 
+    margin: 20px auto; 
+  }
+  

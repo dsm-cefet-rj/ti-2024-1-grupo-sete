@@ -8,13 +8,19 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
+import useUserStore from "../../Components/Zustand/storeUser";
 
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
+  const setUser = useUserStore((state) => state.setUser);
+  const zustandUser = useUserStore((state) => state.usuario);
+  const setToken = useUserStore((state) => state.setToken);
+  const zustandToken = useUserStore((state) => state.token);
   const history = useHistory();
+
   const timer = () => {
     setTimeout(() => {
       history.push('/');  // Redireciona após o tempo definido
@@ -23,6 +29,7 @@ function Login() {
         behavior: 'smooth' // Isso adiciona uma rolagem suave
     });
     }, 3000);  // 3000 ms = 3 segundos
+    console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco);
   };
 
   const handleLogin = async (email, senha) => {
@@ -40,12 +47,15 @@ function Login() {
       });
       console.log(response.data);
       const { token, user } = response.data;
+      setToken(token);
+      setUser(user);
+
       //console.log("XUXA", response.data);
-      console.log('Login bem-sucedido!', token);
-      
+      console.log('Login bem-sucedido!', token, user.email, user.name, user.telefone, user.endereco);
       localStorage.setItem('token', token);
       //console.log("XUXA TOKEN", localStorage.getItem('token'));
       localStorage.setItem('userId', user.id);
+      localStorage.setItem('user', JSON.stringify(user))
 
       toast.success("Login bem-sucedido!", {
         position: "top-center",

@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HeaderMain from "../../Components/Header";
 import Detalhes from "../Detalhes/Detalhes";
 import Principal from "../Principal/Principal";
 import Atualizarcarro from "../Atualizarcarro/Atualizarcarro";
@@ -16,6 +15,7 @@ import Atualizardadoscarro from "../Atualizardadoscarro/Atualizardadoscarro";
 import FormClientes from "../formClientes/formClientes";
 import AtualizarClientes from "../atualizarClientes/atualizarClientes";
 import PrivateRoute from "../../Components/PrivateRoute/PrivateRoute";
+import Perfil from "../Perfil/perfil";
 
 
 export const AppRouter = () => {
@@ -26,7 +26,7 @@ export const AppRouter = () => {
           <Route path="/login" exact component={Login} />
           <Route path="/FAQ" exact component={FAQ} />
           <Route path="/contatos" exact component={Contatos} />
-          <Route path="/clientes" exact component={FormClientes} />
+          <Route path="/cadastro" exact component={FormClientes} />
           <Route path="/" exact component={Principal} />
 
           <PrivateRoute path="/detalhes/:id" exact component={Detalhes} />
@@ -50,9 +50,9 @@ export const AppRouter = () => {
             component={Atualizardadoscarro}
           />
           <PrivateRoute
-            path="/atualizarcliente"
+            path="/profile"
             exact
-            component={AtualizarClientes}
+            component={Perfil}
           />
         </Switch>
       </div>
