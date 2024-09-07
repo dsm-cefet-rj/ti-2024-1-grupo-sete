@@ -26,7 +26,7 @@ function Login() {
       history.push('/');  // Redireciona após o tempo definido
       window.scrollTo({
         top: 0,
-        behavior: 'smooth' // Isso adiciona uma rolagem suave
+        behavior: 'auto' // Isso adiciona uma rolagem suave
     });
     }, 3000);  // 3000 ms = 3 segundos
     console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco);
@@ -45,7 +45,7 @@ function Login() {
           'Expires': '0'
         }
       });
-      console.log(response.data);
+      console.log("\n\nRESPONSE:",response.data, "\n\n");
       const { token, user } = response.data;
       setToken(token);
       setUser(user);
@@ -57,9 +57,10 @@ function Login() {
       localStorage.setItem('userId', user.id);
       localStorage.setItem('user', JSON.stringify(user))
 
-      toast.success("Login bem-sucedido!", {
+      toast.success("Login bem sucedido!", {
         position: "top-center",
         autoClose: 2700,
+        theme: "colored",
         }
       );
 
@@ -74,8 +75,10 @@ function Login() {
         toast.error(error.response.data.message, {
           position: "top-center",
           autoClose: 2700,
+          theme: "colored",
           }
         );
+        
         setError(error.response.data.message || "Erro no login. Tente novamente.");
       } else {
         setError("Erro ao tentar fazer login: " + error.message);

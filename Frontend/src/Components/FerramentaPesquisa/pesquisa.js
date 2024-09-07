@@ -56,13 +56,17 @@ export default function Pesquisa() {
       }
     };
 
-    
   
     fetchCarros();
   }, [diasEntreDatas]);
 
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
+
+
+  //console.log("\n\nDias entre datas:", format(diasEntreDatas[0], "dd/MM/yyyy"));
+  //console.log(diasEntreDatas);
+
 
   //função ativada quando clica em um card de carro
   const handleCardClick = (carroId) => {
@@ -96,7 +100,7 @@ export default function Pesquisa() {
           console.log(`Busca: ${buscaLower}, Cidade do carro: ${carroCidadeLower}`);
           return carroCidadeLower.includes(buscaLower);
         }).filter((carro) => {
-          return true;//!containsArray(diasEntreDatas, carro.diasAlugado);
+          return !containsArray(diasEntreDatas, carro.diasAlugado);
         }).map((carro, index) => {
           return (
             <Col xs={12} md={6} lg={4} key={index}>
