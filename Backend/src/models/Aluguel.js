@@ -14,10 +14,10 @@ const AluguelSchema = new mongoose.Schema({
         require: true,
     },
 
-    formaPagamento: {
-        type: String,
-        require: true,
-    },
+    // formaPagamento: {
+    //     type: String,
+    //     require: true,
+    // },
 
     user: {
         type: mongoose.Schema.Types.ObjectId,

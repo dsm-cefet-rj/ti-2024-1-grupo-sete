@@ -4,6 +4,7 @@ import userRoute from './src/routes/user.route.js';
 import authRoute from './src/routes/auth.route.js';
 import carrosRoute from './src/routes/carros.route.js';
 import aluguelRoute from './src/routes/aluguel.route.js';
+import registroRoute from './src/routes/registro.route.js';
 //import "dotenv/config";
 //require('dotenv').config()
 import dotenv from 'dotenv';
@@ -22,6 +23,7 @@ app.use("/user", userRoute);
 app.use("/auth", authRoute);
 app.use("/carros", carrosRoute);
 app.use("/aluguel", aluguelRoute);
+app.use("/registro", registroRoute)
 
 //app.get('/', function (req, res) {
 //  res.send('Hello World')
