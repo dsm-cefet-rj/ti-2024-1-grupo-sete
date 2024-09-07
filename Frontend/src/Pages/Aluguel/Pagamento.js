@@ -5,10 +5,17 @@ import HeaderMain from "../../Components/Header";
 import qrCodeImage from "./qrcode.png"; 
 import "./aluguel.css"; 
 import axios from 'axios';
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
+import useUserStore from "../../Components/Zustand/storeUser";
+import format from 'date-fns/format';
 
 const Pagamento = () => {
   const location = useLocation();
-  const { quantidadeDias, carro } = location.state || {}; 
+  const user = useUserStore((state)=> state.usuario.userId);
+  const clienteNome = useUserStore((state) => state.usuario.name);
+  const carro = useAluguelStore((state)=> state.carroId);
+  const carroID = useAluguelStore((state)=>state.carroId.id);
+  const quantidadeDias = useAluguelStore((state)=>state.diasAluguel)
 
   const [formValues, setFormValues] = useState({
     titular: "",
@@ -20,33 +27,10 @@ const Pagamento = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false);
   const [_nomeCliente, setNomeCliente] = useState(""); 
-  
-  useEffect(() => {
-    const fetchNomeCliente = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const response = await axios.get("http://localhost:5000/api/registros", {
-          headers: {
-            'x-auth-token': token,
-          },
-        });
-
-        if (response.data && response.data.nome) {
-          setNomeCliente(response.data.nome); 
-        }
-      } catch (error) {
-        console.error("Erro ao buscar nome do cliente:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    fetchNomeCliente();
-  }, []); 
 
   const handleConfirmarPagamento = async () => {
     const token = localStorage.getItem("token");
-    const clienteId = localStorage.getItem("id");
-    const clienteNome = localStorage.getItem("nome"); 
+
     console.log("Cliente Nome:", clienteNome);
   
     if (
@@ -57,22 +41,18 @@ const Pagamento = () => {
       return;
     }
   
-    const novoRegistro = {
-      clienteId: clienteId,  
-      carro: carro?.modelo || "Carro não encontrado",
-      nome: clienteNome || "Nome não disponível",
-      valorDiario: carro?.preco || 0, 
-      quantDias: quantidadeDias,
-      formPagamento: formValues.formaPagamento,
-      status: 'Alugado',
-      dataLocacao: new Date().toISOString().split('T')[0],
-      horaLocacao: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    const novoAluguel = {
+      valorDia: carro?.precoPorDia|| 0, 
+      valorTotal: carro?.precoPorDia * quantidadeDias.length,
+      quantidadeDias: format(quantidadeDias, "dd/MM/yyyy")
     };
   
     try {
-      const response = await axios.post("http://localhost:5000/api/registros", novoRegistro, {
+      console.log(novoAluguel)
+      console.log(carroID)
+      const response = await axios.post(`http://localhost:5000/aluguel/${carroID}`, novoAluguel, {
         headers: {
-          'x-auth-token': token,
+          Authorization: `Bearer ${token}`
         },
       });
   
