@@ -24,8 +24,8 @@ export default function Alugar() {
       const carroOfList = carros[id];
       setCarro(carroOfList);
     }, [id]);
-    console.log(diasEntreDatas)
-    const total = diasEntreDatas * (carro?.preco || 0); 
+  
+    const total = diasEntreDatas.length * (carro?.precoPorDia || 0); 
 
     useEffect(() => {
       const fetchCarrosById = async (id) => {
