@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService, diasAlugadoService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -269,4 +269,21 @@ const apagarCarro = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById, searchByModelo, byUser, update, apagarCarro };
+const updateDiasAlugado = async (req, res) => {
+    try{
+        const {carroId, diasAlugadoArray} = req.body; //Mdnar alguelId em body no criaAluguelServices (Front)
+
+        console.log("\ncarroId:", carroId);
+        console.log("\ndiasAlugadoArray:", diasAlugadoArray);
+
+        const CarroDiasAlugadoUpdated = await diasAlugadoService(carroId, diasAlugadoArray);
+        console.log(CarroDiasAlugadoUpdated);
+        res.send("Ok");
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+
+
+};
+
+export { create, findAll, topCarros, findById, searchByModelo, byUser, update, apagarCarro, updateDiasAlugado };
