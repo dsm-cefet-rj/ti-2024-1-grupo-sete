@@ -8,6 +8,8 @@ import axios from 'axios';
 import useAluguelStore from "../../Components/Zustand/storeAluguel";
 import useUserStore from "../../Components/Zustand/storeUser";
 import format from 'date-fns/format';
+import { parseISO } from 'date-fns';
+
 
 const Pagamento = () => {
   const location = useLocation();
@@ -16,6 +18,8 @@ const Pagamento = () => {
   const carro = useAluguelStore((state)=> state.carroId);
   const carroID = useAluguelStore((state)=>state.carroId.id);
   const quantidadeDias = useAluguelStore((state)=>state.diasAluguel)
+  const formattedDias = quantidadeDias.map(date => format(date, 'dd/MM/yyyy'));
+
 
   const [formValues, setFormValues] = useState({
     titular: "",
@@ -44,7 +48,7 @@ const Pagamento = () => {
     const novoAluguel = {
       valorDia: carro?.precoPorDia|| 0, 
       valorTotal: carro?.precoPorDia * quantidadeDias.length,
-      quantidadeDias: format(quantidadeDias, "dd/MM/yyyy")
+      quantidadeDias: formattedDias
     };
   
     try {
