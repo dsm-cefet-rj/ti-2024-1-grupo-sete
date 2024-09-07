@@ -17,15 +17,6 @@ export default function BarraPesquisa() {
   const [digita, setDigita] = useState(busca);
   const [carros, setCarros] = useState([]);
   
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/cars')
-      .then(response => {
-        setCarros(response.data);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar os carros:', error);
-      });
-  }, []);
 
   const onChange = (event) => {
     setDigita(event.target.value);

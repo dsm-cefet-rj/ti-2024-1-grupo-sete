@@ -29,7 +29,8 @@ const login = async (req, res) => {
                 email: user.email,
                 name: user.name,
                 telefone: user.telefone,
-                endereco: user.endereco
+                endereco: user.endereco,
+                isAdm: user.isAdm
             }}
         );
     } catch (err) {

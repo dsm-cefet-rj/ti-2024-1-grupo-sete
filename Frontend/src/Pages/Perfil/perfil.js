@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Table, Button, Form } from "react-bootstrap";
-import axios from "axios";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./style.css"; 
 import useUserStore from "../../Components/Zustand/storeUser";
-import { Container } from "reactstrap";
+import { Button } from "reactstrap";
 
 export default function Perfil() {
   const user = useUserStore((state) => state.usuario);
@@ -13,62 +10,64 @@ export default function Perfil() {
   return (
     <div className="page-container">
       <HeaderMain />
-        <Container>
-        <div className="titulo">
+        <div className="profile">
             <h1>Perfil</h1>
         </div>
-                <Form>
-                    <Form.Group controlId="formCardNumber">
-                        <Form.Label className='pag'>Nome: </Form.Label>
-                        <Form.Control
-                            aria-label="Default select example"
-                            type="text"
-                            placeholder="Carro alugado"
-                            name="carro"
-                            value={user?.name}
-                            disabled
-                        />
+    <div className = "profile-container">
+        <div class="col-lg-4 col-xl-3">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <h6 class="mb-0">Nome</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {user.name}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {user.email}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <h6 class="mb-0">Telefone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {user?.telefone}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <h6 class="mb-0">Endereço</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {user.endereco}
+                    </div>
+                  </div>
+                  <div class="row"></div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                    <div className = "button-config">
+                        <Button> Editar conta</Button>
+                    </div>
+                    <div class="row"></div>
+                    <div className = "button-config">                   
+                      <a class="btn btn-danger  btn-sm" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Excluir conta</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
 
-                    </Form.Group>
 
-                    <Form.Group controlId="formExpirationDate">
-                        <Form.Label className='pag'>Email: </Form.Label>
-                        <Form.Control
-                            aria-label="Default select example"
-                            type="text"
-                            placeholder=""
-                            name="email"
-                            value={user?.email}
-                            disabled
-                        />
-                    </Form.Group>
 
-                    <Form.Group controlId="formCVV">
-                        <Form.Label className='pag'>Telefone: </Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="5 dias"
-                            name="quantDias"
-                            value={user?.telefone}
-                            disabled
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="formExpirationDate">
-                        <Form.Label className='pag'>Endereço: </Form.Label>
-                        <Form.Control
-                            aria-label="Default select example"
-                            type="text"
-                            placeholder="Sem endereço"
-                            name="valorDiario"
-                            value={user?.endereco}
-                            disabled
-                        />
-                    </Form.Group>
-                </Form>
-                
-            </Container>
-      <div></div>      
       <footer>
         <Footer />
       </footer>

@@ -3,6 +3,7 @@ import "./header.css";
 import Logo from "../../Assets/Logo2.png";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { FaPersonCirclePlus } from "react-icons/fa6";
+import { GrUserAdmin } from "react-icons/gr";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import {
   Collapse,
@@ -20,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function HeaderMain(props) {
   const isLogged = useUserStore((state) => state.isAuthenticated);
   const userName = useUserStore((state) => state.usuario.name);
+  const isAdmin = useUserStore((state) => state.usuario.isAdm)
   const firstName = userName ? userName.split(" ")[0] : "";
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -107,6 +109,17 @@ export default function HeaderMain(props) {
                         <FaUser className="fa-user" /> Bem vindo, {firstName}
                       </DropdownToggle>
                       <DropdownMenu>
+                      {isAdmin && (
+                          <DropdownItem>
+                            <Link
+                              className="nav-link"
+                              aria-current="page"
+                              to="/admin"
+                            >
+                            <GrUserAdmin />  ADMIN
+                            </Link>
+                          </DropdownItem>
+                        )}
                         <DropdownItem>
                           <Link
                             className="nav-link"

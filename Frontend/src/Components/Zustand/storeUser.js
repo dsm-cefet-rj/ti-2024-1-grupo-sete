@@ -10,7 +10,8 @@ const getStoredState = () => {
       name: '',
       email: '',
       telefone: '',
-      endereco: ''
+      endereco: '',
+      isAdm: ''
     },
     token: storedToken || '',
     isAuthenticated: !!storedToken,

@@ -16,7 +16,12 @@ import FormClientes from "../formClientes/formClientes";
 import AtualizarClientes from "../atualizarClientes/atualizarClientes";
 import PrivateRoute from "../../Components/PrivateRoute/PrivateRoute";
 import Perfil from "../Perfil/perfil";
-
+import ProtectedAdminRoutes from "./ProtectedAdminRoutes";
+import Admin from "../AdminPages/admin";
+import AdminAlugueis from "../AdminPages/adminAlugueis";
+import AdminCarros from "../AdminPages/adminCarros";
+import AdminRegistros from "../AdminPages/adminRegistros";
+import AdminUsers from "../AdminPages/adminUsers";
 
 export const AppRouter = () => {
   return (
@@ -27,8 +32,13 @@ export const AppRouter = () => {
           <Route path="/FAQ" exact component={FAQ} />
           <Route path="/contatos" exact component={Contatos} />
           <Route path="/cadastro" exact component={FormClientes} />
+          <ProtectedAdminRoutes path="/admin" exact component={Admin} />
           <Route path="/" exact component={Principal} />
-
+          
+          <ProtectedAdminRoutes path="/admin/registros" exact component={AdminRegistros} />
+          <ProtectedAdminRoutes path="/admin/carros" exact component={AdminCarros} />
+          <ProtectedAdminRoutes path="/admin/users" exact component={AdminUsers} />
+          <ProtectedAdminRoutes path="/admin/alugueis" exact component={AdminAlugueis} />
           <PrivateRoute path="/detalhes/:id" exact component={Detalhes} />
           <PrivateRoute
             path="/atualizarcarro"

@@ -6,13 +6,6 @@ import './style.css';
 import useAluguelStore from '../Zustand/storeAluguel';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
 import { Link } from "react-router-dom";
-import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
-import FordKa from '../../Assets/FordKa.jpg';
-import Bmw from '../../Assets/bmw.png';
-import Mercedes from '../../Assets/Mercedes.jpg';
-import FiatUno from '../../Assets/fiat-uno.jpg';
-import Tesla from '../../Assets/Tesla.jpg';
-import Honda from '../../Assets/honda.jpg';
 import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosServices';
 
 function containsArray(array1, array2) {
@@ -71,16 +64,6 @@ export default function Pesquisa() {
   //função ativada quando clica em um card de carro
   const handleCardClick = (carroId) => {
     setCarroId(carros.find(carro => carro.id === carroId));
-  };
-
-  const imagensCarros = {
-    4: FiatUno,
-    5: FordKa,
-    6: Mercedes,
-    7: Bmw,
-    8: Honda,
-    9: Tesla,
-    10: FiatUno21,
   };
 
   return (

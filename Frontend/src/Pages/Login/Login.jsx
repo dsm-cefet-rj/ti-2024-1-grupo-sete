@@ -29,7 +29,7 @@ function Login() {
         behavior: 'auto' // Isso adiciona uma rolagem suave
     });
     }, 3000);  // 3000 ms = 3 segundos
-    console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco);
+    console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco, zustandUser.isAdm);
   };
 
   const handleLogin = async (email, senha) => {
@@ -51,7 +51,7 @@ function Login() {
       setUser(user);
 
       //console.log("XUXA", response.data);
-      console.log('Login bem-sucedido!', token, user.email, user.name, user.telefone, user.endereco);
+      console.log('Login bem-sucedido!', token, user.email, user.name, user.telefone, user.endereco, user.isAdm);
       localStorage.setItem('token', token);
       //console.log("XUXA TOKEN", localStorage.getItem('token'));
       localStorage.setItem('userId', user.id);
