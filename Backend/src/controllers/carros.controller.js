@@ -278,7 +278,7 @@ const updateDiasAlugado = async (req, res) => {
 
         const CarroDiasAlugadoUpdated = await diasAlugadoService(carroId, diasAlugadoArray);
         console.log(CarroDiasAlugadoUpdated);
-        res.send("Ok");
+        res.send(CarroDiasAlugadoUpdated);
     }catch(err) {
         res.status(500).send({message: err.message});
     }

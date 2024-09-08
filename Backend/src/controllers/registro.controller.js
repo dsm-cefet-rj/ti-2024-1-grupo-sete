@@ -23,9 +23,9 @@ const create = async (req, res) => {
             carro: id,
         });
         console.log("\n\nRegistro criado foi esse => ", registro,"\n\n");
-        res.status(201).send({
+        res.status(201).send(
             registro
-        });
+        );
     }catch(err) {
         res.status(500).send({message: err.message});
     }

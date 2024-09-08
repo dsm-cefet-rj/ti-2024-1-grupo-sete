@@ -91,7 +91,7 @@ export default function Pesquisa() {
                 <Link to={`/detalhes/${carro.id}`} className="link">
                   <CardBody>
                     <CardImg
-                      src={carro.fotoLink1} 
+                      src={carro.fotoLink1}
                       alt={carro.modelo}
                       onError={(error) => console.error('Erro ao carregar imagem:', error)}
                     />

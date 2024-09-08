@@ -17,7 +17,7 @@ export default function AtualizarCarros() {
         console.log("Carros encontrados:", data);
         setCarros(data.data.results);
       } catch (error) {
-        console.error("Erro ao buscar carros:", error);
+        console.error("Erro ao buscar carros:", error.response.data.message);
         setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
         setCarros([]); 
       }
