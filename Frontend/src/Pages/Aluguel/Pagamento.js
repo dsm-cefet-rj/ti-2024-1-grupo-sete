@@ -65,10 +65,13 @@ const Pagamento = () => {
     };
 
     const formaPagamentoParaRegistro = formValues.formaPagamento;
+    const dataCriado = format(Date.now(), 'dd/MM/yyyy');
+    console.log("\n\nData criado: ", dataCriado);
     const novoRegistro = {
       valorDia: carro?.precoPorDia|| 0, 
       valorTotal: carro?.precoPorDia * quantidadeDias.length,
       quantidadeDias: formattedDias,
+      dataDoPagamento: dataCriado,
       formaPagamento: formaPagamentoParaRegistro
     };
   

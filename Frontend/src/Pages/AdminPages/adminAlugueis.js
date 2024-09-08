@@ -13,7 +13,7 @@ export default function AdminAlugueis() {
     const pegaAluguel = async () => {
       try {
         const response = await getAllAluguel();
-        console.log("\n\nAluguéis encontrados:", response);
+        console.log("\n\nAluguéis encontrados:", response.data.results);
         setAluguel(response.data.results);
       } catch (error) {
         console.error("Erro ao buscar aluguéis:", error.response.data.message);
@@ -24,6 +24,7 @@ export default function AdminAlugueis() {
   
     pegaAluguel();
   }, []);
+  console.log(aluguel)
 
   return (
     <div>
@@ -43,15 +44,15 @@ export default function AdminAlugueis() {
             </tr>
           </thead>
           <tbody>
-            {aluguel.map((carro) => (
-              <tr key={carro.id}>
-                <td>{carro.carro}</td>
-                <td>{carro.valorTotal}</td>
-                <td>{carro.quantidadeDias.length}</td>
+            {aluguel.map((aluguel) => (
+              <tr key={aluguel.carro}>
+                <td>{aluguel.carroId}</td>
+                <td>{aluguel.valorTotal}</td>
+                <td>{aluguel.quantidadeDias.length}</td>
                 <td>
                   <Button
                     variant="primary"
-                    onClick={() => setEditingCarro(carro)}
+                    onClick={() => setEditingCarro(aluguel)}
                   >
                     Editar
                   </Button>

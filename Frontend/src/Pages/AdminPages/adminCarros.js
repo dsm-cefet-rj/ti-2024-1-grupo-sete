@@ -56,10 +56,18 @@ const handleCardClick = (carroId) => {
               <Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
                 <Link to={`/detalhes/${carro.id}`} className="link">
                   <CardBody>
-                    <CardImg
+                    {/* <CardImg
                       src={carro.fotoLink1} 
                       alt={carro.modelo}
                       onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                    /> */}
+                    <img
+                      alt="Sample"
+                      src={carro.fotoLink1}
+                      style={{
+                        width: "100%",
+                        height: "300px"
+                      }}
                     />
                     <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
                     <CardText>

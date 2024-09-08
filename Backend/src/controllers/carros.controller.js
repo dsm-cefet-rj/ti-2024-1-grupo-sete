@@ -10,6 +10,8 @@ const create = async (req, res) => {
             res.status(400).send({ message: "Preencha todos os campos" });
         }
 
+        
+
         const carro = await createService({
             modelo,
             ano,
@@ -22,7 +24,7 @@ const create = async (req, res) => {
             user: req.userId,
             //req.userId está em authMiddleware
         });
-        console.log("Requisição okay\n\n\n\n", carro);
+        //console.log("Requisição okay\n\n\n\n", carro);
         res.status(201).send(carro);
     }catch(err) {
         res.status(500).send({message: err.message});
@@ -144,6 +146,7 @@ const findById = async (req, res) => {
     try{
         const {id} = req.params;
         const carros = await findByIdService(id);
+        //console.log(carros.user.name)
 
         return res.send({
             carros: {

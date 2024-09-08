@@ -33,6 +33,8 @@ const findAll = async (req, res) => {
             return res.status(400).send({ message: "Nenhum aluguel foi encontrado"})
         }
 
+        //console.log(aluguel[1].user.name)
+
         res.send({
             results: aluguel.map((carrosItem) => ({
                 id: carrosItem._id,
@@ -40,14 +42,15 @@ const findAll = async (req, res) => {
                 valorTotal: carrosItem.valorTotal,
                 quantidadeDias: carrosItem.quantidadeDias, 
                 userId: carrosItem.user._id,
+                carroId: carrosItem.carro._id,
                 userEmail: carrosItem.user.email,
                 userName: carrosItem.user.name,
                 userEndereco: carrosItem.user.endereco,
-                carro: carrosItem.carro._id,
-                modelo: carrosItem.carro.modelo,
-                fotoLink1: carrosItem.fotoLink1,
-                diasAlugado: carrosItem.diasAlugado,
-                dataCriado: carrosItem.dataCriado,
+                //carro: carrosItem.carro._id,
+                // modelo: carrosItem.carro.modelo,
+                // fotoLink1: carrosItem.fotoLink1,
+                // diasAlugado: carrosItem.diasAlugado,
+                // dataCriado: carrosItem.dataCriado,
             })),
         });
 

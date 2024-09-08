@@ -1,11 +1,12 @@
 import axios from "axios";
+import format from 'date-fns/format';
 
 const baseURL = "http://localhost:5000";
 
 export async function createRegistro(body, id) {
     try {
         console.log("CRIAR REGISTRO AQUI", body, body.id);
-
+        
         const tokenCria = localStorage.getItem('token');
         const response = await axios.post(`${baseURL}/registro/${id}`, body, {
             headers: {
@@ -19,3 +20,13 @@ export async function createRegistro(body, id) {
         throw error;
     }
 }
+
+export async function getAllRegistro(){
+    const token = localStorage.getItem('token');
+    const response = await axios.get(`${baseURL}/registro/`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+    return response;
+} ;

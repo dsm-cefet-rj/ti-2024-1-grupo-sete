@@ -10,4 +10,4 @@ export function getAllAluguel(){
         },
     });
     return response;
-} ;
+};
