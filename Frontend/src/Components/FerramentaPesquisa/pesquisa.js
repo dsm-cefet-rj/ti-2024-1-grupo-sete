@@ -90,12 +90,26 @@ export default function Pesquisa() {
               <Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
                 <Link to={`/detalhes/${carro.id}`} className="link">
                   <CardBody>
-                    <CardImg
+                    {/* <CardImg
                       src={carro.fotoLink1}
                       alt={carro.modelo}
                       onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                      style={{
+
+                      }}
+                    /> */}
+                    <img
+                      alt="Sample"
+                      src={carro.fotoLink1}
+                      style={{
+                        width: "100%",
+                        height: "300px"
+                      }}
                     />
-                    <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
+                    <CardTitle
+                    style={{
+                      paddingTop: "0.7em"
+                    }}><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
                     <CardText>
                       <p>Ano: {carro.ano}</p>
                       <p>Dono: {carro.userName}</p>
