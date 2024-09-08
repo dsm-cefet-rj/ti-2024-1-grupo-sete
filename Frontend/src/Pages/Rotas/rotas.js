@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Detalhes from "../Detalhes/Detalhes";
 import Principal from "../Principal/Principal";
-import Atualizarcarro from "../Atualizarcarro/Atualizarcarro";
+import Atualizarcarro from "../Atualizarcarro/Atualizarcarro.js";
 import FAQ from "../FAQ/index";
 import Contatos from "../Contatos/index";
 import Login from "../Login/Login";

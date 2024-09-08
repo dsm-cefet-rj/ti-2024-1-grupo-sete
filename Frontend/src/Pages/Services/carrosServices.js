@@ -71,4 +71,17 @@ export async function updateDiasAlugado(id, diasAlugado) {
     return response;
 };
 
+export async function updateCarroByUser(carroId, body) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de updateCarroByUser:\n\n", carroId, body);
+    const response = await axios.patch(`http://localhost:5000/carros/${carroId}`,body, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+    
+}
+
 

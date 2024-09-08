@@ -230,10 +230,10 @@ const byUser = async (req, res) => {
 const update = async (req, res) => {
     try{
         //Atributos do carro que serão atualizados (não necessariamente todos, mas pelo menos 1)
-        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado} = req.body;
+        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1} = req.body;
         const {id} = req.params;
 
-        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1 && !diasAlugado){
+        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1){
             res.status(400).send({ message: "Preencha pelo menos 1 campo para editar o seu carro" });
         }
 
@@ -244,9 +244,9 @@ const update = async (req, res) => {
             res.status(400).send({ message: "Você não pode editar este carro" });
         }
 
-        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado);
+        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1);
 
-        return res.send({message: "Carro editado com sucesso"});
+        return res.send({carros, message: "Carro editado com sucesso"});
     }catch(err) {
         res.status(500).send({message: err.message});
     }
