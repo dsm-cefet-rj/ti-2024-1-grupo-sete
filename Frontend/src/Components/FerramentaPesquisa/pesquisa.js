@@ -11,13 +11,20 @@ import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosSer
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
     const elemento = format(array1[i], "dd/MM/yyyy");
+    //console.log(array2[0]);
 
-    if (array2.includes(elemento)) {
+    for (let j=0; j < array2.length; j++){
+      const newarray = array2[j]
+      console.log(newarray);
+      //console.log("comparando ", array2[0])
+    if (newarray.includes(elemento)) {
+      console.log("comparando ", elemento, " com ", array2[0])
       console.log("bateu");
       return true;
     }
+  }
 
-    console.log(elemento);
+    //console.log(elemento);
   }
 
   return false;

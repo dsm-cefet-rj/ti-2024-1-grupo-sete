@@ -4,6 +4,7 @@ import AdminMenu from "../../Components/MenuAdmin/AdminMenu";
 import { getAllRegistro } from "../Services/registroServices.js";
 import { useEffect, useState } from "react";
 import { Table, Button, Form } from "react-bootstrap";
+import format from "date-fns/format";
 
 
 export default function AdminRegistros() {
@@ -52,7 +53,7 @@ export default function AdminRegistros() {
                 <td>{registro.userId}</td>
                 <td>{registro.valorTotal}</td>
                 <td>{registro.formaPagamento}</td>
-                <td>{registro.dataDoPagamento}</td>
+                <td>{format(registro.dataDoPagamento, "dd/MM/yyyy")}</td>
                 <td>{registro.quantidadeDias.length}</td>
                 <td>
                   <Button
