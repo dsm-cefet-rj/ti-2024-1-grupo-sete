@@ -42,7 +42,7 @@ const apagarCarroService = (id) => Carros.findOneAndDelete({_id: id});
 
 const diasAlugadoService = (carroId, diasAlugadoArray) => Carros.findByIdAndUpdate(
     {_id: carroId},
-    { $push: {diasAlugado: diasAlugadoArray[0]}}
+    { $push: {diasAlugado: diasAlugadoArray}}
 );
 
 export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService, diasAlugadoService };
