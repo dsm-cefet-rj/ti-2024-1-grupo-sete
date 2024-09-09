@@ -24,12 +24,13 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
   function handleChange(e) {
     setCarro({ ...carro, [e.target.name]: e.target.value });
   }
+  //<h2>Cadastrar carro</h2>
+  //<h6 style={{textAlign:"center", marginBottom:"25px"}}>Cadastre aqui seu carro para ser alugado</h6>
 
   return (
     <form onSubmit={submit} className="form">
-      <h2>Cadastrar carro</h2>
-      <h6 style={{textAlign:"center", marginBottom:"25px"}}>Cadastre aqui seu carro para ser alugado</h6>
-      <div className="formGroup">
+      
+      {/* <div className="formGroup">
         <Input
           type="text"
           text="Seu nome"
@@ -38,7 +39,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
           handleOnChange={handleChange}
           value={carro.dono}
         />
-      </div>
+      </div> */}
       <div className="formGroup">
         <Input
           type="text"
@@ -76,7 +77,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
           name="preco"
           placeholder="Insira o custo por dia de aluguel"
           handleOnChange={handleChange}
-          value={carro.preco}
+          value={carro.precoPorDia}
         />
       </div>
       <div className="formGroup">
@@ -86,7 +87,17 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
           name="detalhe"
           placeholder="Insira detalhes sobre o carro"
           handleOnChange={handleChange}
-          value={carro.detalhe}
+          value={carro.detalhes}
+        />
+      </div>
+      <div className="formGroup">
+        <Input
+          type="text"
+          text="Foto"
+          name="detalhe"
+          placeholder="Insira detalhes sobre o carro"
+          handleOnChange={handleChange}
+          value={carro.fotoLink1}
         />
       </div>
       {/*<div className="input-file">
@@ -99,7 +110,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
                     value={carro.Image}
                 />
             </div>*/}
-      <Botaocriarcarro text={botaotxt} />
+      <Botaocriarcarro text={botaotxt}/>
     </form>
   );
 }

@@ -46,6 +46,7 @@ input{
 .titleCard{
   text-align: center;
   text-decoration: underline;
+  margin-top: 10px;
 }
 
 .t4{
@@ -70,12 +71,13 @@ input{
     display: flex; /* Enable flexbox layout for card content */
     flex-direction: column; /* Arrange elements vertically by default */
     align-items: center; /* Center content horizontally */
-    padding: 20px; /* Add some padding for content spacing */
+    padding: 10px; /* Add some padding for content spacing */
+    margin-bottom: 30px;
   }
 
 
 .card-carros:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .cards-container {
@@ -89,6 +91,7 @@ input{
 
   .card-body {
     flex: 1; /* Allow the card body to grow and fill available space */
+    margin-top: 0px;
   }
 
 .card-text{

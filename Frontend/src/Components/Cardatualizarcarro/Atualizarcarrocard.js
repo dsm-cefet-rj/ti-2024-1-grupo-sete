@@ -7,15 +7,15 @@ import {BsPencil, BsFillTrashFill} from 'react-icons/bs'
  * @component
  * @param {Object} props - Propriedades passadas para o componente.
  * @param {string} props.id - ID do carro.
- * @param {string} props.dono - Nome do proprietário do carro.
+ * @param {string} props.userName - Nome do proprietário do carro.
  * @param {string} props.modelo - Modelo do carro.
  * @param {number} props.ano - Ano do carro.
  * @param {string} props.cidade - Cidade onde o carro está localizado.
- * @param {number} props.preco - Preço do aluguel do carro por dia.
+ * @param {number} props.precoPorDia - Preço do aluguel do carro por dia.
  * @param {function} props.handleRemove - Função para remover o carro.
  * @returns {JSX.Element} Retorna um elemento JSX que representa o cartão de informações do carro.
  */
-function Atualizarcarrocard({id, dono, modelo, ano, cidade, preco, handleRemove}) {
+function Atualizarcarrocard({id, userName, modelo, ano, cidade, precoPorDia, handleRemove}) {
 
     /**
      * Função chamada quando o botão "Remover" é clicado.
@@ -28,12 +28,15 @@ function Atualizarcarrocard({id, dono, modelo, ano, cidade, preco, handleRemove}
 
     return (
         <div className="carro-card">
-            <h4>Proprietário:<br></br>{dono}</h4>
+            <h4>Modelo:<br></br>{modelo}</h4>
             <p>
-                <span>Modelo:</span> {modelo}
+                <span>Ano:</span> {ano}
             </p>
             <p>
-                <span>R$:</span> {preco}/dia
+                <span>Cidade:</span> {cidade}
+            </p>
+            <p>
+                <span>R$:</span> {precoPorDia}/dia
             </p>
             <div className="carro-card-action">
                 <Link className="carro-card-action-link" to={`/atualizardadoscarro/${id}`}>

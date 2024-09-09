@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { getAllRegistroByUser } from "../Services/registroServices";
-import HeaderMain from "../../Components/Header";
+import { getAllAluguelByUser } from "../Services/aluguelServices.js";
+import HeaderMain from "../../Components/Header/index.jsx";
 import Footer from "../../Components/Footer/footer";
 import Message from "../../Components/Message/Message";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Form } from "react-bootstrap";
 
-export default function Historico() {
-  const [registro, setRegistro] = useState([]);
+export default function AluguelAtivo() {
+  const [aluguel, setAluguel] = useState([]);
   const [messageRemove, setMessageRemove] = useState('');  
   //const [editingCarro, setEditingCarro] = useState(null);
   
 
   useEffect(() => {
-    const fetchRegistro = async () => {
+    const fetchAluguel = async () => {
       try {
-        const data = await getAllRegistroByUser();
+        const data = await getAllAluguelByUser();
         console.log("\n\nAlugueis encontrados by user:", data);
-        setRegistro(data.data.results);
+        setAluguel(data.data.results);
       } catch (error) {
         console.error("Erro ao buscar Aluguel:", error.response.data.message);
         //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
-        setRegistro([]); 
+        setAluguel([]); 
       }
     };
   
-    fetchRegistro();
+    fetchAluguel();
   }, []);
 
   function RemoveCarro(id){
@@ -33,30 +33,31 @@ export default function Historico() {
   return (
     <div>
         <HeaderMain/>
+        <h1 className='titulo'>Aluguéis ativos</h1>
         {messageRemove && <Message type="success" msg={messageRemove}/>}
-        <h1 className = 'titulo'> Histórico de Pagamentos</h1>
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID carro</th>
+              <th>Modelo</th>
               <th>Valor total</th>
               <th>Dias alugados</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {registro.map((registro) => (
-              <tr key={registro.carro}>
-                <td>{registro.carro}</td>
-                <td>{registro.valorTotal}</td>
-                <td>{registro.quantidadeDias.length}</td>
+            {aluguel.map((aluguel) => (
+              <tr key={aluguel.carro}>
+                <td>{aluguel.modelo}</td>
+                <td>{aluguel.valorTotal}</td>
+                <td>{aluguel.quantidadeDias.length}</td>
                 <td>
                   <Button
                     variant="primary"
-                    //onClick={() => setEditingCarro(registro)}
+                    //onClick={() => setEditingCarro(aluguel)}
                   >
                     Editar
                   </Button>
+                  <button className="btn btn-danger" type="submit">Deletar Aluguel</button>
                 </td>
               </tr>
             ))}

@@ -6,13 +6,6 @@ import './style.css';
 import useAluguelStore from '../Zustand/storeAluguel';
 import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
 import { Link } from "react-router-dom";
-import FiatUno21 from '../../Assets/Fiat-uno21.jpg';
-import FordKa from '../../Assets/FordKa.jpg';
-import Bmw from '../../Assets/bmw.png';
-import Mercedes from '../../Assets/Mercedes.jpg';
-import FiatUno from '../../Assets/fiat-uno.jpg';
-import Tesla from '../../Assets/Tesla.jpg';
-import Honda from '../../Assets/honda.jpg';
 import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosServices';
 
 /**
@@ -24,13 +17,20 @@ import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosSer
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
     const elemento = format(array1[i], "dd/MM/yyyy");
+    //console.log(array2[0]);
 
-    if (array2.includes(elemento)) {
+    for (let j=0; j < array2.length; j++){
+      const newarray = array2[j]
+      console.log(newarray);
+      //console.log("comparando ", array2[0])
+    if (newarray.includes(elemento)) {
+      console.log("comparando ", elemento, " com ", array2[0])
       console.log("bateu");
       return true;
     }
+  }
 
-    console.log(elemento);
+    //console.log(elemento);
   }
 
   return false;
@@ -65,7 +65,6 @@ export default function Pesquisa() {
       }
     };
 
-    
   
     fetchCarros();
   }, [diasEntreDatas]);
@@ -73,23 +72,14 @@ export default function Pesquisa() {
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
 
-  /**
-   * Função ativada ao clicar em um card de carro. Armazena o carro selecionado no estado global.
-   * @param {string} carroId - ID do carro selecionado.
-   */
+
+  //console.log("\n\nDias entre datas:", format(diasEntreDatas[0], "dd/MM/yyyy"));
+  //console.log(diasEntreDatas);
+
+
+  //função ativada quando clica em um card de carro
   const handleCardClick = (carroId) => {
     setCarroId(carros.find(carro => carro.id === carroId));
-  };
-
-  //imagens associadas a carros
-  const imagensCarros = {
-    4: FiatUno,
-    5: FordKa,
-    6: Mercedes,
-    7: Bmw,
-    8: Honda,
-    9: Tesla,
-    10: FiatUno21,
   };
 
   return (
@@ -109,19 +99,33 @@ export default function Pesquisa() {
           console.log(`Busca: ${buscaLower}, Cidade do carro: ${carroCidadeLower}`);
           return carroCidadeLower.includes(buscaLower);
         }).filter((carro) => {
-          return true;
+          return !containsArray(diasEntreDatas, carro.diasAlugado);
         }).map((carro, index) => {
           return (
             <Col xs={12} md={6} lg={4} key={index}>
               <Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
                 <Link to={`/detalhes/${carro.id}`} className="link">
                   <CardBody>
-                    <CardImg
-                      src={carro.fotoLink1} 
+                    {/* <CardImg
+                      src={carro.fotoLink1}
                       alt={carro.modelo}
                       onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                      style={{
+
+                      }}
+                    /> */}
+                    <img
+                      alt="Sample"
+                      src={carro.fotoLink1}
+                      style={{
+                        width: "100%",
+                        height: "300px"
+                      }}
                     />
-                    <CardTitle><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
+                    <CardTitle
+                    style={{
+                      paddingTop: "0.7em"
+                    }}><h2 className='titleCard'>{carro.modelo}</h2></CardTitle>
                     <CardText>
                       <p>Ano: {carro.ano}</p>
                       <p>Dono: {carro.userName}</p>

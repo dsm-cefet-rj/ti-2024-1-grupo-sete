@@ -1,17 +1,45 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-const RegistroSchema = new Schema({
-  nome: { type: String, required: true },
-  carro: { type: String, required: true },
-  quantDias: { type: Number, required: true },
-  valorDiario: { type: Number, required: true },
-  formPagamento: { type: String, required: true },
-  status: { type: String, default: 'Alugado' },
-  dataLocacao: { type: String, required: true },
-  horaLocacao: { type: String, required: true },
+//const Schema = mongoose.Schema;
+
+const RegistroSchema = new mongoose.Schema({
+  //nome: { type: String, required: true },
+  //carro: { type: String, required: true },
+  valorDia: {
+    type: Number,
+    require: true,
+  },
+  valorTotal: {
+    type: Number,
+    require: true,
+  },
+  quantidadeDias: {
+    type: Array,
+    required: true
+  },
+  dataDoPagamento: {
+    type: Date,
+    default: Date.now(),
+  },
+  formaPagamento: {
+    type: String,
+    require: true,
+  },
+
+  //Cliente / comprador
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+
+  // carro: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Carros",
+  //   required: true,
+  // }
 });
 
-const Registro = mongoose.model('Registro', RegistroSchema);
+const Registro = mongoose.model("Registro", RegistroSchema)
 
-module.exports = Registro;
+export default Registro;

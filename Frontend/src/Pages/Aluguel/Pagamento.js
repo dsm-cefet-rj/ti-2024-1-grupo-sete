@@ -5,10 +5,22 @@ import HeaderMain from "../../Components/Header";
 import qrCodeImage from "./qrcode.png"; 
 import "./aluguel.css"; 
 import axios from 'axios';
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
+import useUserStore from "../../Components/Zustand/storeUser";
+import format from 'date-fns/format';
+import { parseISO } from 'date-fns';
+import { updateDiasAlugado } from "../Services/carrosServices.js";
+import { createRegistro } from "../Services/registroServices.js";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Pagamento = () => {
   const location = useLocation();
-  const { quantidadeDias, carro } = location.state || {}; 
+  const user = useUserStore((state)=> state.usuario.userId);
+  const clienteNome = useUserStore((state) => state.usuario.name);
+  const carro = useAluguelStore((state)=> state.carroId);
+  const carroID = useAluguelStore((state)=>state.carroId.id);
+  const quantidadeDias = useAluguelStore((state)=>state.diasAluguel)
+  const formattedDias = quantidadeDias.map(date => format(date, 'dd/MM/yyyy'));
 
   const [formValues, setFormValues] = useState({
     titular: "",
@@ -20,34 +32,23 @@ const Pagamento = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false);
   const [_nomeCliente, setNomeCliente] = useState(""); 
-  
-  useEffect(() => {
-    const fetchNomeCliente = async () => {
-      const token = localStorage.getItem("token");
 
-      try {
-        const response = await axios.get("http://localhost:5000/api/registros", {
-          headers: {
-            'x-auth-token': token,
-          },
-        });
+  //console.log("\n\nDias", formattedDias)
 
-        if (response.data && response.data.nome) {
-          setNomeCliente(response.data.nome); 
-        }
-      } catch (error) {
-        console.error("Erro ao buscar nome do cliente:", error.response ? error.response.data : error.message);
-      }
-    };
+  const updateDiasAlugadoCarro = async (carroID, dias) => {
+    const responseDias = await updateDiasAlugado(carroID, dias);
+    return responseDias;
+  }
 
-    fetchNomeCliente();
-  }, []); 
+  const criarRegistro = async (body, id) => {
+    const responseRegistro = await createRegistro(body, id);
+    return responseRegistro;
+  }
 
   const handleConfirmarPagamento = async () => {
     const token = localStorage.getItem("token");
-    const clienteId = localStorage.getItem("id");
-    const clienteNome = localStorage.getItem("nome"); 
-    console.log("Cliente Nome:", clienteNome);
+
+    //console.log("Cliente Nome:", clienteNome);
   
     if (
       formValues.formaPagamento === "cartao" &&
@@ -57,28 +58,43 @@ const Pagamento = () => {
       return;
     }
   
+    const novoAluguel = {
+      valorDia: carro?.precoPorDia|| 0, 
+      valorTotal: carro?.precoPorDia * quantidadeDias.length,
+      quantidadeDias: formattedDias
+    };
+
+    const formaPagamentoParaRegistro = formValues.formaPagamento;
+    const dataCriado = format(Date.now(), 'dd/MM/yyyy');
+    console.log("\n\nData criado: ", dataCriado);
     const novoRegistro = {
-      clienteId: clienteId,  
-      carro: carro?.modelo || "Carro não encontrado",
-      nome: clienteNome || "Nome não disponível",
-      valorDiario: carro?.preco || 0, 
-      quantDias: quantidadeDias,
-      formPagamento: formValues.formaPagamento,
-      status: 'Alugado',
-      dataLocacao: new Date().toISOString().split('T')[0],
-      horaLocacao: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      valorDia: carro?.precoPorDia|| 0, 
+      valorTotal: carro?.precoPorDia * quantidadeDias.length,
+      quantidadeDias: formattedDias,
+      dataDoPagamento: dataCriado,
+      formaPagamento: formaPagamentoParaRegistro
     };
   
     try {
-      const response = await axios.post("http://localhost:5000/api/registros", novoRegistro, {
+      //console.log(novoAluguel)
+      //console.log(carroID)
+      const response = await axios.post(`http://localhost:5000/aluguel/${carroID}`, novoAluguel, {
         headers: {
-          'x-auth-token': token,
+          Authorization: `Bearer ${token}`
         },
       });
   
       console.log("Registro adicionado:", response.data);
       setSuccessMessage("Pagamento realizado com sucesso!");
       setPagamentoConfirmado(true); 
+
+      const responseDiasEdited = await updateDiasAlugadoCarro(carroID, formattedDias);
+      console.log(responseDiasEdited);
+
+      console.log("\n\nformaPagamentoParaRegistro", formValues.formaPagamento);
+
+      const registroCriado = await criarRegistro(novoRegistro, carroID);
+      console.log("\n\nREGISTRO CRIADO: ", registroCriado);
     } catch (error) {
       console.error("Erro ao processar pagamento:", error.response ? error.response.data : error.message);
     }

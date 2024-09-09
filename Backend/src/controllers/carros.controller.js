@@ -1,4 +1,4 @@
-import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService} from "../services/carros.service.js";
+import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService, diasAlugadoService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
 const create = async (req, res) => {
@@ -9,6 +9,8 @@ const create = async (req, res) => {
         if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1){
             res.status(400).send({ message: "Preencha todos os campos" });
         }
+
+        
 
         const carro = await createService({
             modelo,
@@ -22,7 +24,7 @@ const create = async (req, res) => {
             user: req.userId,
             //req.userId está em authMiddleware
         });
-        console.log("Requisição okay\n\n\n\n", carro);
+        //console.log("Requisição okay\n\n\n\n", carro);
         res.status(201).send(carro);
     }catch(err) {
         res.status(500).send({message: err.message});
@@ -144,6 +146,7 @@ const findById = async (req, res) => {
     try{
         const {id} = req.params;
         const carros = await findByIdService(id);
+        //console.log(carros.user.name)
 
         return res.send({
             carros: {
@@ -227,10 +230,10 @@ const byUser = async (req, res) => {
 const update = async (req, res) => {
     try{
         //Atributos do carro que serão atualizados (não necessariamente todos, mas pelo menos 1)
-        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado} = req.body;
+        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1} = req.body;
         const {id} = req.params;
 
-        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1 && !diasAlugado){
+        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1){
             res.status(400).send({ message: "Preencha pelo menos 1 campo para editar o seu carro" });
         }
 
@@ -241,9 +244,9 @@ const update = async (req, res) => {
             res.status(400).send({ message: "Você não pode editar este carro" });
         }
 
-        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado);
+        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1);
 
-        return res.send({message: "Carro editado com sucesso"});
+        return res.send({carros, message: "Carro editado com sucesso"});
     }catch(err) {
         res.status(500).send({message: err.message});
     }
@@ -269,4 +272,21 @@ const apagarCarro = async (req, res) => {
     }
 };
 
-export { create, findAll, topCarros, findById, searchByModelo, byUser, update, apagarCarro };
+const updateDiasAlugado = async (req, res) => {
+    try{
+        const {carroId, diasAlugadoArray} = req.body; //Mdnar alguelId em body no criaAluguelServices (Front)
+
+        console.log("\ncarroId:", carroId);
+        console.log("\ndiasAlugadoArray:", diasAlugadoArray);
+
+        const CarroDiasAlugadoUpdated = await diasAlugadoService(carroId, diasAlugadoArray);
+        console.log(CarroDiasAlugadoUpdated);
+        res.send(CarroDiasAlugadoUpdated);
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+
+
+};
+
+export { create, findAll, topCarros, findById, searchByModelo, byUser, update, apagarCarro, updateDiasAlugado };

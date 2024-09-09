@@ -21,12 +21,16 @@ const login = async (req, res) => {
         }
 
         const token = generateToken(user.id);
+        console.log("TESTANDO RESPOSTA", {user: { id: user.id, email: user.email, name: user.name, telefone: user.telefone, endereco: user. endereco }});
 
         res.send({token, 
             user: { 
                 id: user.id, 
                 email: user.email,
-                name: user.name
+                name: user.name,
+                telefone: user.telefone,
+                endereco: user.endereco,
+                isAdm: user.isAdm
             }}
         );
     } catch (err) {

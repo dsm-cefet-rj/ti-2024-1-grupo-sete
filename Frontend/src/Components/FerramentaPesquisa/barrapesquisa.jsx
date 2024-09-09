@@ -23,19 +23,6 @@ export default function BarraPesquisa() {
   
 
   /**
-   * Hook useEffect para buscar os carros da API ao carregar o componente.
-   */
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/cars')
-      .then(response => {
-        setCarros(response.data);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar os carros:', error);
-      });
-  }, []);
-
-  /**
    * Função para lidar com mudanças no campo de busca de cidade.
    * @param {Object} event - O evento do campo de entrada.
    */

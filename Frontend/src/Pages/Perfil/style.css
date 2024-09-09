@@ -1,0 +1,15 @@
+.profile{
+  display: flex;
+  justify-content: center;
+}
+
+.profile-container{
+  display: flex;
+  justify-content: center;
+}
+
+.button-config{
+  display: flex;
+  justify-content: center;
+       /* Alinha os itens verticalmente no centro */ 
+};

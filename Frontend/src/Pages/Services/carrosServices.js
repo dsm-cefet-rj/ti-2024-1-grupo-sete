@@ -11,7 +11,7 @@ export function getAllCarrosByUser(){
         },
     });
     return response;
-} 
+};
 
 export async function criarCarro(body) {
     const tokenCria = localStorage.getItem('token');
@@ -33,7 +33,7 @@ export async function criarCarro(body) {
         console.error("Erro ao criar carro:", error.response ? error.response.data : error.message);
         throw error;
     }
-}
+};
 
 export function getAllCarros(){
     const tokenAll = localStorage.getItem('token');
@@ -57,6 +57,31 @@ export async function findCarroById(id){
         },
     });
     return response;
+}
+
+export async function updateDiasAlugado(id, diasAlugado) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de updateDiasAlugado:\n\n");
+    const response = await axios.patch(`http://localhost:5000/carros/diasAlugado/${id}`,{carroId: id, diasAlugadoArray: diasAlugado}, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+};
+
+export async function updateCarroByUser(carroId, body) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de updateCarroByUser:\n\n", carroId, body);
+    const response = await axios.patch(`http://localhost:5000/carros/${carroId}`,body, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+    
 }
 
 
