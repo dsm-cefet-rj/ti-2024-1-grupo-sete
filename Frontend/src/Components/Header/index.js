@@ -6,7 +6,14 @@ import { FaPersonCirclePlus } from "react-icons/fa6";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Nav } from "reactstrap";
 
-
+/**
+ * Componente de cabeçalho principal para a aplicação.
+ * Exibe a barra de navegação com o logotipo da empresa, links de navegação, e opções de login e cadastro.
+ * Inclui um menu dropdown para mais informações e um botão de alternância para expandir e colapsar o menu de navegação.
+ * @component
+ * @param {Object} props - Propriedades do componente (não utilizadas neste componente).
+ * @returns {JSX.Element} Retorna o cabeçalho com navegação e menu de opções.
+ */
 export default function HeaderMain(props){
 
   const [isOpen, setIsOpen] = useState(false);

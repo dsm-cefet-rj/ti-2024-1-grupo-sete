@@ -15,6 +15,12 @@ import Tesla from '../../Assets/Tesla.jpg';
 import Honda from '../../Assets/honda.jpg';
 import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosServices';
 
+/**
+ * Verifica se o intervalo de dias está contido em outro intervalo de dias.
+ * @param {Array} array1 - Primeiro array de dias no formato Date.
+ * @param {Array} array2 - Segundo array de dias no formato de string (dd/MM/yyyy).
+ * @returns {boolean} Retorna true se houver sobreposição entre os dias dos dois arrays.
+ */
 function containsArray(array1, array2) {
   for (let i = 0; i < array1.length; i++) {
     const elemento = format(array1[i], "dd/MM/yyyy");
@@ -30,6 +36,11 @@ function containsArray(array1, array2) {
   return false;
 }
 
+/**
+ * Componente de pesquisa que exibe uma lista de carros disponíveis com base na busca por cidade e datas selecionadas.
+ * @component
+ * @returns {JSX.Element} Retorna o layout do componente com os resultados da pesquisa.
+ */
 export default function Pesquisa() {
   const [carros, setCarros] = useState([]);
   const busca = useAluguelStore((state) => state.buscar);
@@ -37,18 +48,16 @@ export default function Pesquisa() {
   const setCarroId = useAluguelStore((state) => state.setCarroId);
   const [message, setMessage] = useState('');
 
+  /**
+   * Hook useEffect para buscar os carros ao carregar o componente ou quando os dias de aluguel são alterados.
+   */
   useEffect(() => {
     const fetchCarros = async () => {
       try {
         console.log("\n\n\nFETCH CARROS TOKEN:", localStorage.getItem('token'))
         const data = await getAllCarros();
         console.log("Carros encontrados:", data);
-        setCarros(data.data.results);
-
-
-        //console.log("PREÇO:", carros.results);
-
-        
+        setCarros(data.data.results);        
       } catch (error) {
         console.error("Erro ao buscar carros:", error);
         setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
@@ -64,11 +73,15 @@ export default function Pesquisa() {
   let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
   let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
 
-  //função ativada quando clica em um card de carro
+  /**
+   * Função ativada ao clicar em um card de carro. Armazena o carro selecionado no estado global.
+   * @param {string} carroId - ID do carro selecionado.
+   */
   const handleCardClick = (carroId) => {
     setCarroId(carros.find(carro => carro.id === carroId));
   };
 
+  //imagens associadas a carros
   const imagensCarros = {
     4: FiatUno,
     5: FordKa,
@@ -96,7 +109,7 @@ export default function Pesquisa() {
           console.log(`Busca: ${buscaLower}, Cidade do carro: ${carroCidadeLower}`);
           return carroCidadeLower.includes(buscaLower);
         }).filter((carro) => {
-          return true;//!containsArray(diasEntreDatas, carro.diasAlugado);
+          return true;
         }).map((carro, index) => {
           return (
             <Col xs={12} md={6} lg={4} key={index}>

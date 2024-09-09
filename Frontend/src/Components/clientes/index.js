@@ -4,10 +4,18 @@ import Message from "../../Components/Message/Message";
 import { useEffect, useState } from "react";
 import "./style.css"
 
+/**
+ * Componente que exibe a lista de clientes em uma tabela com opções de visualização e adição.
+ * @component
+ * @returns {JSX.Element} Retorna um elemento JSX contendo a tabela de clientes.
+ */
 export default function Clientes(params) {
     const [clientes, setClientes] = useState([])
     const [messageRemove] = useState('');
 
+    /**
+     * Hook useEffect para buscar dados dos clientes na API quando o componente é iniciado.
+     */
     useEffect(() => {
         fetch('http://localhost:4000/clientes', {
             method: 'GET',

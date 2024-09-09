@@ -10,13 +10,21 @@ import useAluguelStore from "../Zustand/storeAluguel";
 import { pt } from "date-fns/locale";
 import "./style.css";
 
-
+/**
+ * Componente de pesquisa de carros para aluguel que permite selecionar a cidade e o intervalo de datas.
+ * @component
+ * @returns {JSX.Element} Retorna um elemento JSX que contém um campo de busca para a cidade e um seletor de intervalo de datas.
+ */
 export default function BarraPesquisa() {
   const setBusca = useAluguelStore((state) => state.setBuscar);
   const busca = useAluguelStore((state) => state.buscar);
   const [digita, setDigita] = useState(busca);
   const [carros, setCarros] = useState([]);
   
+
+  /**
+   * Hook useEffect para buscar os carros da API ao carregar o componente.
+   */
   useEffect(() => {
     axios.get('http://localhost:5000/api/cars')
       .then(response => {
@@ -27,10 +35,18 @@ export default function BarraPesquisa() {
       });
   }, []);
 
+  /**
+   * Função para lidar com mudanças no campo de busca de cidade.
+   * @param {Object} event - O evento do campo de entrada.
+   */
   const onChange = (event) => {
     setDigita(event.target.value);
   }
 
+  /**
+   * Função para definir o termo de busca e ativar a busca na aplicação.
+   * @param {string} searchTerm - O termo de busca selecionado ou digitado.
+   */
   const onSearch = (searchTerm) => {
     setDigita(searchTerm);
     setBusca(searchTerm);
@@ -49,6 +65,9 @@ export default function BarraPesquisa() {
   const [open, setOpen] = useState(false);
   const refOne = useRef(null);
 
+  /**
+   * Hook useEffect para adicionar eventos de teclado e clique, e calcular os dias de aluguel.
+   */
   useEffect(() => {
     document.addEventListener("keydown", hideOnEscape, true);
     document.addEventListener("click", hideOnClickOutside, true);
@@ -59,12 +78,20 @@ export default function BarraPesquisa() {
     setDiasAluguel(dias);
   }, [range]);
 
+  /**
+   * Função para fechar o calendário ao pressionar a tecla "Escape".
+   * @param {Object} e - O evento de teclado.
+   */
   const hideOnEscape = (e) => {
     if (e.key === "Escape") {
       setOpen(false);
     }
   }
 
+  /**
+   * Função para fechar o calendário ao clicar fora dele.
+   * @param {Object} e - O evento de clique.
+   */
   const hideOnClickOutside = (e) => {
     if (refOne.current && !refOne.current.contains(e.target)) {
       setOpen(false);

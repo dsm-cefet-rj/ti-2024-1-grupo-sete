@@ -9,11 +9,12 @@ import Tesla from '../../Assets/Tesla.jpg';
 import Honda from '../../Assets/honda.jpg';
 import './style.css';
 
-
- 
- 
-
-
+/**
+ * Componente que exibe um carrossel de carros disponíveis para visualização.
+ * @component
+ * @param {Object} props - Propriedades passadas para o componente.
+ * @returns {JSX.Element} Retorna um elemento JSX contendo o carrossel de imagens de carros.
+ */
 export default function CarrosselCarro(props){
     return(       
         <div>
