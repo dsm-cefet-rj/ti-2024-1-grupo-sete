@@ -18,6 +18,12 @@ import { FaUser } from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+/**
+ * Componente de Cabeçalho Principal.
+ * Exibe um cabeçalho com navegação e opções de menu, que muda dependendo do estado de autenticação do usuário.
+ * Inclui links para páginas principais, opções de perfil do usuário autenticado, e funcionalidades de login e cadastro para usuários não autenticados.
+ * Também fornece uma funcionalidade de logout que limpa o estado de autenticação e redireciona o usuário para a página inicial.
+ */
 export default function HeaderMain(props) {
   const isLogged = useUserStore((state) => state.isAuthenticated);
   const userName = useUserStore((state) => state.usuario.name);
@@ -26,6 +32,10 @@ export default function HeaderMain(props) {
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
 
+  /**
+   * Manipula o logout do usuário. Limpa o estado de autenticação e remove o token do localStorage.
+   * Exibe uma notificação de sucesso e redireciona o usuário para a página inicial após um pequeno atraso.
+   */
   const handleLogout = () => {
     useUserStore.getState().logout();
     localStorage.removeItem("token");
@@ -42,6 +52,9 @@ export default function HeaderMain(props) {
     }, 2000); 
   };
 
+  /**
+   * Alterna o estado de visibilidade do menu colapsável.
+   */
   const toggle = () => setIsOpen(!isOpen);
   return (
     <>
