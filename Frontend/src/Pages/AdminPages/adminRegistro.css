@@ -1,0 +1,80 @@
+/* Importando a fonte Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Aplicar fonte padrão ao corpo da página */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo do Formulário */
+.card {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  font-weight: 500;
+  text-align: center;
+  display: block;
+}
+
+.form-control {
+  text-align: center;
+}
+
+/* Estilo dos Botões */
+.btn {
+  display: block;
+  margin: 10px auto;
+  font-weight: 500;
+}
+
+/* Estilo da Tabela */
+.table {
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  text-align: center;
+}
+
+/* Estilo dos Títulos */
+.titulo {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0; /* Ajuste a margem conforme necessário */
+  text-align: center;
+  color: #333;
+}
+
+/* Estilo de Alertas */
+.alert {
+  text-align: center;
+}
+
+th.sortable {
+    cursor: pointer; /* Muda o cursor para indicar que o cabeçalho é clicável */
+    background-color: #f8f9fa; /* Cor de fundo inicial */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transições suaves */
+    padding: 10px; /* Adiciona um pouco de espaço ao redor do texto */
+  }
+  
+  th.sortable:hover {
+    background-color: #e9ecef; /* Cor de fundo quando o mouse está sobre o cabeçalho */
+    color: #007bff; /* Cor do texto quando o mouse está sobre o cabeçalho */
+  }
+  

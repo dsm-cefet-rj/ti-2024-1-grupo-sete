@@ -1,4 +1,4 @@
-import {createService, findAllService} from "../services/aluguel.service.js";
+import {createService, findAllService, byUserService} from "../services/aluguel.service.js";
 
 const create = async (req, res) => {
     try{
@@ -59,6 +59,29 @@ const findAll = async (req, res) => {
     }
 }
 
+const byUser = async (req, res) => {
+    try{
+        const id = req.userId;
+        const aluguel = await byUserService(id);
+
+        return res.send({
+            results: aluguel.map((aluguelItem) => ({
+                id: aluguelItem._id,
+                valorDia: aluguelItem.valorDia,
+                valorTotal: aluguelItem.valorTotal,
+                quantidadeDias: aluguelItem.quantidadeDias, 
+                userId: aluguelItem.user._id,
+                carroId: aluguelItem.carro._id,
+                userEmail: aluguelItem.user.email,
+                userName: aluguelItem.user.name,
+                userEndereco: aluguelItem.user.endereco,
+            })),
+        });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
 
 
-export default { create, findAll };
+
+export default { create, findAll, byUser };

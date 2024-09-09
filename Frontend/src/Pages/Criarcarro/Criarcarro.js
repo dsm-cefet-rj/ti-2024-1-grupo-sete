@@ -38,6 +38,7 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
       toast.warning("Por favor, preencha todos os campos.", {
         position: "top-center",
         autoClose: 2700,
+        containerId: "shared-toast-container"
       });
       return;
     }
@@ -64,6 +65,7 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
       toast.success("Carro cadastrado com sucesso!", {
         position: "top-center",
         autoClose: 2700,
+        containerId: "shared-toast-container"
       });
       timer();
 
@@ -91,7 +93,6 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
     <>
       <div className="page-container">
         <HeaderMain />
-        <ToastContainer/>
         <form onSubmit={submit} className="form">
           {submitted ? (
             <div className="thank-you-message">

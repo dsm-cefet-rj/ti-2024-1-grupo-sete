@@ -61,6 +61,7 @@ function Login() {
         position: "top-center",
         autoClose: 2700,
         theme: "colored",
+        containerId: "shared-toast-container"
         }
       );
 
@@ -76,12 +77,9 @@ function Login() {
           position: "top-center",
           autoClose: 2700,
           theme: "colored",
+          containerId: "shared-toast-container"
           }
         );
-        
-        setError(error.response.data.message || "Erro no login. Tente novamente.");
-      } else {
-        setError("Erro ao tentar fazer login: " + error.message);
       }
     }
   };
@@ -97,7 +95,6 @@ function Login() {
     <>
       <div className="page-container">
         <HeaderMain />
-        <ToastContainer/>
         <div className="content-wrap">
           <form className="form" onSubmit={handleSubmit}>
             <span className="login-form-title">Bem Vindo!</span>
@@ -136,7 +133,7 @@ function Login() {
             <div className="text-center">
               <span className="txt1">Não possui conta?</span>
               <a className="txt2" href="#">
-              <Link className="nav-link" aria-current="page" to="/clientes">Criar conta.</Link>
+              <Link className="nav-link" aria-current="page" to="/cadastro">Criar conta.</Link>
               </a>
             </div>
           </form>

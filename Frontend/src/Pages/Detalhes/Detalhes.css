@@ -86,6 +86,7 @@
     text-align: center;
     color: var(--cor4);
     margin: 20px;
+    
 }
 
 .button-container {
@@ -94,6 +95,7 @@
     margin: 1px;
     margin-bottom: 50px;
     gap: 120px;
+    
 }
 .button-alugar{
     border: 2px solid var(--cor4);
@@ -104,6 +106,9 @@
     width: 100px;
     height: 40px;
     font-size: small;
+    text-align: center;
+    color: var(--cor4);
+    margin: 20px;
 }
 .button-alugar:hover {
     cursor: pointer;

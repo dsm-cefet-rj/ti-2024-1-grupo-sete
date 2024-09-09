@@ -34,6 +34,7 @@ export default function HeaderMain(props) {
       {
         position: "top-center",
         autoClose: 2700,
+        containerId: "shared-toast-container"
       }
     );
     setTimeout(() => {
@@ -142,7 +143,7 @@ export default function HeaderMain(props) {
                           <Link
                             className="nav-link"
                             aria-current="page"
-                            to="/alugueis-em-andamento" // CONTRUIR!!!!!!!!
+                            to="/aluguelativo" // CONTRUIR!!!!!!!!
                           >
                             Aluguéis em Andamento
                           </Link>
@@ -191,7 +192,6 @@ export default function HeaderMain(props) {
           </div>
         </nav>
       </div>
-      <ToastContainer/>
     </>
   );
 }

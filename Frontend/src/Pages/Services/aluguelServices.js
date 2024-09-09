@@ -11,3 +11,13 @@ export function getAllAluguel(){
     });
     return response;
 };
+
+export function getAllAluguelByUser(){
+    const tokenGetAluguelByUser = localStorage.getItem('token');
+    const response = axios.get(`${baseURL}/aluguel/byUser`, {
+        headers: {
+            Authorization: `Bearer ${tokenGetAluguelByUser}`
+        },
+    });
+    return response;
+};
