@@ -36,21 +36,22 @@ const findAll = async (req, res) => {
         //console.log(aluguel[1].user.name)
 
         res.send({
-            results: aluguel.map((carrosItem) => ({
-                id: carrosItem._id,
-                valorDia: carrosItem.valorDia,
-                valorTotal: carrosItem.valorTotal,
-                quantidadeDias: carrosItem.quantidadeDias, 
-                userId: carrosItem.user._id,
-                carroId: carrosItem.carro._id,
-                userEmail: carrosItem.user.email,
-                userName: carrosItem.user.name,
-                userEndereco: carrosItem.user.endereco,
-                //carro: carrosItem.carro._id,
-                // modelo: carrosItem.carro.modelo,
-                // fotoLink1: carrosItem.fotoLink1,
-                // diasAlugado: carrosItem.diasAlugado,
-                // dataCriado: carrosItem.dataCriado,
+            results: aluguel.map((aluguelItem) => ({
+                id: aluguelItem._id,
+                valorDia: aluguelItem.valorDia,
+                valorTotal: aluguelItem.valorTotal,
+                quantidadeDias: aluguelItem.quantidadeDias, 
+                userId: aluguelItem.user._id,
+                carroId: aluguelItem.carro._id,
+                modelo: aluguelItem.carro.modelo,
+                userEmail: aluguelItem.carro.user.email,
+                userName: aluguelItem.carro.user.name,
+                userEndereco: aluguelItem.user.endereco,
+                //carro: aluguelItem.carro._id,
+                // modelo: aluguelItem.carro.modelo,
+                // fotoLink1: aluguelItem.fotoLink1,
+                // diasAlugado: aluguelItem.diasAlugado,
+                // dataCriado: aluguelItem.dataCriado,
             })),
         });
 
@@ -71,6 +72,7 @@ const byUser = async (req, res) => {
                 valorTotal: aluguelItem.valorTotal,
                 quantidadeDias: aluguelItem.quantidadeDias, 
                 userId: aluguelItem.user._id,
+                modelo: aluguelItem.carro.modelo,
                 carroId: aluguelItem.carro._id,
                 userEmail: aluguelItem.user.email,
                 userName: aluguelItem.user.name,

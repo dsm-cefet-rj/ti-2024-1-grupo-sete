@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllAluguelByUser } from "../Services/aluguelServices.js";
-import HeaderMain from "../../Components/Header";
+import HeaderMain from "../../Components/Header/index.jsx";
 import Footer from "../../Components/Footer/footer";
-import "./Atualizarcarro.css";
 import Message from "../../Components/Message/Message";
 import { Table, Button, Form } from "react-bootstrap";
 
@@ -34,11 +33,12 @@ export default function AluguelAtivo() {
   return (
     <div>
         <HeaderMain/>
+        <h1 className='titulo'>Aluguéis ativos</h1>
         {messageRemove && <Message type="success" msg={messageRemove}/>}
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID carro</th>
+              <th>Modelo</th>
               <th>Valor total</th>
               <th>Dias alugados</th>
               <th>Ações</th>
@@ -47,7 +47,7 @@ export default function AluguelAtivo() {
           <tbody>
             {aluguel.map((aluguel) => (
               <tr key={aluguel.carro}>
-                <td>{aluguel.carroId}</td>
+                <td>{aluguel.modelo}</td>
                 <td>{aluguel.valorTotal}</td>
                 <td>{aluguel.quantidadeDias.length}</td>
                 <td>
@@ -57,6 +57,7 @@ export default function AluguelAtivo() {
                   >
                     Editar
                   </Button>
+                  <button className="btn btn-danger" type="submit">Deletar Aluguel</button>
                 </td>
               </tr>
             ))}

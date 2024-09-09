@@ -1,83 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import "./styles.css";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { getAllRegistroByUser } from "../Services/registroServices";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
+import Message from "../../Components/Message/Message";
+import { Table, Button } from "react-bootstrap";
 
-const Historico = () => {
-  const [registros, setRegistros] = useState([]);
-
-  const token = localStorage.getItem("token");
+export default function Historico() {
+  const [registro, setRegistro] = useState([]);
+  const [messageRemove, setMessageRemove] = useState('');  
+  //const [editingCarro, setEditingCarro] = useState(null);
+  
 
   useEffect(() => {
-    async function carregarRegistros() {
+    const fetchRegistro = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/registros', {
-          headers: {
-            'x-auth-token': token,
-          },
-        });
-        setRegistros(response.data);
+        const data = await getAllRegistroByUser();
+        console.log("\n\nAlugueis encontrados by user:", data);
+        setRegistro(data.data.results);
       } catch (error) {
-        console.error("Erro ao carregar registros:", error.response ? error.response.data : error.message);
+        console.error("Erro ao buscar Aluguel:", error.response.data.message);
+        //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+        setRegistro([]); 
       }
-    }
+    };
   
-    carregarRegistros();
-  }, [token]);
+    fetchRegistro();
+  }, []);
 
+  function RemoveCarro(id){
+    setMessageRemove('Carro foi removido com sucesso!');
+  }
   return (
-    <div className="page-container">
-      <HeaderMain />
-      <div className="content-wrap">
-        <div className="historicoTabela">
-          <h1 style={{ marginTop: "30px", marginBottom: "30px" }}>
-            Histórico de Aluguéis
-          </h1>
-
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Carro Alugado</th>
-                <th>Valor total</th>
-                <th>Método</th>
-                {/* Remove a coluna de Status */}
-                <th>Data de Locação</th>
-                <th>Hora de Locação</th>
-                <th>Detalhes</th>
+    <div>
+        <HeaderMain/>
+        {messageRemove && <Message type="success" msg={messageRemove}/>}
+        <h1 className = 'titulo'> Histórico de Pagamentos</h1>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID carro</th>
+              <th>Valor total</th>
+              <th>Dias alugados</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {registro.map((registro) => (
+              <tr key={registro.carro}>
+                <td>{registro.carro}</td>
+                <td>{registro.valorTotal}</td>
+                <td>{registro.quantidadeDias.length}</td>
+                <td>
+                  <Button
+                    variant="primary"
+                    //onClick={() => setEditingCarro(registro)}
+                  >
+                    Editar
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {registros?.map((registro, index) => (
-                <tr key={index}>
-                  <td>{registro?.nome}</td>
-                  <td>{registro?.carro}</td>
-                  <td>
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(registro?.valorDiario * registro?.quantDias)}
-                  </td>
-                  <td>{registro?.formPagamento}</td>
-                  <td>{registro?.dataLocacao}</td>
-                  <td>{registro?.horaLocacao}</td>
-                  <td>
-                    <Link to={`/historico/${index}`}>
-                      <button className="visu">Visualizar</button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      </div>
-      <Footer className="footer" />
+            ))}
+          </tbody>
+        </Table>
+        <footer>
+            <Footer/>
+        </footer>
     </div>
   );
-};
-
-export default Historico;
+}

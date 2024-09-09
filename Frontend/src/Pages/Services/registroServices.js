@@ -30,3 +30,13 @@ export async function getAllRegistro(){
     });
     return response;
 } ;
+
+export function getAllRegistroByUser(){
+    const tokenGetRegistroByUser = localStorage.getItem('token');
+    const response = axios.get(`${baseURL}/registro/byUser`, {
+        headers: {
+            Authorization: `Bearer ${tokenGetRegistroByUser}`
+        },
+    });
+    return response;
+};

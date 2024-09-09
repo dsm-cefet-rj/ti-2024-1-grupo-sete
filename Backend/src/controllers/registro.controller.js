@@ -1,4 +1,4 @@
-import { createService, findAllService } from "../services/registro.service.js";
+import { createService, findAllService, byUserService } from "../services/registro.service.js";
 
 const create = async (req, res) => {
     try{
@@ -44,6 +44,7 @@ const findAll = async (req, res) => {
         res.send({
             results: registro.map((registros) => ({
                 id: registros._id,
+                userName: registros.user.name,
                 valorDia: registros.valorDia,
                 valorTotal: registros.valorTotal,
                 quantidadeDias: registros.quantidadeDias,
@@ -51,7 +52,6 @@ const findAll = async (req, res) => {
                 formaPagamento: registros.formaPagamento,
                 userId: registros.user._id,
                 userEmail: registros.user.email,
-                userName: registros.user.name,
                 userEndereco: registros.user.endereco,
                 //carroId: registros.carro._id,
                 // modelo: registros.carro.modelo,
@@ -66,4 +66,25 @@ const findAll = async (req, res) => {
     }
 }
 
-export { create, findAll };
+const byUser = async (req, res) => {
+    try{
+        const id = req.userId;
+        const registro = await byUserService(id);
+
+        console.log('Registro:', registro);
+        return res.send({
+            results: registro.map((registroItem) => ({
+                id: registroItem._id,
+                valorDia: registroItem.valorDia,
+                valorTotal: registroItem.valorTotal,
+                quantidadeDias: registroItem.quantidadeDias, 
+                userId: registroItem.user._id,
+                userName: registroItem.user.name
+            })),
+        });
+    }catch(err) {
+        res.status(500).send({message: err.message});
+    }
+};
+
+export { create, findAll, byUser };

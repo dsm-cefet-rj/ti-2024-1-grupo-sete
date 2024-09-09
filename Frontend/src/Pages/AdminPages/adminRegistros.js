@@ -24,7 +24,7 @@ export default function AdminRegistros() {
 
   // Estados para paginação
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export default function AdminRegistros() {
         const response = await getAllRegistro();
         setRegistro(response.data.results);
         setFilteredRegistro(response.data.results); // Inicialmente mostra todos os registros
+        console.log("VERIFICANDO REGISTRO", response.data.results)
       } catch (error) {
         console.error(error.response.data.message);
         setMessage("Erro ao buscar registros. Tente novamente mais tarde.");
@@ -194,25 +195,16 @@ export default function AdminRegistros() {
                 Data pagamento {renderSortArrow('date')}
               </th>
               <th>Dias alugados</th>
-              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
             {paginatedRecords.map((registro) => (
               <tr key={registro._id}>
-                <td>{registro.userId}</td>
+                <td>{registro.userName}</td>
                 <td>{registro.valorTotal}</td>
                 <td>{registro.formaPagamento}</td>
                 <td>{format(registro.dataDoPagamento, "dd/MM/yyyy")}</td>
                 <td>{registro.quantidadeDias.length}</td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={() => setEditingCarro(registro)}
-                  >
-                    Editar
-                  </Button>
-                </td>
               </tr>
             ))}
           </tbody>
