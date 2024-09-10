@@ -83,7 +83,7 @@ const findAll = async (req, res) => {
                 userName: registros.user.name,
                 userEmail: registros.user.email,
                 userEndereco: registros.user.endereco,
-                carroModelo: registros.carro.modelo,
+                //carroModelo: registros.carro.modelo,
                 //carroId: registros.carro._id,
                 // modelo: registros.carro.modelo,
                 // fotoLink1: registros.fotoLink1,

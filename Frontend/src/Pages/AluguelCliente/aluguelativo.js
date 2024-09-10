@@ -63,8 +63,12 @@ export default function AluguelAtivo() {
             {aluguel.map((aluguel) => (
               <tr key={aluguel.carro}>
                 <td>{aluguel.modelo}</td>
-                <td>{aluguel.valorTotal}</td>
-                <td>{aluguel.quantidadeDias.length}</td>
+                <td>{new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(aluguel.valorTotal)}</td>
+                <td>{aluguel.quantidadeDias.length}
+                  <div></div>({aluguel.quantidadeDias[0]} até {aluguel.quantidadeDias[aluguel.quantidadeDias.length-1]})</td>
                 <td>
                   <Button
                     variant="primary"

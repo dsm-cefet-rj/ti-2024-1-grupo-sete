@@ -40,6 +40,7 @@ export default function AdminAlugueis() {
       try {
         const response = await getAllAluguel();
         setAluguel(response.data.results);
+        console.log("\n\nAluguéis encontrados:", response.data.results);
         setFilteredAluguel(response.data.results); // Inicialmente mostra todos os registros
         console.log("\n\nAluguéis encontrados:", response.data.results);
       } catch (error) {
@@ -239,8 +240,11 @@ export default function AdminAlugueis() {
               <tr key={aluguel._id}>
                 <td>{aluguel.userName}</td>
                 <td>{aluguel.modelo}</td>
-                <td>{aluguel.valorTotal}</td>
-                <td>{aluguel.quantidadeDias.length}</td>
+                <td>{new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(aluguel.valorTotal)}</td>
+                <td>{aluguel.quantidadeDias.length} <div></div> ({aluguel.quantidadeDias[0]} até {aluguel.quantidadeDias[aluguel.quantidadeDias.length-1]})</td>
                 <td>
                   <Button
                     variant="primary"

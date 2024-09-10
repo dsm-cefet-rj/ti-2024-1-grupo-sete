@@ -24,7 +24,7 @@ const ProtectedAdminRoutes = ({ component: Component, ...rest }) => {
           isAdmin ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/not-authorized" />
+            <Redirect to="/" />
           )
         ) : (
           <Redirect to="/login" />

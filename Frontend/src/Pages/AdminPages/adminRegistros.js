@@ -40,6 +40,7 @@ export default function AdminRegistros() {
       try {
         const response = await getAllRegistro();
         setRegistro(response.data.results);
+        console.log("VERIFICANDO REGISTRO", response.data.results)
         setFilteredRegistro(response.data.results); // Inicialmente mostra todos os registros
         console.log("VERIFICANDO REGISTRO", response.data.results)
       } catch (error) {
@@ -231,7 +232,10 @@ export default function AdminRegistros() {
             {paginatedRecords.map((registro) => (
               <tr key={registro._id}>
                 <td>{registro.userName}</td>
-                <td>{registro.valorTotal}</td>
+                <td>{new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(registro.valorTotal)}</td>
                 <td>{registro.formaPagamento}</td>
                 <td>{format(registro.dataDoPagamento, "dd/MM/yyyy")}</td>
                 <td>{registro.quantidadeDias.length}</td>

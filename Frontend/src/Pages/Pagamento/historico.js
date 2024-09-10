@@ -10,8 +10,8 @@ import { Table, Button } from "react-bootstrap";
  * @returns {React.ReactElement} O componente de histórico, que inclui uma tabela com informações de alugueis e uma mensagem de sucesso.
  * @description
  * O componente 'Historico' exibe o histórico de pagamentos realizados pelo usuário. Ele faz uma chamada à API para buscar
- * todos os registros de aluguel associados ao usuário e os exibe em uma tabela. Inclui funcionalidades para:
- * - Carregar e exibir dados de registros de aluguel.
+ * todos os registros de registro associados ao usuário e os exibe em uma tabela. Inclui funcionalidades para:
+ * - Carregar e exibir dados de registros de registro.
  * - Mostrar uma mensagem de sucesso quando um carro é removido (ainda não implementada para remover efetivamente um carro).
  * @component
  */
@@ -28,7 +28,7 @@ export default function Historico() {
         console.log("\n\nAlugueis encontrados by user:", data);
         setRegistro(data.data.results);
       } catch (error) {
-        console.error("Erro ao buscar Aluguel:", error.response.data.message);
+        console.error("Erro ao buscar registro:", error.response.data.message);
         //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
         setRegistro([]); 
       }
@@ -57,9 +57,13 @@ export default function Historico() {
           <tbody>
             {registro.map((registro) => (
               <tr key={registro.carro}>
-                <td>{registro.carro}</td>
-                <td>{registro.valorTotal}</td>
-                <td>{registro.quantidadeDias.length}</td>
+                <td>{registro.modeloRegistro}</td>
+                <td>{new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(registro.valorTotal)}</td>
+                <td>{registro.quantidadeDias.length}
+                <div></div>({registro.quantidadeDias[0]} até {registro.quantidadeDias[registro.quantidadeDias.length-1]})</td>
                 <td>
                   <Button
                     variant="primary"
