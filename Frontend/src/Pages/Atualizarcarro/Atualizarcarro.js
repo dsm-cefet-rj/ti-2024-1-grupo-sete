@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllCarrosByUser } from "../Services/carrosServices";
+import { getAllCarrosByUser, deleteCarroByUser, findCarroById } from "../Services/carrosServices";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./Atualizarcarro.css";
@@ -17,7 +17,7 @@ import Atualizarcarrocard from "../../Components/Cardatualizarcarro/Atualizarcar
 export default function AtualizarCarros() {
   const [carros, setCarros] = useState([]); // Estado para armazenar a lista de carros
   const [messageRemove, setMessageRemove] = useState('');  // Estado para armazenar mensagens de feedback ao remover carro
-  //const [editingCarro, setEditingCarro] = useState(null);
+  const [messageRemoveFail, setMessageRemoveFail] = useState('');
   
   useEffect(() => {
     /**
@@ -36,19 +36,44 @@ export default function AtualizarCarros() {
     };
   
     fetchCarros(); // Chama a função para buscar os carros
-  }, []);
+  }, [messageRemove]);
+
+  /**
+     * Função para apaga um carro do usuário.
+     */
+  const apagarCarro = async (id) => {
+    try {
+      const certificaCarro = await findCarroById(id);
+      const temDiasAlugado = certificaCarro.data.carros.diasAlugado;
+      console.log("certificaCarro:", temDiasAlugado);
+      if (temDiasAlugado.length == 0){
+        console.log("Dentro do if:", temDiasAlugado);
+        const data = await deleteCarroByUser(id);
+        setMessageRemove(data.data.message);
+      }
+      else{
+        setMessageRemoveFail('Não é possível deletar este carro, porque este carro possui aluguel ativo')       
+      }
+      
+    } catch (error) {
+      console.error("Erro ao buscar carros:", error.response.data.message);
+      //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+      setCarros([]); 
+    }
+  };
 
   /**
    * Função para lidar com a remoção de um carro.
    * @param {string} id - O ID do carro a ser removido.
    */
   function RemoveCarro(id){
-    setMessageRemove('Carro foi removido com sucesso!');
+    apagarCarro(id);
   }
   return (
     <div>
         <HeaderMain/>
         {messageRemove && <Message type="success" msg={messageRemove}/>}
+        {messageRemoveFail && <Message type="error" msg={messageRemoveFail}/>}
             <div className="carro-container">
                 <div className="carro-titulo">
                     <h1>Meus carros</h1>
@@ -57,7 +82,6 @@ export default function AtualizarCarros() {
                     {carros.length > 0 &&
                     carros.map((carro) => (
                         <Atualizarcarrocard id={carro.id}
-                            userName={carro.userName}
                             modelo={carro.modelo}
                             ano={carro.ano}
                             cidade={carro.cidade}
