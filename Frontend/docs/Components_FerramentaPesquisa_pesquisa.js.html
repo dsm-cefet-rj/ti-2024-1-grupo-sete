@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/FerramentaPesquisa/pesquisa.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/FerramentaPesquisa/pesquisa.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import BarraPesquisa from './barrapesquisa';
+import format from 'date-fns/format';
+import './style.css';
+import useAluguelStore from '../Zustand/storeAluguel';
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { getAllCarrosByUser, getAllCarros } from '../../Pages/Services/carrosServices';
+
+/**
+ * Verifica se o intervalo de dias está contido em outro intervalo de dias.
+ * @param {Array} array1 - Primeiro array de dias no formato Date.
+ * @param {Array} array2 - Segundo array de dias no formato de string (dd/MM/yyyy).
+ * @returns {boolean} Retorna true se houver sobreposição entre os dias dos dois arrays.
+ */
+function containsArray(array1, array2) {
+  for (let i = 0; i &lt; array1.length; i++) {
+    const elemento = format(array1[i], "dd/MM/yyyy");
+    //console.log(array2[0]);
+
+    for (let j=0; j &lt; array2.length; j++){
+      const newarray = array2[j]
+      console.log(newarray);
+      //console.log("comparando ", array2[0])
+    if (newarray.includes(elemento)) {
+      console.log("comparando ", elemento, " com ", array2[0])
+      console.log("bateu");
+      return true;
+    }
+  }
+
+    //console.log(elemento);
+  }
+
+  return false;
+}
+
+/**
+ * Componente de pesquisa que exibe uma lista de carros disponíveis com base na busca por cidade e datas selecionadas.
+ * @component
+ * @returns {JSX.Element} Retorna o layout do componente com os resultados da pesquisa.
+ */
+export default function Pesquisa() {
+  const [carros, setCarros] = useState([]);
+  const busca = useAluguelStore((state) => state.buscar);
+  const diasEntreDatas = useAluguelStore((state) => state?.diasAluguel);
+  const setCarroId = useAluguelStore((state) => state.setCarroId);
+  const [message, setMessage] = useState('');
+
+  /**
+   * Hook useEffect para buscar os carros ao carregar o componente ou quando os dias de aluguel são alterados.
+   */
+  useEffect(() => {
+    const fetchCarros = async () => {
+      try {
+        console.log("\n\n\nFETCH CARROS TOKEN:", localStorage.getItem('token'))
+        const data = await getAllCarros();
+        console.log("Carros encontrados:", data);
+        setCarros(data.data.results);        
+      } catch (error) {
+        console.error("Erro ao buscar carros:", error);
+        setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+        setCarros([]); 
+      }
+    };
+
+  
+    fetchCarros();
+  }, [diasEntreDatas]);
+
+  let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
+  let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
+
+
+  //console.log("\n\nDias entre datas:", format(diasEntreDatas[0], "dd/MM/yyyy"));
+  //console.log(diasEntreDatas);
+
+
+  //função ativada quando clica em um card de carro
+  const handleCardClick = (carroId) => {
+    setCarroId(carros.find(carro => carro.id === carroId));
+  };
+
+  return (
+    &lt;div>
+      &lt;div>
+        &lt;BarraPesquisa />
+      &lt;/div>
+      &lt;h1 className='t1'>
+        {busca ? `Busca para: Cidade "${busca}" e para ${diasEntreDatas?.length} dias (${primeiroDia} até ${ultimoDia})` : `Busca para: ${diasEntreDatas.length} dias (${primeiroDia} até ${ultimoDia})`}
+      &lt;/h1>
+
+      &lt;Row>
+        {carros.filter((carro) => {
+          if (!busca) return true;
+          const buscaLower = busca.toLowerCase();
+          const carroCidadeLower = carro.cidade.toLowerCase();
+          console.log(`Busca: ${buscaLower}, Cidade do carro: ${carroCidadeLower}`);
+          return carroCidadeLower.includes(buscaLower);
+        }).filter((carro) => {
+          return !containsArray(diasEntreDatas, carro.diasAlugado);
+        }).map((carro, index) => {
+          return (
+            &lt;Col xs={12} md={6} lg={4} key={index}>
+              &lt;Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
+                &lt;Link to={`/detalhes/${carro.id}`} className="link">
+                  &lt;CardBody>
+                    {/* &lt;CardImg
+                      src={carro.fotoLink1}
+                      alt={carro.modelo}
+                      onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                      style={{
+
+                      }}
+                    /> */}
+                    &lt;img
+                      alt="Sample"
+                      src={carro.fotoLink1}
+                      style={{
+                        width: "100%",
+                        height: "300px"
+                      }}
+                    />
+                    &lt;CardTitle
+                    style={{
+                      paddingTop: "0.7em"
+                    }}>&lt;h2 className='titleCard'>{carro.modelo}&lt;/h2>&lt;/CardTitle>
+                    &lt;CardText>
+                      &lt;p>Ano: {carro.ano}&lt;/p>
+                      &lt;p>Dono: {carro.userName}&lt;/p>
+                      &lt;p>Cidade: {carro.cidade}&lt;/p>
+                      &lt;p className="preco">Preço&lt;/p>
+                      &lt;h1 className="preco">R$ {carro.precoPorDia}/dia&lt;/h1>
+                      &lt;div className="buttonDetails">
+                        &lt;button className="btn btn-primary" type="submit">Mais Detalhes&lt;/button>
+                      &lt;/div>
+                    &lt;/CardText>
+                  &lt;/CardBody>
+                &lt;/Link>
+              &lt;/Card>
+            &lt;/Col>
+          );
+        })}
+      &lt;/Row>
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -9,6 +9,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
 
+/**
+ * Componente para criar um novo carro para alugar.
+ * @param {Object} props - Propriedades passadas para o componente.
+ * @param {Function} props.handleSubmit - Função chamada ao enviar o formulário.
+ * @param {string} props.botaotxt - Texto exibido no botão de envio.
+ * @param {Object} [props.carroData] - Dados iniciais do carro, se disponíveis.
+ * @param {string} [props.clienteId] - ID do cliente, se disponível.
+ * @returns {React.ReactElement} A página de criação de carro.
+ * @description
+ * O componente 'Criarcarro' permite que um usuário cadastre um novo carro para ser alugado. O formulário coleta informações como modelo, ano de 
+ * fabricação, cidade, preço por dia, detalhes adicionais e um link para uma foto do carro. 
+ * Após o envio do formulário, os dados do carro são enviados para um serviço externo e o usuário é notificado sobre o sucesso ou falha do processo.
+ */
 function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
   const [carro, setCarro] = useState(carroData || {});
   const [submitted, setSubmitted] = useState(false); 
@@ -24,6 +37,10 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
     }, 3000);  // 3000 ms = 3 segundos
   };
   
+  /**
+   * Função chamada ao enviar o formulário. Valida os dados e envia para o serviço de criação de carro.
+   * @param {React.FormEvent<HTMLFormElement>} e - Evento de envio do formulário.
+   */
   const submit = async (e) => {
     e.preventDefault();
     if (
@@ -85,6 +102,10 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
     //   });
   };
 
+  /**
+   * Função chamada ao mudar o valor dos campos do formulário.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de mudança no campo de input.
+   */
   function handleChange(e) {
     setCarro({ ...carro, [e.target.name]: e.target.value });
   }

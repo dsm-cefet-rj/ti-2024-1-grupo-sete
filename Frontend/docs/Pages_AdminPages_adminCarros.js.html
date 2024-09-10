@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/AdminPages/adminCarros.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/AdminPages/adminCarros.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect,useState} from "react";
+import HeaderMain from "../../Components/Header/index";
+import AdminMenu from "../../Components/MenuAdmin/AdminMenu";
+import {getAllCarros } from '../../Pages/Services/carrosServices';
+import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstrap';
+import { Link } from "react-router-dom";
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
+
+/**
+ * Componente para exibir e gerenciar os carros cadastrados na plataforma de administração.
+ * @returns {React.ReactElement} O layout da página de administração de carros com cards para cada carro cadastrado.
+ * @description
+ * O componente 'AdminCarros' é responsável por buscar a lista de carros cadastrados e exibi-los em forma de cards.
+ * Cada card inclui informações como modelo, ano, dono, cidade e preço por dia. 
+ * Inclui botões para visualizar mais detalhes e deletar o carro. Além disso, utiliza o Zustand para armazenar o ID do carro selecionado.
+ */
+export default function AdminCarros() {
+  const [carros, setCarros] = useState([]);
+  const setCarroId = useAluguelStore((state) => state.setCarroId);
+  const [message, setMessage] = useState('');
+  const diasEntreDatas = useAluguelStore((state) => state?.diasAluguel);
+
+
+useEffect(() => {
+  const fetchCarros = async () => {
+    try {
+      console.log("\n\n\nFETCH CARROS TOKEN:", localStorage.getItem('token'))
+      const data = await getAllCarros();
+      console.log("Carros encontrados:", data);
+      setCarros(data.data.results);
+
+
+      //console.log("PREÇO:", carros.results);
+
+      
+    } catch (error) {
+      console.error("Erro ao buscar carros:", error);
+      setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+      setCarros([]); 
+    }
+  };
+
+
+  fetchCarros();
+}, [diasEntreDatas]);
+
+/**
+   * Define o carro selecionado e o armazena no Zustand ao clicar no card.
+   * @param {string} carroId - ID do carro que foi clicado.
+   */
+const handleCardClick = (carroId) => {
+  setCarroId(carros.find(carro => carro.id === carroId));
+};
+  return (
+    &lt;>
+    &lt;HeaderMain/>
+    &lt;AdminMenu/>
+
+    &lt;h1 className="titulo">Carros cadastrados&lt;/h1>
+
+    &lt;div>
+      &lt;Row>
+        {carros.map((carro, index) => {
+          return (
+            &lt;Col xs={12} md={6} lg={4} key={index}>
+              &lt;Card className="card-carros" onClick={() => handleCardClick(carro.id)}>
+                &lt;Link to={`/detalhes/${carro.id}`} className="link">
+                  &lt;CardBody>
+                    {/* &lt;CardImg
+                      src={carro.fotoLink1} 
+                      alt={carro.modelo}
+                      onError={(error) => console.error('Erro ao carregar imagem:', error)}
+                    /> */}
+                    &lt;img
+                      alt="Sample"
+                      src={carro.fotoLink1}
+                      style={{
+                        width: "100%",
+                        height: "300px"
+                      }}
+                    />
+                    &lt;CardTitle>&lt;h2 className='titleCard'>{carro.modelo}&lt;/h2>&lt;/CardTitle>
+                    &lt;CardText>
+                      &lt;p>Ano: {carro.ano}&lt;/p>
+                      &lt;p>Dono: {carro.userName}&lt;/p>
+                      &lt;p>Cidade: {carro.cidade}&lt;/p>
+                      &lt;p className="preco">Preço&lt;/p>
+                      &lt;h1 className="preco">R$ {carro.precoPorDia}/dia&lt;/h1>
+                      &lt;div className="buttonDetails">
+                        &lt;button className="btn btn-primary" type="submit" style={{ marginRight: '10px' }} >Mais Detalhes&lt;/button> 
+                        &lt;button className="btn btn-danger" type="submit">Deletar Carro&lt;/button>
+                      &lt;/div>
+                    &lt;/CardText>
+                  &lt;/CardBody>
+                &lt;/Link>
+              &lt;/Card>
+            &lt;/Col>
+          );
+        })}
+      &lt;/Row>
+    &lt;/div>
+    &lt;/>
+  );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

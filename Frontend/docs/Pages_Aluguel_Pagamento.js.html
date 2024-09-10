@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Aluguel/Pagamento.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Aluguel/Pagamento.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { Container, Form, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import HeaderMain from "../../Components/Header";
+import qrCodeImage from "./qrcode.png"; 
+import "./aluguel.css"; 
+import axios from 'axios';
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
+import useUserStore from "../../Components/Zustand/storeUser";
+import format from 'date-fns/format';
+import { parseISO } from 'date-fns';
+import { updateDiasAlugado } from "../Services/carrosServices.js";
+import { createRegistro } from "../Services/registroServices.js";
+import { ToastContainer, toast } from 'react-toastify';
+
+/**
+ * Componente para realizar e confirmar o pagamento de um aluguel.
+ * @returns {React.ReactElement} A página de pagamento e confirmação do aluguel.
+ * @description
+ * O componente 'Pagamento' permite ao usuário selecionar a forma de pagamento (cartão de crédito, Pix ou boleto), preencher as informações 
+ * necessárias para a forma de pagamento selecionada, e confirmar o pagamento.
+ * Após a confirmação, o estado do aluguel é atualizado e um registro de pagamento é criado.
+ */
+const Pagamento = () => {
+  const location = useLocation();
+  const user = useUserStore((state)=> state.usuario.userId);
+  const clienteNome = useUserStore((state) => state.usuario.name);
+  const carro = useAluguelStore((state)=> state.carroId);
+  const carroID = useAluguelStore((state)=>state.carroId.id);
+  const quantidadeDias = useAluguelStore((state)=>state.diasAluguel)
+  const formattedDias = quantidadeDias.map(date => format(date, 'dd/MM/yyyy'));
+
+  const [formValues, setFormValues] = useState({
+    titular: "",
+    numeroCartao: "",
+    validade: "",
+    cvv: "",
+    formaPagamento: "cartao",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+  const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false);
+  const [_nomeCliente, setNomeCliente] = useState(""); 
+
+  //console.log("\n\nDias", formattedDias)
+
+  /**
+   * Atualiza o número de dias alugados para o carro especificado.
+   * @param {string} carroID - ID do carro.
+   * @param {Array} dias - Lista de datas de aluguel.
+   * @returns {Promise} A resposta da atualização.
+   */
+  const updateDiasAlugadoCarro = async (carroID, dias) => {
+    const responseDias = await updateDiasAlugado(carroID, dias);
+    return responseDias;
+  }
+
+  /**
+   * Cria um novo registro de pagamento.
+   * @param {Object} body - Dados do pagamento.
+   * @param {string} id - ID do carro.
+   * @returns {Promise} A resposta da criação do registro.
+   */
+  const criarRegistro = async (body, id) => {
+    const responseRegistro = await createRegistro(body, id);
+    return responseRegistro;
+  }
+
+  /**
+   * Manipula a confirmação do pagamento.
+   * Realiza a validação das informações do cartão e envia os dados de pagamento para o backend.
+   * Atualiza o estado do aluguel e cria um registro de pagamento.
+   */
+  const handleConfirmarPagamento = async () => {
+    const token = localStorage.getItem("token");
+
+    //console.log("Cliente Nome:", clienteNome);
+  
+    if (
+      formValues.formaPagamento === "cartao" &amp;&amp;
+      (!formValues.titular || !formValues.numeroCartao || !formValues.validade || !formValues.cvv)
+    ) {
+      alert("Por favor, preencha todas as informações do cartão de crédito.");
+      return;
+    }
+  
+    const novoAluguel = {
+      valorDia: carro?.precoPorDia|| 0, 
+      valorTotal: carro?.precoPorDia * quantidadeDias.length,
+      quantidadeDias: formattedDias
+    };
+
+    const formaPagamentoParaRegistro = formValues.formaPagamento;
+    const dataCriado = format(Date.now(), 'dd/MM/yyyy');
+    console.log("\n\nData criado: ", dataCriado);
+    const novoRegistro = {
+      valorDia: carro?.precoPorDia|| 0, 
+      valorTotal: carro?.precoPorDia * quantidadeDias.length,
+      quantidadeDias: formattedDias,
+      dataDoPagamento: dataCriado,
+      formaPagamento: formaPagamentoParaRegistro
+    };
+  
+    try {
+      //console.log(novoAluguel)
+      //console.log(carroID)
+      const response = await axios.post(`http://localhost:5000/aluguel/${carroID}`, novoAluguel, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
+  
+      console.log("Registro adicionado:", response.data);
+      setSuccessMessage("Pagamento realizado com sucesso!");
+      setPagamentoConfirmado(true); 
+
+      const responseDiasEdited = await updateDiasAlugadoCarro(carroID, formattedDias);
+      console.log(responseDiasEdited);
+
+      console.log("\n\nformaPagamentoParaRegistro", formValues.formaPagamento);
+
+      const registroCriado = await criarRegistro(novoRegistro, carroID);
+      console.log("\n\nREGISTRO CRIADO: ", registroCriado);
+    } catch (error) {
+      console.error("Erro ao processar pagamento:", error.response ? error.response.data : error.message);
+    }
+  };
+  
+  
+
+  return (
+    &lt;>
+      &lt;HeaderMain />
+      &lt;Container className="pagamento-container">
+        &lt;h1>Pagamento&lt;/h1>
+        {!pagamentoConfirmado ? ( 
+          &lt;Form className="form">
+            &lt;Form.Group className="formGroup" controlId="formaPagamento">
+              &lt;Form.Label>Forma de Pagamento&lt;/Form.Label>
+              &lt;Form.Select
+                name="formaPagamento"
+                value={formValues.formaPagamento}
+                onChange={(e) => setFormValues({
+                  ...formValues,
+                  formaPagamento: e.target.value,
+                })}
+              >
+                &lt;option value="cartao">Cartão de Crédito&lt;/option>
+                &lt;option value="pix">Pix&lt;/option>
+                &lt;option value="boleto">Boleto&lt;/option>
+              &lt;/Form.Select>
+            &lt;/Form.Group>
+
+            {formValues.formaPagamento === "cartao" &amp;&amp; (
+              &lt;>
+                &lt;Form.Group className="formGroup" controlId="titular">
+                  &lt;Form.Label>Titular do Cartão&lt;/Form.Label>
+                  &lt;Form.Control
+                    type="text"
+                    name="titular"
+                    value={formValues.titular}
+                    onChange={(e) => setFormValues({
+                      ...formValues,
+                      titular: e.target.value,
+                    })}
+                    placeholder="Nome completo"
+                    required />
+                &lt;/Form.Group>
+
+                &lt;Form.Group className="formGroup" controlId="numeroCartao">
+                  &lt;Form.Label>Número do Cartão&lt;/Form.Label>
+                  &lt;Form.Control
+                    type="text"
+                    name="numeroCartao"
+                    value={formValues.numeroCartao}
+                    onChange={(e) => setFormValues({
+                      ...formValues,
+                      numeroCartao: e.target.value,
+                    })}
+                    placeholder="1234 5678 9012 3456"
+                    required />
+                &lt;/Form.Group>
+
+                &lt;Form.Group className="formGroup" controlId="validade">
+                  &lt;Form.Label>Validade&lt;/Form.Label>
+                  &lt;Form.Control
+                    type="text"
+                    name="validade"
+                    value={formValues.validade}
+                    onChange={(e) => setFormValues({
+                      ...formValues,
+                      validade: e.target.value,
+                    })}
+                    placeholder="MM/AA"
+                    required />
+                &lt;/Form.Group>
+
+                &lt;Form.Group className="formGroup" controlId="cvv">
+                  &lt;Form.Label>CVV&lt;/Form.Label>
+                  &lt;Form.Control
+                    type="text"
+                    name="cvv"
+                    value={formValues.cvv}
+                    onChange={(e) => setFormValues({ ...formValues, cvv: e.target.value })}
+                    placeholder="123"
+                    required />
+                &lt;/Form.Group>
+              &lt;/>
+            )}
+
+            {formValues.formaPagamento === "pix" &amp;&amp; (
+              &lt;>
+                &lt;p>Pagamento via Pix. Siga as instruções no QR Code abaixo:&lt;/p>
+                &lt;img src={qrCodeImage} alt="QR Code" />
+              &lt;/>
+            )}
+
+            {formValues.formaPagamento === "boleto" &amp;&amp; (
+              &lt;p>Pagamento via Boleto. O boleto foi enviado via e-mail. Após o pagamento, confirme.&lt;/p>
+            )}
+
+            &lt;Button variant="primary" onClick={handleConfirmarPagamento}>
+              Confirmar Pagamento
+            &lt;/Button>
+          &lt;/Form>
+        ) : (
+          &lt;div className="success-message">
+            &lt;h3>{successMessage}&lt;/h3>
+          &lt;/div>
+        )}
+      &lt;/Container>
+    &lt;/>
+  );
+};
+
+export default Pagamento;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

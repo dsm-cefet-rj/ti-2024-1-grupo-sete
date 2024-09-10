@@ -9,19 +9,21 @@ import { FaUser, FaCar, FaCity, FaDollarSign } from 'react-icons/fa';
 import { findCarroById } from '../Services/carrosServices';
 //import useAluguelStore from "../../Components/Zustand/storeAluguel";
 
+/**
+ * Componente para exibir os detalhes de um veículo específico.
+ * @returns {React.ReactElement} A página de detalhes do veículo com informações e imagens do carro.
+ * @description
+ * O componente 'Detalhes' é responsável por exibir informações detalhadas sobre um veículo específico, incluindo o nome do proprietário, modelo, 
+ * ano, cidade e preço por dia. Utiliza um carrossel para exibir as fotos do carro e possui botões para voltar à página principal e para iniciar o 
+ * processo de aluguel do veículo.
+ * Ele utiliza o hook 'useParams' para obter o ID do veículo da URL e o hook 'useHistory' para redirecionar o usuário.
+ * Os dados do veículo são obtidos através de uma chamada assíncrona para a função 'findCarroById'.
+ */
 export default function Detalhes() {
   
     const { id } = useParams();
     const history = useHistory();
     const [carro, setCarro] = useState();
-    
-
-
-    // useEffect(() => {
-    //   const carroOfList = carros[id];
-    //   setCarro(carroOfList)
-    // }, [])
-    //console.log("ID:\n", id); ok
     
     useEffect(() => {
         const fetchCarrosById = async (id) => {
@@ -43,6 +45,10 @@ export default function Detalhes() {
     //const diasArray = useAluguelStore((state) => state.diasAluguel);
     //console.log(diasArray);
 
+    /**
+     * Função para redirecionar o usuário para a página de aluguel do carro.
+     * @param {string} id - O ID do carro para ser alugado.
+     */
     const handleButtonClick = (id) => {
         history.push(`/aluguel/${id}`);
       };

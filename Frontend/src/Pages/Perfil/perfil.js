@@ -4,6 +4,25 @@ import "./style.css";
 import useUserStore from "../../Components/Zustand/storeUser";
 import { Button } from "reactstrap";
 
+/**
+ * Componente de perfil do usuário, exibindo informações pessoais e opções de configuração.
+ * @returns {React.ReactElement} O componente de perfil, que inclui informações do usuário, opções de edição e exclusão de conta, e o cabeçalho e 
+ * rodapé da página.
+ * @description
+ * O componente 'Perfil' utiliza o hook 'useUserStore' para acessar as informações do usuário a partir do estado global.
+ * Ele renderiza um layout de perfil com detalhes pessoais, como nome, email, telefone e endereço.
+ * O layout inclui:
+ * - 'HeaderMain': O cabeçalho da página.
+ * - Seção de perfil contendo:
+ *   -> Nome do usuário.
+ *   -> Email do usuário.
+ *   -> Telefone do usuário (opcional).
+ *   -> Endereço do usuário.
+ *   -> Botões para editar a conta e excluir a conta (o botão de exclusão redireciona para uma URL externa).
+ * - 'Footer': O rodapé da página.
+ *
+ * @component
+ */
 export default function Perfil() {
   const user = useUserStore((state) => state.usuario);
 

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Services/registroServices.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Services/registroServices.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import format from 'date-fns/format';
+const baseURL = "http://localhost:5000";
+
+/**
+ * Cria um novo registro no servidor.
+ * @async
+ * @function createRegistro
+ * @param {Object} body - O corpo da solicitação, contendo os dados do registro a ser criado.
+ * @param {string} id - O ID associado ao registro.
+ * @returns {Promise&lt;Object>} A promessa que resolve com a resposta do servidor.
+ * @description
+ * Esta função realiza uma solicitação POST para o endpoint '/registro/${id}' no servidor localizado em `http://localhost:5000`.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com os dados da resposta do servidor.
+ * Em caso de erro, o erro é registrado no console e a exceção é lançada.
+ */
+export async function createRegistro(body, id) {
+    try {
+        console.log("CRIAR REGISTRO AQUI", body, body.id);
+        
+        const tokenCria = localStorage.getItem('token');
+        const response = await axios.post(`${baseURL}/registro/${id}`, body, {
+            headers: {
+                Authorization: `Bearer ${tokenCria}`
+            },
+        });
+        console.log("Resposta do servidor:", response.data);
+        return response.data; // Return response data if needed
+    } catch (error) {
+        console.error("Erro ao criar registro:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+/**
+ * Obtém todos os registros do servidor.
+ * @async
+ * @function getAllRegistro
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios contendo todos os registros.
+ * @description
+ * Esta função realiza uma solicitação GET para o endpoint '/registro/' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export async function getAllRegistro(){
+    const token = localStorage.getItem('token');
+    const response = await axios.get(`${baseURL}/registro/`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+    return response;
+} ;
+
+/**
+ * Obtém todos os registros associados ao usuário atual.
+ * @function getAllRegistroByUser
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios contendo os registros do usuário.
+ * @description
+ * Esta função realiza uma solicitação GET para o endpoint '/registro/byUser' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+
+export function getAllRegistroByUser(){
+    const tokenGetRegistroByUser = localStorage.getItem('token');
+    const response = axios.get(`${baseURL}/registro/byUser`, {
+        headers: {
+            Authorization: `Bearer ${tokenGetRegistroByUser}`
+        },
+    });
+    return response;
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

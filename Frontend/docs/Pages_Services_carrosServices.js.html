@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Services/carrosServices.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Services/carrosServices.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+const baseURL = "http://localhost:5000";
+
+/**
+ * Obtém todos os carros associados ao usuário atual.
+ * @function getAllCarrosByUser
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios contendo todos os carros do usuário.
+ * @description
+ * Esta função realiza uma solicitação GET para o endpoint '/carros/byUser' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export function getAllCarrosByUser(){
+    const tokenGetCarrosByUser = localStorage.getItem('token');
+    const response = axios.get(`${baseURL}/carros/byUser`, {
+        headers: {
+            Authorization: `Bearer ${tokenGetCarrosByUser}`
+        },
+    });
+    return response;
+};
+
+/**
+ * Cria um novo carro no servidor.
+ * @async
+ * @function criarCarro
+ * @param {Object} body - O corpo da solicitação, contendo os dados do carro a ser criado.
+ * @returns {Promise&lt;Object>} A promessa que resolve com a resposta do servidor.
+ * @throws {Error} Se o token não for encontrado, um erro é lançado.
+ * @description
+ * Esta função realiza uma solicitação POST para o endpoint '/carros' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com os dados da resposta do servidor.
+ * Se o token não for encontrado no armazenamento local, um erro é lançado.
+ */
+export async function criarCarro(body) {
+    const tokenCria = localStorage.getItem('token');
+    if (!tokenCria) {
+        throw new Error("Token não encontrado. Verifique se o usuário está autenticado.");
+    }
+
+    try {
+        console.log("CRIAR CARRO AQUI", body);
+        
+        const response = await axios.post(`${baseURL}/carros`, body, {
+            headers: {
+                Authorization: `Bearer ${tokenCria}`
+            },
+        });
+        console.log("Resposta do servidor:", response.data);
+        return response.data; // Return response data if needed
+    } catch (error) {
+        console.error("Erro ao criar carro:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+
+/**
+ * Obtém todos os carros do servidor.
+ * @function getAllCarros
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios contendo todos os carros.
+ * @description
+ * Esta função realiza uma solicitação GET para o endpoint '/carros/' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export function getAllCarros(){
+    const tokenAll = localStorage.getItem('token');
+    console.log("\n\n\n\nGETALLCARROS TOKEN: ", tokenAll)
+    const response = axios.get(`${baseURL}/carros/`, {
+        headers: {
+            Authorization: `Bearer ${tokenAll}`
+        },
+    });
+    return response;
+} 
+
+/**
+ * Encontra um carro pelo ID.
+ * @async
+ * @function findCarroById
+ * @param {string} id - O ID do carro a ser encontrado.
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios contendo os dados do carro.
+ * @description
+ * Esta função realiza uma solicitação GET para o endpoint '/carros/${id}' no servidor localizado em `http://localhost:5000`.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export async function findCarroById(id){
+    const tokenAll = localStorage.getItem('token');
+    console.log("\n\nDentro de findCarroById:\n\n", `http://localhost:5000/carros/${id}`);
+    console.log("\n\nTOKEN findCarroById:\n\n", tokenAll);
+    const response = await axios.get(`http://localhost:5000/carros/${id}`,
+    {
+        headers: {
+            Authorization: `Bearer ${tokenAll}`
+        },
+    });
+    return response;
+}
+
+/**
+ * Atualiza os dias alugados para um carro específico.
+ * @async
+ * @function updateDiasAlugado
+ * @param {string} id - O ID do carro a ser atualizado.
+ * @param {Array&lt;number>} diasAlugado - Um array contendo os dias alugados para o carro.
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios após a atualização.
+ * @description
+ * Esta função realiza uma solicitação PATCH para o endpoint '/carros/diasAlugado/${id}' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export async function updateDiasAlugado(id, diasAlugado) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de updateDiasAlugado:\n\n");
+    const response = await axios.patch(`http://localhost:5000/carros/diasAlugado/${id}`,{carroId: id, diasAlugadoArray: diasAlugado}, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+};
+
+/**
+ * Atualiza as informações de um carro específico pelo usuário.
+ * @async
+ * @function updateCarroByUser
+ * @param {string} carroId - O ID do carro a ser atualizado.
+ * @param {Object} body - O corpo da solicitação, contendo os dados atualizados do carro.
+ * @returns {Promise&lt;AxiosResponse&lt;any>>} A promessa de uma resposta Axios após a atualização.
+ * @description
+ * Esta função realiza uma solicitação PATCH para o endpoint '/carros/${carroId}' no servidor localizado em 'http://localhost:5000'.
+ * Inclui um token de autenticação no cabeçalho da solicitação, que é recuperado do armazenamento local.
+ * A função retorna uma promessa que resolve com a resposta da solicitação Axios.
+ */
+export async function updateCarroByUser(carroId, body) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de updateCarroByUser:\n\n", carroId, body);
+    const response = await axios.patch(`http://localhost:5000/carros/${carroId}`,body, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+    
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

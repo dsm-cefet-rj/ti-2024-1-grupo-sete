@@ -4,16 +4,26 @@ import { Accordion, AccordionBody, AccordionHeader, AccordionItem } from "reacts
 import './index.css';
 import Footer from "../../Components/Footer/footer";
 
-
-
-
+/**
+ * Componente para a página de Perguntas Frequentes (FAQ).
+ * @returns {React.ReactElement} A página de FAQ com perguntas e respostas.
+ * @description
+ * O componente 'Faq' exibe uma página de perguntas frequentes utilizando um acordeão para mostrar e ocultar as respostas.
+ * Ele inclui perguntas e respostas sobre o serviço da empresa, como o que é o DriveZoom, requisitos para alugar um carro, e o processo para 
+ * colocar um carro à disposição para aluguel.
+ */
 export default function Faq(props){
     const [open, setOpen] = useState('0');
+
+    /**
+     * Função para alternar a exibição do toggle.
+     * @param {string} id - O ID do item do toggle que deve ser aberto ou fechado.
+     */
     const toggle = (id) => {
         if (open === id) {
-        setOpen();
+        setOpen(); // fecha o item se estiver aberto
     } else {
-        setOpen(id);
+        setOpen(id); // abre o item selecionado
     }
 };
     return(

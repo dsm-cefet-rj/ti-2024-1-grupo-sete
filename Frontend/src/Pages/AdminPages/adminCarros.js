@@ -6,8 +6,14 @@ import { Card, CardBody, CardImg, CardText, CardTitle, Row, Col } from 'reactstr
 import { Link } from "react-router-dom";
 import useAluguelStore from "../../Components/Zustand/storeAluguel";
 
-
-
+/**
+ * Componente para exibir e gerenciar os carros cadastrados na plataforma de administração.
+ * @returns {React.ReactElement} O layout da página de administração de carros com cards para cada carro cadastrado.
+ * @description
+ * O componente 'AdminCarros' é responsável por buscar a lista de carros cadastrados e exibi-los em forma de cards.
+ * Cada card inclui informações como modelo, ano, dono, cidade e preço por dia. 
+ * Inclui botões para visualizar mais detalhes e deletar o carro. Além disso, utiliza o Zustand para armazenar o ID do carro selecionado.
+ */
 export default function AdminCarros() {
   const [carros, setCarros] = useState([]);
   const setCarroId = useAluguelStore((state) => state.setCarroId);
@@ -38,6 +44,10 @@ useEffect(() => {
   fetchCarros();
 }, [diasEntreDatas]);
 
+/**
+   * Define o carro selecionado e o armazena no Zustand ao clicar no card.
+   * @param {string} carroId - ID do carro que foi clicado.
+   */
 const handleCardClick = (carroId) => {
   setCarroId(carros.find(carro => carro.id === carroId));
 };

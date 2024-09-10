@@ -6,13 +6,23 @@ import "./Atualizarcarro.css";
 import Message from "../../Components/Message/Message";
 import Atualizarcarrocard from "../../Components/Cardatualizarcarro/Atualizarcarrocard.js";
 
+/**
+ * Componente para a página de atualização de carros.
+ * @returns {React.ReactElement} A página de atualização de carros.
+ * @description
+ * O componente 'AtualizarCarros' busca a lista de carros do usuário e exibe cada carro em um card.
+ * Permite ao usuário ver uma mensagem de sucesso ao remover um carro.
+ * Inclui um cabeçalho e um rodapé.
+ */
 export default function AtualizarCarros() {
-  const [carros, setCarros] = useState([]);
-  const [messageRemove, setMessageRemove] = useState('');  
+  const [carros, setCarros] = useState([]); // Estado para armazenar a lista de carros
+  const [messageRemove, setMessageRemove] = useState('');  // Estado para armazenar mensagens de feedback ao remover carro
   //const [editingCarro, setEditingCarro] = useState(null);
   
-
   useEffect(() => {
+    /**
+     * Função para buscar a lista de carros do usuário.
+     */
     const fetchCarros = async () => {
       try {
         const data = await getAllCarrosByUser();
@@ -25,9 +35,13 @@ export default function AtualizarCarros() {
       }
     };
   
-    fetchCarros();
+    fetchCarros(); // Chama a função para buscar os carros
   }, []);
 
+  /**
+   * Função para lidar com a remoção de um carro.
+   * @param {string} id - O ID do carro a ser removido.
+   */
   function RemoveCarro(id){
     setMessageRemove('Carro foi removido com sucesso!');
   }

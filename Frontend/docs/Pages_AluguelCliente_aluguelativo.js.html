@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/AluguelCliente/aluguelativo.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/AluguelCliente/aluguelativo.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { getAllAluguelByUser } from "../Services/aluguelServices.js";
+import HeaderMain from "../../Components/Header/index.jsx";
+import Footer from "../../Components/Footer/footer";
+import Message from "../../Components/Message/Message";
+import { Table, Button, Form } from "react-bootstrap";
+
+/**
+ * Componente para exibir os aluguéis ativos do usuário.
+ * @returns {React.ReactElement} A página de aluguéis ativos.
+ * @description
+ * O componente 'AluguelAtivo' busca a lista de aluguéis ativos do usuário e os exibe em uma tabela.
+ * Permite a visualização dos detalhes do aluguel, mas não implementa a funcionalidade de edição ou exclusão de aluguéis.
+ * Inclui um cabeçalho e um rodapé.
+ */
+export default function AluguelAtivo() {
+  const [aluguel, setAluguel] = useState([]);
+  const [messageRemove, setMessageRemove] = useState('');  
+  //const [editingCarro, setEditingCarro] = useState(null);
+  
+
+  useEffect(() => {
+    /**
+     * Função para buscar a lista de aluguéis do usuário.
+     */
+    const fetchAluguel = async () => {
+      try {
+        const data = await getAllAluguelByUser();
+        console.log("\n\nAlugueis encontrados by user:", data);
+        setAluguel(data.data.results);
+      } catch (error) {
+        console.error("Erro ao buscar Aluguel:", error.response.data.message);
+        //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+        setAluguel([]); 
+      }
+    };
+  
+    fetchAluguel();// Chama a função para buscar os aluguéis
+  }, []);
+
+  /**
+   * Função para lidar com a remoção de um aluguel.
+   * @param {string} id - O ID do aluguel a ser removido.
+   */
+  function RemoveCarro(id){
+    setMessageRemove('Carro foi removido com sucesso!');
+  }
+  return (
+    &lt;div>
+        &lt;HeaderMain/>
+        &lt;h1 className='titulo'>Aluguéis ativos&lt;/h1>
+        {messageRemove &amp;&amp; &lt;Message type="success" msg={messageRemove}/>}
+        &lt;Table striped bordered hover>
+          &lt;thead>
+            &lt;tr>
+              &lt;th>Modelo&lt;/th>
+              &lt;th>Valor total&lt;/th>
+              &lt;th>Dias alugados&lt;/th>
+              &lt;th>Ações&lt;/th>
+            &lt;/tr>
+          &lt;/thead>
+          &lt;tbody>
+            {aluguel.map((aluguel) => (
+              &lt;tr key={aluguel.carro}>
+                &lt;td>{aluguel.modelo}&lt;/td>
+                &lt;td>{aluguel.valorTotal}&lt;/td>
+                &lt;td>{aluguel.quantidadeDias.length}&lt;/td>
+                &lt;td>
+                  &lt;Button
+                    variant="primary"
+                    //onClick={() => setEditingCarro(aluguel)}
+                  >
+                    Editar
+                  &lt;/Button>
+                  &lt;button className="btn btn-danger" type="submit">Deletar Aluguel&lt;/button>
+                &lt;/td>
+              &lt;/tr>
+            ))}
+          &lt;/tbody>
+        &lt;/Table>
+        &lt;footer>
+            &lt;Footer/>
+        &lt;/footer>
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

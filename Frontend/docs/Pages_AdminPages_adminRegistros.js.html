@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/AdminPages/adminRegistros.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/AdminPages/adminRegistros.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import HeaderMain from "../../Components/Header/index";
+import AdminMenu from "../../Components/MenuAdmin/AdminMenu";
+import { getAllRegistro } from "../Services/registroServices.js";
+import { Table, Button, Form } from "react-bootstrap";
+import format from "date-fns/format";
+import { Card } from "reactstrap";
+import ReactPaginate from 'react-paginate'; // Importa o componente de paginação
+import "./adminRegistro.css";
+import Footer from "../../Components/Footer/footer.js";
+
+/**
+ * Componente de administração de registros de aluguel.
+ * @returns {React.ReactElement} Layout da página de administração dos registros de aluguéis com funcionalidades de filtro, ordenação e paginação.
+ * @description
+ * O componente 'AdminRegistros' permite que o administrador visualize, filtre e ordene os registros de aluguel de carros.
+ * A página inclui uma tabela com os registros de locação, campos de filtro para locatário, valor total e data de pagamento, além de suporte à 
+ * paginação para navegar entre grandes volumes de dados.
+ */
+export default function AdminRegistros() {
+  const [registro, setRegistro] = useState([]);
+  const [filteredRegistro, setFilteredRegistro] = useState([]);
+  const [editingCarro, setEditingCarro] = useState(null);
+  const [message, setMessage] = useState('');
+  
+  // Estados para os filtros
+  const [locatarioFilter, setLocatarioFilter] = useState('');
+  const [valorFilter, setValorFilter] = useState('');
+  const [dataFilter, setDataFilter] = useState('');
+  const [sortCriteria, setSortCriteria] = useState('date'); // Critério de ordenação padrão
+  const [sortOrder, setSortOrder] = useState('desc'); // Ordem de ordenação padrão
+
+  // Estados para paginação
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    const pegaRegistro = async () => {
+      try {
+        const response = await getAllRegistro();
+        setRegistro(response.data.results);
+        setFilteredRegistro(response.data.results); // Inicialmente mostra todos os registros
+        console.log("VERIFICANDO REGISTRO", response.data.results)
+      } catch (error) {
+        console.error(error.response.data.message);
+        setMessage("Erro ao buscar registros. Tente novamente mais tarde.");
+        setRegistro([]);
+        setFilteredRegistro([]);
+      }
+    };
+  
+    pegaRegistro();
+  }, []);
+  
+  /**
+   * Função para filtrar registros de acordo com os filtros de locatário, valor e data.
+   */
+  const filterRecords = () => {
+    let filtered = registro;
+
+    if (locatarioFilter) {
+      filtered = filtered.filter((reg) =>
+        reg.userId.toLowerCase().includes(locatarioFilter.toLowerCase())
+      );
+    }
+    
+    if (valorFilter) {
+      filtered = filtered.filter((reg) =>
+        reg.valorTotal.toString().includes(valorFilter)
+      );
+    }
+    
+    if (dataFilter) {
+      filtered = filtered.filter((reg) =>
+        format(new Date(reg.dataDoPagamento), "yyyy-MM-dd").includes(dataFilter)
+      );
+    }
+
+    // Ordena os registros filtrados
+    const sortedRecords = sortRecords(filtered, sortCriteria, sortOrder);
+    setFilteredRegistro(sortedRecords);
+  };
+
+  /**
+   * Função para ordenar registros com base no critério e ordem fornecidos.
+   * @param {Array} records - Lista de registros.
+   * @param {string} criteria - Critério de ordenação (ex: 'name', 'value', 'date').
+   * @param {string} order - Ordem de ordenação ('asc' ou 'desc').
+   * @returns {Array} Lista de registros ordenados.
+   */
+
+  const sortRecords = (records, criteria, order) => {
+    return records.slice().sort((a, b) => {
+      let comparison = 0;
+      switch (criteria) {
+        case 'name':
+          comparison = a.userId.localeCompare(b.userId); // Ordena alfabéticamente
+          break;
+        case 'value':
+          comparison = a.valorTotal - b.valorTotal; // Ordena de menor para maior
+          break;
+        case 'date':
+          comparison = new Date(a.dataDoPagamento) - new Date(b.dataDoPagamento); // Ordena da mais antiga para a mais recente
+          break;
+        default:
+          return 0;
+      }
+      return order === 'asc' ? comparison : -comparison; // Inverte a ordem se necessário
+    });
+  };
+
+  // Execute a filtragem e ordenação sempre que qualquer filtro ou critério de ordenação mudar
+  useEffect(() => {
+    filterRecords();
+  }, [locatarioFilter, valorFilter, dataFilter, sortCriteria, sortOrder, registro]);
+
+  // Atualiza o número total de páginas baseado na quantidade de registros filtrados
+  useEffect(() => {
+    setPageCount(Math.ceil(filteredRegistro.length / itemsPerPage));
+  }, [filteredRegistro, itemsPerPage]);
+
+  /**
+   * Alterna a ordem de ordenação ou define um novo critério de ordenação.
+   * @param {string} criteria - Critério de ordenação.
+   */
+  const handleSortChange = (criteria) => {
+    if (sortCriteria === criteria) {
+      setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc')); // Alterna a ordem
+    } else {
+      setSortCriteria(criteria);
+      setSortOrder('asc'); // Default -> ordem ascendente para novos criteria
+    }
+  };
+
+  /**
+   * Retorna a seta de ordenação correta com base no critério atual.
+   * @param {string} criteria - Critério de ordenação.
+   * @returns {string} Seta de ordenação ('▲' ou '▼').
+   */
+  const renderSortArrow = (criteria) => {
+    if (sortCriteria === criteria) {
+      return sortOrder === 'asc' ? '▲' : '▼';
+    }
+    return '';
+  };
+
+  /**
+   * Função que lida com a troca de páginas na paginação.
+   * @param {object} event - Evento de troca de página.
+   */
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
+
+  // Pagina os registros filtrados
+  const paginatedRecords = filteredRegistro.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  return (
+    &lt;div>
+      &lt;HeaderMain />
+      &lt;AdminMenu />
+
+      &lt;h1 className="titulo">Registros em andamento&lt;/h1>
+      &lt;div className="container mt-4">
+        {message &amp;&amp; &lt;div className="alert alert-danger">{message}&lt;/div>}
+        
+        &lt;Card>
+          &lt;Form className="mb-4">
+            &lt;Form.Group controlId="locatarioFilter">
+              &lt;Form.Label>Locatário (cliente)&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                placeholder="Filtrar por locatário"
+                value={locatarioFilter}
+                onChange={(e) => setLocatarioFilter(e.target.value)}
+              />
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId="valorFilter">
+              &lt;Form.Label>Valor total&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                placeholder="Filtrar por valor"
+                value={valorFilter}
+                onChange={(e) => setValorFilter(e.target.value)}
+              />
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId="dataFilter">
+              &lt;Form.Label>Data pagamento&lt;/Form.Label>
+              &lt;Form.Control
+                type="date"
+                placeholder="Filtrar por data"
+                value={dataFilter}
+                onChange={(e) => setDataFilter(e.target.value)}
+              />
+            &lt;/Form.Group>
+          &lt;/Form>
+        &lt;/Card>
+        
+        &lt;Table striped bordered hover>
+          &lt;thead>
+            &lt;tr>
+              &lt;th
+                onClick={() => handleSortChange('name')}
+                className={`sortable ${sortCriteria === 'name' ? sortOrder : ''}`}
+              >
+                Locatário (cliente) {renderSortArrow('name')}
+              &lt;/th>
+              &lt;th
+                onClick={() => handleSortChange('value')}
+                className={`sortable ${sortCriteria === 'value' ? sortOrder : ''}`}
+              >
+                Valor total {renderSortArrow('value')}
+              &lt;/th>
+              &lt;th>Forma de pagamento&lt;/th>
+              &lt;th
+                onClick={() => handleSortChange('date')}
+                className={`sortable ${sortCriteria === 'date' ? sortOrder : ''}`}
+              >
+                Data pagamento {renderSortArrow('date')}
+              &lt;/th>
+              &lt;th>Dias alugados&lt;/th>
+            &lt;/tr>
+          &lt;/thead>
+          &lt;tbody>
+            {paginatedRecords.map((registro) => (
+              &lt;tr key={registro._id}>
+                &lt;td>{registro.userName}&lt;/td>
+                &lt;td>{registro.valorTotal}&lt;/td>
+                &lt;td>{registro.formaPagamento}&lt;/td>
+                &lt;td>{format(registro.dataDoPagamento, "dd/MM/yyyy")}&lt;/td>
+                &lt;td>{registro.quantidadeDias.length}&lt;/td>
+              &lt;/tr>
+            ))}
+          &lt;/tbody>
+        &lt;/Table>
+
+        &lt;ReactPaginate
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="&lt; previous"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
+        />
+      &lt;/div>
+
+      &lt;Footer />
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

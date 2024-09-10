@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Pagamento/historico.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Pagamento/historico.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { getAllRegistroByUser } from "../Services/registroServices";
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+import Message from "../../Components/Message/Message";
+import { Table, Button } from "react-bootstrap";
+
+/**
+ * Componente para exibir o histórico de pagamentos do usuário.
+ * @returns {React.ReactElement} O componente de histórico, que inclui uma tabela com informações de alugueis e uma mensagem de sucesso.
+ * @description
+ * O componente 'Historico' exibe o histórico de pagamentos realizados pelo usuário. Ele faz uma chamada à API para buscar
+ * todos os registros de aluguel associados ao usuário e os exibe em uma tabela. Inclui funcionalidades para:
+ * - Carregar e exibir dados de registros de aluguel.
+ * - Mostrar uma mensagem de sucesso quando um carro é removido (ainda não implementada para remover efetivamente um carro).
+ * @component
+ */
+export default function Historico() {
+  const [registro, setRegistro] = useState([]);
+  const [messageRemove, setMessageRemove] = useState('');  
+  //const [editingCarro, setEditingCarro] = useState(null);
+  
+
+  useEffect(() => {
+    const fetchRegistro = async () => {
+      try {
+        const data = await getAllRegistroByUser();
+        console.log("\n\nAlugueis encontrados by user:", data);
+        setRegistro(data.data.results);
+      } catch (error) {
+        console.error("Erro ao buscar Aluguel:", error.response.data.message);
+        //setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+        setRegistro([]); 
+      }
+    };
+  
+    fetchRegistro();
+  }, []);
+
+  function RemoveCarro(id){
+    setMessageRemove('Carro foi removido com sucesso!');
+  }
+  return (
+    &lt;div>
+        &lt;HeaderMain/>
+        {messageRemove &amp;&amp; &lt;Message type="success" msg={messageRemove}/>}
+        &lt;h1 className = 'titulo'> Histórico de Pagamentos&lt;/h1>
+        &lt;Table striped bordered hover>
+          &lt;thead>
+            &lt;tr>
+              &lt;th>ID carro&lt;/th>
+              &lt;th>Valor total&lt;/th>
+              &lt;th>Dias alugados&lt;/th>
+              &lt;th>Ações&lt;/th>
+            &lt;/tr>
+          &lt;/thead>
+          &lt;tbody>
+            {registro.map((registro) => (
+              &lt;tr key={registro.carro}>
+                &lt;td>{registro.carro}&lt;/td>
+                &lt;td>{registro.valorTotal}&lt;/td>
+                &lt;td>{registro.quantidadeDias.length}&lt;/td>
+                &lt;td>
+                  &lt;Button
+                    variant="primary"
+                    //onClick={() => setEditingCarro(registro)}
+                  >
+                    Editar
+                  &lt;/Button>
+                &lt;/td>
+              &lt;/tr>
+            ))}
+          &lt;/tbody>
+        &lt;/Table>
+        &lt;footer>
+            &lt;Footer/>
+        &lt;/footer>
+    &lt;/div>
+  );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

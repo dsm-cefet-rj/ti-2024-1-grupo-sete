@@ -13,6 +13,14 @@ import { updateDiasAlugado } from "../Services/carrosServices.js";
 import { createRegistro } from "../Services/registroServices.js";
 import { ToastContainer, toast } from 'react-toastify';
 
+/**
+ * Componente para realizar e confirmar o pagamento de um aluguel.
+ * @returns {React.ReactElement} A página de pagamento e confirmação do aluguel.
+ * @description
+ * O componente 'Pagamento' permite ao usuário selecionar a forma de pagamento (cartão de crédito, Pix ou boleto), preencher as informações 
+ * necessárias para a forma de pagamento selecionada, e confirmar o pagamento.
+ * Após a confirmação, o estado do aluguel é atualizado e um registro de pagamento é criado.
+ */
 const Pagamento = () => {
   const location = useLocation();
   const user = useUserStore((state)=> state.usuario.userId);
@@ -35,16 +43,33 @@ const Pagamento = () => {
 
   //console.log("\n\nDias", formattedDias)
 
+  /**
+   * Atualiza o número de dias alugados para o carro especificado.
+   * @param {string} carroID - ID do carro.
+   * @param {Array} dias - Lista de datas de aluguel.
+   * @returns {Promise} A resposta da atualização.
+   */
   const updateDiasAlugadoCarro = async (carroID, dias) => {
     const responseDias = await updateDiasAlugado(carroID, dias);
     return responseDias;
   }
 
+  /**
+   * Cria um novo registro de pagamento.
+   * @param {Object} body - Dados do pagamento.
+   * @param {string} id - ID do carro.
+   * @returns {Promise} A resposta da criação do registro.
+   */
   const criarRegistro = async (body, id) => {
     const responseRegistro = await createRegistro(body, id);
     return responseRegistro;
   }
 
+  /**
+   * Manipula a confirmação do pagamento.
+   * Realiza a validação das informações do cartão e envia os dados de pagamento para o backend.
+   * Atualiza o estado do aluguel e cria um registro de pagamento.
+   */
   const handleConfirmarPagamento = async () => {
     const token = localStorage.getItem("token");
 

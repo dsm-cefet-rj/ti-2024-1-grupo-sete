@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Atualizardadoscarro/Atualizardadoscarro.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Atualizardadoscarro/Atualizardadoscarro.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useParams, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import HeaderMain from "../../Components/Header"
+import Footer from "../../Components/Footer/footer"
+import Formcriarcarro from '../../Pages/Formcriarcarro/Formcriarcarro';
+import Message from "../../Components/Message/Message"
+import styles from "./Atualizardadoscarro.module.css"
+import { updateCarroByUser, findCarroById } from '../Services/carrosServices.js';
+
+/**
+ * Componente para a página de atualização de dados do carro.
+ * @returns {React.ReactElement} A página de atualização de dados do carro.
+ * @description
+ * O componente 'Atualizardadoscarro' permite ao usuário visualizar e atualizar os detalhes de um carro.
+ * Utiliza o ID do carro, fornecido via parâmetros de URL, para buscar os dados do carro e exibir um formulário de edição.
+ * Também exibe mensagens de sucesso ou erro baseadas nas operações realizadas.
+ */
+function Atualizardadoscarro() {
+    const { id } = useParams()
+    const [carro, setCarro] = useState([])
+    const [showCarroForm, setShowCarroForm] = useState(false)
+    const [message, setMessage] = useState()
+    const [type, setType] = useState()
+
+    /**
+     * Função para buscar os dados do carro pelo ID.
+     */
+    useEffect(() => {
+        const getCarroById = async () => {
+            try {
+              const data = await findCarroById(id);
+              setCarro(data.data.carros); // Atualiza o estado com os dados do carro
+            } catch (error) {
+              console.error("Erro ao buscar carros:", error.response.data.message);
+              setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
+              setCarro([]); // Reseta o estado do carro em caso de erro
+            }
+          };
+        
+          getCarroById(); // Chama a função para buscar os dados do carro
+    }, [showCarroForm]) // Dependência para re-fetch quando o formulário de edição é mostrado
+
+    /**
+     * Função para atualizar os dados do carro.
+     * @param {Object} carro - Dados do carro a serem atualizados.
+     */
+    async function editPost(carro) {
+        try{
+            let body = {
+                modelo: carro.modelo,
+                ano: carro.ano,
+                cidade: carro.cidade,
+                precoPorDia: carro.precoPorDia,
+                detalhes: carro.detalhes,
+                fotoLink1: carro.fotoLink1
+            }
+            console.log("\n\nBody:", body);
+            const response = await updateCarroByUser(carro.id, body);
+            //setEditingCarro(response)
+            console.log("\n\nUPDATE CARRO", response)
+            setShowCarroForm(false) // Fecha o formulário de edição
+            setMessage('Seu carro foi atualizado com sucesso!') // Mensagem de sucesso
+            setType('success')// Tipo de mensagem
+                
+            }catch(error){
+              console.error("Erro ao editar carro:", error.response.data.message);
+          }
+    }
+
+    /**
+     * Função para alternar a visibilidade do formulário de edição.
+     */
+    function toggleCarroForm() {
+        setShowCarroForm(!showCarroForm)
+    }
+
+    return (
+        &lt;>
+        &lt;HeaderMain>&lt;/HeaderMain>
+        {message &amp;&amp; &lt;Message type={type} msg={message}/>}
+        &lt;div className={styles.carro_details}>
+        &lt;div className={styles.details_container}>
+            &lt;Link to={"/atualizarcarro"}>
+                &lt;button className={styles.btn}> Voltar &lt;/button>
+            &lt;/Link>
+            &lt;h1>Dono: {carro.userName}&lt;/h1>
+            
+            &lt;button className={styles.btn} onClick={toggleCarroForm}>{!showCarroForm ? 'Editar carro' : 'Fechar'}&lt;/button>
+            {!showCarroForm ? (
+                &lt;div className={styles.carro_info}>
+                    &lt;p>
+                        &lt;span>Modelo:&lt;/span> {carro.modelo}
+                    &lt;/p>
+                    &lt;p>
+                        &lt;span>Ano de fabricação:&lt;/span> {carro.ano}
+                    &lt;/p>
+                    &lt;p>
+                        &lt;span>Cidade:&lt;/span> {carro.cidade}
+                    &lt;/p>
+                    &lt;p>
+                        &lt;span>Preço diário:&lt;/span> {carro.precoPorDia}
+                    &lt;/p>
+                    &lt;p>
+                        &lt;span>Detalhes:&lt;/span> {carro.detalhes}
+                    &lt;/p>
+                    &lt;p>
+                        &lt;span>Foto:&lt;/span> {carro.fotoLink1}
+                    &lt;/p>
+                &lt;/div>
+            ) : (
+                &lt;div className={styles.carro_info}>
+                    &lt;p>&lt;Formcriarcarro handleSubmit={editPost} botaotxt={"Concluir edição"} carroData={carro}/>&lt;/p>
+                &lt;/div>
+            )}
+        &lt;/div>
+        &lt;/div>
+        &lt;Footer/>
+        &lt;/>
+    )
+}
+
+export default Atualizardadoscarro</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

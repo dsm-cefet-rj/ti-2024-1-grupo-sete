@@ -5,6 +5,14 @@ import Footer from "../../Components/Footer/footer";
 import Message from "../../Components/Message/Message";
 import { Table, Button, Form } from "react-bootstrap";
 
+/**
+ * Componente para exibir os aluguéis ativos do usuário.
+ * @returns {React.ReactElement} A página de aluguéis ativos.
+ * @description
+ * O componente 'AluguelAtivo' busca a lista de aluguéis ativos do usuário e os exibe em uma tabela.
+ * Permite a visualização dos detalhes do aluguel, mas não implementa a funcionalidade de edição ou exclusão de aluguéis.
+ * Inclui um cabeçalho e um rodapé.
+ */
 export default function AluguelAtivo() {
   const [aluguel, setAluguel] = useState([]);
   const [messageRemove, setMessageRemove] = useState('');  
@@ -12,6 +20,9 @@ export default function AluguelAtivo() {
   
 
   useEffect(() => {
+    /**
+     * Função para buscar a lista de aluguéis do usuário.
+     */
     const fetchAluguel = async () => {
       try {
         const data = await getAllAluguelByUser();
@@ -24,9 +35,13 @@ export default function AluguelAtivo() {
       }
     };
   
-    fetchAluguel();
+    fetchAluguel();// Chama a função para buscar os aluguéis
   }, []);
 
+  /**
+   * Função para lidar com a remoção de um aluguel.
+   * @param {string} id - O ID do aluguel a ser removido.
+   */
   function RemoveCarro(id){
     setMessageRemove('Carro foi removido com sucesso!');
   }

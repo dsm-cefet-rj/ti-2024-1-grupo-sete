@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Detalhes/Detalhes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Detalhes/Detalhes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import './Detalhes.css'
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+//import carros from "../../Components/Carros/carros";
+import Carousel from 'react-bootstrap/Carousel';
+import { Link, useParams, useHistory } from "react-router-dom/cjs/react-router-dom";
+import { FaUser, FaCar, FaCity, FaDollarSign } from 'react-icons/fa';
+import { findCarroById } from '../Services/carrosServices';
+//import useAluguelStore from "../../Components/Zustand/storeAluguel";
+
+/**
+ * Componente para exibir os detalhes de um veículo específico.
+ * @returns {React.ReactElement} A página de detalhes do veículo com informações e imagens do carro.
+ * @description
+ * O componente 'Detalhes' é responsável por exibir informações detalhadas sobre um veículo específico, incluindo o nome do proprietário, modelo, 
+ * ano, cidade e preço por dia. Utiliza um carrossel para exibir as fotos do carro e possui botões para voltar à página principal e para iniciar o 
+ * processo de aluguel do veículo.
+ * Ele utiliza o hook 'useParams' para obter o ID do veículo da URL e o hook 'useHistory' para redirecionar o usuário.
+ * Os dados do veículo são obtidos através de uma chamada assíncrona para a função 'findCarroById'.
+ */
+export default function Detalhes() {
+  
+    const { id } = useParams();
+    const history = useHistory();
+    const [carro, setCarro] = useState();
+    
+    useEffect(() => {
+        const fetchCarrosById = async (id) => {
+            try{
+                const response = await findCarroById(id);
+                console.log("Carro encontrado:", response.data.carros);
+                setCarro(response.data.carros);
+            }catch(error){
+                console.error("Erro ao buscar carros:", error.response.data.message);
+            }
+        };
+        fetchCarrosById(id);
+      }, [])
+    
+    
+    console.log('paraams: ', id)
+    console.log('Car: ', carro)
+    console.log('Modelo: ', carro?.modelo)
+    //const diasArray = useAluguelStore((state) => state.diasAluguel);
+    //console.log(diasArray);
+
+    /**
+     * Função para redirecionar o usuário para a página de aluguel do carro.
+     * @param {string} id - O ID do carro para ser alugado.
+     */
+    const handleButtonClick = (id) => {
+        history.push(`/aluguel/${id}`);
+      };
+  
+
+    return(      
+        &lt;>
+        &lt;HeaderMain />
+        &lt;body>
+        &lt;div className="titulo">
+            &lt;h1>Detalhes do veículo&lt;/h1>
+        &lt;/div>
+
+
+        &lt;section className="flex-container-1">
+            &lt;div className="flex-item">
+                &lt;h4>&lt;FaUser/> Proprietário: {carro?.userName}&lt;/h4>
+            &lt;/div>
+            &lt;div className="flex-item">
+                &lt;h4>&lt;FaCar/> Modelo: {carro?.modelo} {carro?.ano}&lt;/h4>
+            &lt;/div>
+            &lt;div className="flex-item">
+                &lt;h4>&lt;FaCity/> Cidade: {carro?.cidade}&lt;/h4>
+            &lt;/div>
+            &lt;div className="flex-item">
+                &lt;h4>&lt;FaDollarSign/> Preço/dia: R$ {carro?.precoPorDia}&lt;/h4>
+            &lt;/div>
+        &lt;/section>
+
+        &lt;section className="flex-container-2">
+        &lt;Carousel  indicators={false} variant="dark">
+                &lt;Carousel.Item>
+                    &lt;img className="img-carrossel" src= {carro?.fotoLink1}/>
+                &lt;/Carousel.Item>
+                &lt;Carousel.Item>
+                    &lt;img className="img-carrossel" src={carro?.Image2} />
+                &lt;/Carousel.Item>
+        &lt;/Carousel>
+          
+        &lt;/section>
+
+        &lt;div className="detalhes-linha">
+        &lt;/div>
+
+        &lt;div className="detalhes-tecnicos-data">
+            &lt;div className="detalhes-tecnicos">
+                
+                &lt;div className="detalhes-titulo">
+                    &lt;h3>Detalhes técnicos do modelo:&lt;/h3>
+                &lt;/div>
+
+            &lt;ul className="flex-container-3">
+                &lt;li className="flex-container-item-3">
+                    &lt;p>{carro?.detalhes}&lt;/p>
+                &lt;/li>
+            &lt;/ul>
+            &lt;/div>
+        &lt;/div>
+
+        &lt;div className="button-container">
+            &lt;Link className="pagPag" aria-current="page" to={'/'}>
+                &lt;button className="button-voltar">Voltar&lt;/button>
+            &lt;/Link>
+            &lt;Link className="aluPag" aria-current="page" to={`/Aluguel/${id}`}>
+                &lt;button className="button-alugar" onClick={() => handleButtonClick(id)}>Alugar&lt;/button>
+            &lt;/Link>
+        &lt;/div>
+
+        &lt;/body>
+
+        &lt;footer>
+            &lt;Footer />
+        &lt;/footer>
+        &lt;/>
+);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

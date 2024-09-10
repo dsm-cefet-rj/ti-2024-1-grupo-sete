@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Formcriarcarro/Formcriarcarro.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Formcriarcarro/Formcriarcarro.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Input from "../../Components/Form/Input";
+import Botaocriarcarro from "../../Components/Form/Botaocriarcarro";
+import styles from "./Formcriarcarro.css";
+import "./Formcriarcarro.css";
+
+/**
+ * Componente para criar ou editar um carro.
+ * @param {Object} props - Propriedades do componente.
+ * @param {Function} props.handleSubmit - Função chamada ao submeter o formulário com os dados do carro.
+ * @param {string} props.botaotxt - Texto para o botão de submit.
+ * @param {Object} [props.carroData] - Dados do carro para edição (opcional).
+ * @returns {React.ReactElement} O formulário para criar ou editar um carro.
+ * @description
+ * O componente 'Formcriarcarro' é utilizado para criar ou editar um carro. Ele exibe um formulário com campos para o modelo do carro, ano de 
+ * fabricação, cidade, preço por dia, detalhes e foto do carro.
+ * Quando o formulário é enviado, ele verifica se todos os campos obrigatórios estão preenchidos e chama a função 'handleSubmit' com os dados do 
+ * carro.
+ * O componente utiliza um estado local para gerenciar os dados do carro e atualiza este estado conforme o usuário preenche os campos do formulário.
+ */
+function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
+  const [carro, setCarro] = useState(carroData || {});
+
+  /**
+   * Função para lidar com o envio do formulário.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
+  const submit = (e) => {
+    e.preventDefault();
+    if (
+      carro.dono === "" ||
+      carro.preco === "" ||
+      carro.cidade === "" ||
+      carro.modelo === ""
+    ) {
+      console.error("Por favor, preencha todos os campos.");
+      return;
+    }
+    handleSubmit(carro);
+  };
+
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - O evento de mudança do campo.
+   */
+  function handleChange(e) {
+    setCarro({ ...carro, [e.target.name]: e.target.value });
+  }
+  return (
+    &lt;form onSubmit={submit} className="form">
+      
+      {/* &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Seu nome"
+          name="dono"
+          placeholder="Insira o seu nome"
+          handleOnChange={handleChange}
+          value={carro.dono}
+        />
+      &lt;/div> */}
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Modelo do carro"
+          name="modelo"
+          placeholder="Insira o modelo do carro"
+          handleOnChange={handleChange}
+          value={carro.modelo}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Ano de fabricação"
+          name="ano"
+          placeholder="Insira o ano de fabricação"
+          handleOnChange={handleChange}
+          value={carro.ano}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Cidade"
+          name="cidade"
+          placeholder="Insira a cidade"
+          handleOnChange={handleChange}
+          value={carro.cidade}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Preço por dia"
+          name="preco"
+          placeholder="Insira o custo por dia de aluguel"
+          handleOnChange={handleChange}
+          value={carro.precoPorDia}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Mais detalhes sobre o carro"
+          name="detalhe"
+          placeholder="Insira detalhes sobre o carro"
+          handleOnChange={handleChange}
+          value={carro.detalhes}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Foto"
+          name="detalhe"
+          placeholder="Insira detalhes sobre o carro"
+          handleOnChange={handleChange}
+          value={carro.fotoLink1}
+        />
+      &lt;/div>
+      {/*&lt;div className="input-file">
+                &lt;Input
+                    type="file"
+                    text="Foto do carro"
+                    name="Image"
+                    placeholder="Insira uma foto do carro"
+                    handleOnChange={handleChange}
+                    value={carro.Image}
+                />
+            &lt;/div>*/}
+      &lt;Botaocriarcarro text={botaotxt}/>
+    &lt;/form>
+  );
+}
+
+export default Formcriarcarro;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

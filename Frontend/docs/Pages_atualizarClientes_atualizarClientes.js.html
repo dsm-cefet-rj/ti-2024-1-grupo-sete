@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/atualizarClientes/atualizarClientes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/atualizarClientes/atualizarClientes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { Table, Button, Form } from "react-bootstrap";
+import axios from "axios";
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+import "./style.css"; 
+
+/**
+ * Componente para a página de atualização de clientes.
+ * @returns {React.ReactElement} A página de atualização de clientes.
+ * @description
+ * O componente 'AtualizarClientes' exibe uma lista de clientes e permite a edição dos dados de um cliente.
+ * Utiliza o token de autenticação armazenado no 'localStorage' para realizar chamadas à API.
+ * Inclui funcionalidades para buscar clientes, editar dados e mostrar mensagens de feedback.
+ */
+export default function AtualizarClientes() {
+  const [clientes, setClientes] = useState([]);// Estado para armazenar a lista de clientes
+  const [editingCliente, setEditingCliente] = useState(null); // Estado para armazenar o cliente sendo editado
+  const [message, setMessage] = useState(''); // Estado para armazenar mensagens de feedback
+
+  useEffect(() => {
+    /**
+     * Função para buscar a lista de clientes.
+     */
+    const token = localStorage.getItem('token'); 
+    async function fetchClientes() {
+      try {
+        const response = await axios.get('http://localhost:5000/api/clientes', {
+          headers: {
+            'x-auth-token': token 
+          }
+        });
+        const data = response.data;
+        console.log("Dados", data);
+        
+        
+        setClientes(Array.isArray(data) ? data : [data]);
+      } catch (error) {
+        console.error('Erro ao buscar clientes:', error.response ? error.response.data : error.message);
+        setClientes([]);
+      }
+    }
+
+    fetchClientes(); // Chama a função para buscar os clientes
+  }, []);
+
+  /**
+   * Função para iniciar a edição de um cliente.
+   * @param {Object} cliente - O cliente a ser editado.
+   */
+  const handleEdit = (cliente) => {
+    setEditingCliente(cliente);
+  };
+
+  /**
+   * Função para salvar as alterações de um cliente.
+   * @param {React.FormEvent} e - Evento de submissão do formulário.
+   */
+  const handleSave = async (e) => {
+    const token = localStorage.getItem('token');
+    e.preventDefault();
+
+    if (!editingCliente || !editingCliente.id) {
+      console.error('ID do cliente é necessário para atualizar');
+      return;
+    }
+
+    try {
+      const response = await axios.put(`http://localhost:5000/api/clientes/${editingCliente.id}`, editingCliente, {
+        headers: {
+          'x-auth-token': token
+        }
+      });
+      const updatedCliente = response.data;
+
+      setClientes(clientes.map(cliente => cliente.id === updatedCliente.id ? updatedCliente : cliente));
+      setMessage('Cliente atualizado com sucesso!');
+      setEditingCliente(null);
+    } catch (error) {
+      console.error('Erro ao atualizar cliente:', error.response ? error.response.data : error.message);
+      setMessage('Erro ao atualizar cliente');
+    }
+  };
+
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de mudança do campo.
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingCliente(prev => ({ ...prev, [name]: value }));
+  };
+
+  /**
+   * Função para lidar com mudanças no endereço do cliente.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de mudança do campo.
+   */
+  const handleEnderecoChange = (e) => {
+    const { name, value } = e.target;
+    setEditingCliente(prev => ({
+      ...prev,
+      endereco: { ...prev.endereco, [name]: value }
+    }));
+  };
+
+  /**
+   * Função para cancelar a edição e fechar o formulário.
+   */
+  const handleCancel = () => {
+    setEditingCliente(null);
+  };
+
+  return (
+    &lt;div className="page-container">
+      &lt;HeaderMain />
+      &lt;div className="content-wrap">
+        {message &amp;&amp; &lt;div className="alert alert-success">{message}&lt;/div>}
+        &lt;div className="table-container">
+          &lt;Table striped bordered hover>
+            &lt;thead>
+              &lt;tr>
+                &lt;th>ID&lt;/th>
+                &lt;th>Nome&lt;/th>
+                &lt;th>Telefone&lt;/th>
+                &lt;th>CPF&lt;/th>
+                &lt;th>Endereço&lt;/th>
+                &lt;th>CNH&lt;/th>
+                &lt;th>Data de Nascimento&lt;/th>
+                &lt;th>Ações&lt;/th>
+              &lt;/tr>
+            &lt;/thead>
+            &lt;tbody>
+              {Array.isArray(clientes) &amp;&amp; clientes.map(cliente => (
+                &lt;tr key={cliente.id}>
+                  &lt;td>{cliente.id}&lt;/td>
+                  &lt;td>{cliente.nome}&lt;/td>
+                  &lt;td>{cliente.telefone}&lt;/td>
+                  &lt;td>{cliente.cpf}&lt;/td>
+                  &lt;td>{`${cliente.endereco.rua}, ${cliente.endereco.numero} - ${cliente.endereco.estado}`}&lt;/td>
+                  &lt;td>{cliente.cnh}&lt;/td>
+                  &lt;td>{cliente.dataNasc}&lt;/td>
+                  &lt;td>
+                    &lt;Button onClick={() => handleEdit(cliente)}>Editar&lt;/Button>
+                  &lt;/td>
+                &lt;/tr>
+              ))}
+            &lt;/tbody>
+          &lt;/Table>
+        &lt;/div>
+
+        {editingCliente &amp;&amp; (
+          &lt;div className="form-container">
+            &lt;Form onSubmit={handleSave}>
+              &lt;h2>Editar Cliente&lt;/h2>
+              &lt;Form.Group controlId="id">
+                &lt;Form.Label>ID&lt;/Form.Label>
+                &lt;Form.Control
+                  disabled
+                  type="text"
+                  name="id"
+                  value={editingCliente.id}
+                  readOnly
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="nome">
+                &lt;Form.Label>Nome&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="nome"
+                  value={editingCliente.nome}
+                  onChange={handleChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="telefone">
+                &lt;Form.Label>Telefone&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="telefone"
+                  value={editingCliente.telefone}
+                  onChange={handleChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="cpf">
+                &lt;Form.Label>CPF&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="cpf"
+                  value={editingCliente.cpf}
+                  onChange={handleChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="enderecoRua">
+                &lt;Form.Label>Rua&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="rua"
+                  value={editingCliente.endereco?.rua || ''}
+                  onChange={handleEnderecoChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="enderecoNumero">
+                &lt;Form.Label>Número&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="numero"
+                  value={editingCliente.endereco?.numero || ''}
+                  onChange={handleEnderecoChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="enderecoEstado">
+                &lt;Form.Label>Estado&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="estado"
+                  value={editingCliente.endereco?.estado || ''}
+                  onChange={handleEnderecoChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="cnh">
+                &lt;Form.Label>CNH&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="cnh"
+                  value={editingCliente.cnh}
+                  onChange={handleChange}
+                />
+              &lt;/Form.Group>
+              &lt;Form.Group controlId="dataNasc">
+                &lt;Form.Label>Data de Nascimento&lt;/Form.Label>
+                &lt;Form.Control
+                  type="text"
+                  name="dataNasc"
+                  value={editingCliente.dataNasc}
+                  onChange={handleChange}
+                />
+              &lt;/Form.Group>
+              &lt;Button variant="primary" type="submit">Salvar&lt;/Button>
+              &lt;Button variant="secondary" onClick={handleCancel}>Cancelar&lt;/Button>
+            &lt;/Form>
+          &lt;/div>
+        )}
+      &lt;/div>
+      &lt;footer>
+        &lt;Footer />
+      &lt;/footer>
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -9,6 +9,14 @@ import ReactPaginate from 'react-paginate'; // Importa o componente de paginaç�
 import "./adminRegistro.css";
 import Footer from "../../Components/Footer/footer.js";
 
+/**
+ * Componente de administração de registros de aluguel.
+ * @returns {React.ReactElement} Layout da página de administração dos registros de aluguéis com funcionalidades de filtro, ordenação e paginação.
+ * @description
+ * O componente 'AdminRegistros' permite que o administrador visualize, filtre e ordene os registros de aluguel de carros.
+ * A página inclui uma tabela com os registros de locação, campos de filtro para locatário, valor total e data de pagamento, além de suporte à 
+ * paginação para navegar entre grandes volumes de dados.
+ */
 export default function AdminRegistros() {
   const [registro, setRegistro] = useState([]);
   const [filteredRegistro, setFilteredRegistro] = useState([]);
@@ -19,8 +27,8 @@ export default function AdminRegistros() {
   const [locatarioFilter, setLocatarioFilter] = useState('');
   const [valorFilter, setValorFilter] = useState('');
   const [dataFilter, setDataFilter] = useState('');
-  const [sortCriteria, setSortCriteria] = useState('date'); // Default to 'date'
-  const [sortOrder, setSortOrder] = useState('desc'); // Default to 'desc'
+  const [sortCriteria, setSortCriteria] = useState('date'); // Critério de ordenação padrão
+  const [sortOrder, setSortOrder] = useState('desc'); // Ordem de ordenação padrão
 
   // Estados para paginação
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,7 +53,9 @@ export default function AdminRegistros() {
     pegaRegistro();
   }, []);
   
-  // Função para filtrar registros
+  /**
+   * Função para filtrar registros de acordo com os filtros de locatário, valor e data.
+   */
   const filterRecords = () => {
     let filtered = registro;
 
@@ -72,6 +82,14 @@ export default function AdminRegistros() {
     setFilteredRegistro(sortedRecords);
   };
 
+  /**
+   * Função para ordenar registros com base no critério e ordem fornecidos.
+   * @param {Array} records - Lista de registros.
+   * @param {string} criteria - Critério de ordenação (ex: 'name', 'value', 'date').
+   * @param {string} order - Ordem de ordenação ('asc' ou 'desc').
+   * @returns {Array} Lista de registros ordenados.
+   */
+
   const sortRecords = (records, criteria, order) => {
     return records.slice().sort((a, b) => {
       let comparison = 0;
@@ -97,20 +115,29 @@ export default function AdminRegistros() {
     filterRecords();
   }, [locatarioFilter, valorFilter, dataFilter, sortCriteria, sortOrder, registro]);
 
-  // Atualiza o número total de páginas
+  // Atualiza o número total de páginas baseado na quantidade de registros filtrados
   useEffect(() => {
     setPageCount(Math.ceil(filteredRegistro.length / itemsPerPage));
   }, [filteredRegistro, itemsPerPage]);
 
+  /**
+   * Alterna a ordem de ordenação ou define um novo critério de ordenação.
+   * @param {string} criteria - Critério de ordenação.
+   */
   const handleSortChange = (criteria) => {
     if (sortCriteria === criteria) {
       setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc')); // Alterna a ordem
     } else {
       setSortCriteria(criteria);
-      setSortOrder('asc'); // Default to ascending order for new criteria
+      setSortOrder('asc'); // Default -> ordem ascendente para novos criteria
     }
   };
 
+  /**
+   * Retorna a seta de ordenação correta com base no critério atual.
+   * @param {string} criteria - Critério de ordenação.
+   * @returns {string} Seta de ordenação ('▲' ou '▼').
+   */
   const renderSortArrow = (criteria) => {
     if (sortCriteria === criteria) {
       return sortOrder === 'asc' ? '▲' : '▼';
@@ -118,7 +145,10 @@ export default function AdminRegistros() {
     return '';
   };
 
-  // Função para tratar a mudança de página
+  /**
+   * Função que lida com a troca de páginas na paginação.
+   * @param {object} event - Evento de troca de página.
+   */
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
   };

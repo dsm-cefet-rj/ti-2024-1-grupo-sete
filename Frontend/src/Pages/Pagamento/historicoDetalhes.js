@@ -9,6 +9,20 @@ import axios from "axios";
 import qrCodeImage from "./qrcode.png"; 
 import { useHistory } from "react-router-dom";
 
+/**
+ * Componente para exibir os detalhes de um aluguel, com opções para renovação e pagamento.
+ * @returns {React.ReactElement} O componente de detalhes do histórico, incluindo uma tabela com informações do aluguel, opções de renovação e um 
+ * formulário para pagamento.
+ * @description
+ * O componente 'HistoricoDetalhes' permite visualizar e renovar um aluguel. Utiliza o hook 'useAluguelStore' para acessar
+ * a função 'renovarAluguel' e atualizar o estado global com a renovação do aluguel. Inclui funcionalidades para:
+ * - Carregar os dados do aluguel a partir da API.
+ * - Exibir detalhes do aluguel em uma tabela.
+ * - Mostrar opções para renovação do aluguel com diferentes períodos e preços.
+ * - Exibir um formulário de pagamento com diferentes métodos (cartão, Pix, boleto).
+ * - Confirmar a renovação e atualizar as informações do aluguel.
+ * @component
+ */
 const HistoricoDetalhes = () => {
   const [dados, setDados] = useState([]);
   const { index } = useParams();

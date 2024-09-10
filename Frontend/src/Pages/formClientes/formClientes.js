@@ -9,6 +9,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
 
+/**
+ * Dados iniciais do cliente.
+ * @type {Object}
+ * @property {string} nome - Nome completo do cliente.
+ * @property {string} email - Endereço de e-mail do cliente.
+ * @property {string} telefone - Número de telefone do cliente.
+ * @property {string} endereco - Endereço do cliente.
+ * @property {string} senha - Senha do cliente.
+ */
 const initialClienteData = {
   nome: "",
   email: "",
@@ -17,11 +26,24 @@ const initialClienteData = {
   senha: "",
 };
 
+/**
+ * Componente para o formulário de cadastro de clientes.
+ * @returns {React.ReactElement} O formulário de cadastro de clientes.
+ * @description
+ * O componente 'FormClientes' é utilizado para criar um novo cliente. Ele exibe um formulário com campos para nome, e-mail, telefone, endereço e 
+ * senha.
+ * Quando o formulário é enviado, ele valida se todos os campos obrigatórios estão preenchidos e envia os dados do cliente para a API.
+ * Após o envio, o usuário é redirecionado para a página de login após um intervalo de tempo e recebe uma notificação de sucesso.
+ */
 function FormClientes() {
   const [cliente, setCliente] = useState(initialClienteData);
   const [submitted, setSubmitted] = useState(false);
 
   const history = useHistory();
+
+  /**
+   * Função para redirecionar o usuário após um intervalo de tempo.
+   */
   const timer = () => {
     setTimeout(() => {
       history.push('/login');  // Redireciona após o tempo definido
@@ -29,9 +51,13 @@ function FormClientes() {
         top: 0,
         behavior: 'smooth' // Isso adiciona uma rolagem suave
     });
-    }, 3000);  // 3000 ms = 3 segundos
+    }, 3000);
   };
 
+  /**
+   * Função para lidar com o envio do formulário.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
   const submit = (e) => {
     e.preventDefault();
 
@@ -76,7 +102,10 @@ function FormClientes() {
   };
 
 
-
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - O evento de mudança do campo.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
       setCliente({

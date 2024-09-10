@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/formClientes/formClientes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/formClientes/formClientes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Input from "../../Components/Form/Input";
+import styles from "./style.module.css";
+import HeaderMain from "../../Components/Header";
+import { Button } from "reactstrap";
+import Footer from "../../Components/Footer/footer";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
+
+/**
+ * Dados iniciais do cliente.
+ * @type {Object}
+ * @property {string} nome - Nome completo do cliente.
+ * @property {string} email - Endereço de e-mail do cliente.
+ * @property {string} telefone - Número de telefone do cliente.
+ * @property {string} endereco - Endereço do cliente.
+ * @property {string} senha - Senha do cliente.
+ */
+const initialClienteData = {
+  nome: "",
+  email: "",
+  telefone: "",
+  endereco: "",
+  senha: "",
+};
+
+/**
+ * Componente para o formulário de cadastro de clientes.
+ * @returns {React.ReactElement} O formulário de cadastro de clientes.
+ * @description
+ * O componente 'FormClientes' é utilizado para criar um novo cliente. Ele exibe um formulário com campos para nome, e-mail, telefone, endereço e 
+ * senha.
+ * Quando o formulário é enviado, ele valida se todos os campos obrigatórios estão preenchidos e envia os dados do cliente para a API.
+ * Após o envio, o usuário é redirecionado para a página de login após um intervalo de tempo e recebe uma notificação de sucesso.
+ */
+function FormClientes() {
+  const [cliente, setCliente] = useState(initialClienteData);
+  const [submitted, setSubmitted] = useState(false);
+
+  const history = useHistory();
+
+  /**
+   * Função para redirecionar o usuário após um intervalo de tempo.
+   */
+  const timer = () => {
+    setTimeout(() => {
+      history.push('/login');  // Redireciona após o tempo definido
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Isso adiciona uma rolagem suave
+    });
+    }, 3000);
+  };
+
+  /**
+   * Função para lidar com o envio do formulário.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
+  const submit = (e) => {
+    e.preventDefault();
+
+    if (
+      cliente.nome === "" ||
+      cliente.telefone === "" ||
+      cliente.endereco === "" ||
+      cliente.email === "" ||
+      cliente.senha === ""
+    ) {
+      toast.error("Por favor, preencha todos os campos.", {
+        position: "top-center",
+        autoClose: 2700,
+        }
+      );
+      console.error("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    axios.post("http://localhost:5000/user", { name: cliente.nome, email:cliente.email, senha: cliente.senha, telefone: cliente.telefone, endereco: cliente.endereco })
+      .then((response) => {
+        console.log("Cliente cadastrado com sucesso:", response.data);
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.error("Erro ao cadastrar cliente:", error.response.data.message);
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 2700,
+          }
+        );
+      }
+    );
+
+    //Notificação
+    toast.success("Cadastro bem-sucedido!", {
+      position: "top-center",
+      autoClose: 2700,
+    });
+    timer();
+
+  };
+
+
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - O evento de mudança do campo.
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+      setCliente({
+        ...cliente,
+        [name]: value,
+      });
+  };
+
+  return (
+    &lt;>
+      &lt;HeaderMain />
+      &lt;ToastContainer/>
+      {submitted ? (
+        &lt;div className={styles.thankYouMessage}>
+          &lt;p>Enviamos um e-mail para confirmação.&lt;/p>
+        &lt;/div>
+      ) : (
+        &lt;form onSubmit={submit} className={styles.form}>
+          &lt;h2>Cadastro de Clientes&lt;/h2>
+          &lt;div className={styles.formGroup}>
+            &lt;Input
+              type="text"
+              text="Nome"
+              name="nome"
+              placeholder="Insira o nome completo"
+              handleOnChange={handleChange}
+              value={cliente.nome}
+            />
+          &lt;/div>
+          &lt;div className={styles.formGroup}>
+            &lt;Input
+              type="email"
+              text="E-mail"
+              name="email"
+              placeholder="Insira o endereço de e-mail"
+              handleOnChange={handleChange}
+              value={cliente.email}
+            />
+          &lt;/div>
+          &lt;div className={styles.formGroup}>
+            &lt;Input
+              type="text"
+              text="Telefone"
+              name="telefone"
+              placeholder="Insira o telefone"
+              handleOnChange={handleChange}
+              value={cliente.telefone}
+            />
+          &lt;/div>
+
+          &lt;div className={styles.formGroup}>
+            &lt;Input
+              type="text"
+              text="Endereço"
+              name="endereco"
+              placeholder = "Insira seu endereço"
+              handleOnChange={handleChange}
+              value={cliente.endereco}
+            />
+          &lt;/div>
+
+          &lt;div className={styles.formGroup}>
+            &lt;Input
+              type="password"
+              text="Senha"
+              name="senha"
+              placeholder="Crie uma senha"
+              handleOnChange={handleChange}
+              value={cliente.senha}
+            />
+          &lt;/div>
+          &lt;div className={styles.buttonContainer}>
+            &lt;Button type="submit">Criar Conta&lt;/Button>
+          &lt;/div>
+        &lt;/form>
+      )}
+      &lt;Footer className="footer" />
+    &lt;/>
+  );
+}
+
+export default FormClientes;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

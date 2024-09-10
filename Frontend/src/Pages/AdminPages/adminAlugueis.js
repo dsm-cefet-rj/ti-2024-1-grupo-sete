@@ -9,6 +9,14 @@ import "./adminAluguel.css"; // Supondo que tenha um CSS similar
 import Footer from "../../Components/Footer/footer.js";
 import { Card } from "reactstrap";
 
+/**
+ * Componente para exibir e gerenciar aluguéis em andamento na página de administração.
+ * @returns {React.ReactElement} O layout da página de administração de aluguéis, incluindo filtros, tabela com registros e paginação.
+ * @description
+ * O componente 'AdminAlugueis' é responsável por buscar, filtrar, ordenar e paginar a lista de aluguéis em andamento.
+ * Inclui funcionalidades para filtragem por usuário, modelo e valor, além de ordenação e paginação dos registros.
+ * Também permite a edição de registros de aluguel e exibe mensagens de erro se houver problemas ao buscar os dados.
+ */
 export default function AdminAlugueis() {
   const [aluguel, setAluguel] = useState([]);
   const [filteredAluguel, setFilteredAluguel] = useState([]);
@@ -45,7 +53,9 @@ export default function AdminAlugueis() {
     pegaAluguel();
   }, []);
 
-  // Função para filtrar registros
+  /**
+   * Filtra os registros com base nos critérios de filtro e ordena os registros filtrados.
+   */
   const filterRecords = () => {
     let filtered = aluguel;
 
@@ -72,6 +82,13 @@ export default function AdminAlugueis() {
     setFilteredAluguel(sortedRecords);
   };
 
+  /**
+   * Ordena os registros com base no critério e na ordem fornecidos.
+   * @param {Array} records - Registros a serem ordenados.
+   * @param {string} criteria - Critério de ordenação (e.g., 'user', 'modelo', 'value', 'dias').
+   * @param {string} order - Ordem de ordenação ('asc' para ascendente, 'desc' para descendente).
+   * @returns {Array} Registros ordenados.
+   */
   const sortRecords = (records, criteria, order) => {
     return records.slice().sort((a, b) => {
       let comparison = 0;
@@ -105,15 +122,24 @@ export default function AdminAlugueis() {
     setPageCount(Math.ceil(filteredAluguel.length / itemsPerPage));
   }, [filteredAluguel, itemsPerPage]);
 
+  /**
+   * Trata a mudança no critério de ordenação.
+   * @param {string} criteria - O critério de ordenação (e.g., 'user', 'modelo', 'value', 'dias').
+   */
   const handleSortChange = (criteria) => {
     if (sortCriteria === criteria) {
       setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc')); // Alterna a ordem
     } else {
       setSortCriteria(criteria);
-      setSortOrder('asc'); // Default to ascending order for new criteria
+      setSortOrder('asc'); // Default -> ordem ascendente para novos criteria
     }
   };
 
+  /**
+   * Renderiza o ícone de seta de ordenação com base no critério e na ordem.
+   * @param {string} criteria - O critério de ordenação (e.g., 'user', 'modelo', 'value', 'dias').
+   * @returns {string} O ícone de seta de ordenação.
+   */
   const renderSortArrow = (criteria) => {
     if (sortCriteria === criteria) {
       return sortOrder === 'asc' ? '▲' : '▼';
@@ -121,7 +147,10 @@ export default function AdminAlugueis() {
     return '';
   };
 
-  // Função para tratar a mudança de página
+  /**
+   * Trata a mudança de página na paginação.
+   * @param {Object} event - Evento de mudança de página.
+   */
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
   };

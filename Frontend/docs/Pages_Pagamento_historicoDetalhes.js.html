@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Pagamento/historicoDetalhes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Pagamento/historicoDetalhes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { Table, Container, Form, Button } from "react-bootstrap";
+import "./styles.css";
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+import useAluguelStore from "../../Components/Zustand/storeAluguel";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import qrCodeImage from "./qrcode.png"; 
+import { useHistory } from "react-router-dom";
+
+/**
+ * Componente para exibir os detalhes de um aluguel, com opções para renovação e pagamento.
+ * @returns {React.ReactElement} O componente de detalhes do histórico, incluindo uma tabela com informações do aluguel, opções de renovação e um 
+ * formulário para pagamento.
+ * @description
+ * O componente 'HistoricoDetalhes' permite visualizar e renovar um aluguel. Utiliza o hook 'useAluguelStore' para acessar
+ * a função 'renovarAluguel' e atualizar o estado global com a renovação do aluguel. Inclui funcionalidades para:
+ * - Carregar os dados do aluguel a partir da API.
+ * - Exibir detalhes do aluguel em uma tabela.
+ * - Mostrar opções para renovação do aluguel com diferentes períodos e preços.
+ * - Exibir um formulário de pagamento com diferentes métodos (cartão, Pix, boleto).
+ * - Confirmar a renovação e atualizar as informações do aluguel.
+ * @component
+ */
+const HistoricoDetalhes = () => {
+  const [dados, setDados] = useState([]);
+  const { index } = useParams();
+  const renovarAluguel = useAluguelStore((state) => state.renovarAluguel);
+
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedDays, setSelectedDays] = useState(null);
+  const [formValues, setFormValues] = useState({
+    titular: "",
+    numeroCartao: "",
+    validade: "",
+    cvv: "",
+    formaPagamento: "cartao",
+  });
+  const [successMessage, setSuccessMessage] = useState(""); 
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchDados = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/registros",
+          {
+            headers: {
+              "x-auth-token": token,
+            },
+          }
+        );
+        setDados(response.data);
+      } catch (error) {
+        console.error(
+          "Erro ao carregar dados:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+
+    fetchDados();
+  }, [token]);
+
+  const handleRenovar = () => {
+    setShowOptions(true);
+  };
+
+  const handleRenovarConfirm = async () => {
+    if (
+      formValues.formaPagamento === "cartao" &amp;&amp;
+      (!formValues.titular ||
+        !formValues.numeroCartao ||
+        !formValues.validade ||
+        !formValues.cvv)
+    ) {
+      alert("Por favor, preencha todas as informações do cartão de crédito.");
+      return;
+    }
+  
+    const currentDateTime = new Date();
+    const currentDate = currentDateTime.toLocaleDateString('pt-BR'); 
+    const currentTime = currentDateTime.toLocaleTimeString('pt-BR'); 
+  
+    try {
+      await axios.put(
+        `http://localhost:5000/api/registros/${dados[index].id}`,
+        {
+          diasAdicionais: selectedDays,
+          dataLocacao: currentDate,
+          horaLocacao: currentTime, 
+        },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+  
+      renovarAluguel(index, selectedDays);
+  
+      const updatedDados = [...dados];
+      updatedDados[index].quantDias += selectedDays;
+      updatedDados[index].dataLocacao = currentDate; 
+      updatedDados[index].horaLocacao = currentTime; 
+      setDados(updatedDados);
+  
+      setSuccessMessage("Pagamento realizado com sucesso!");
+      setShowOptions(false);
+    } catch (error) {
+      console.error(
+        "Erro ao renovar aluguel:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+  
+
+  const options = [
+    { days: 1, price: dados[index]?.valorDiario * 1 },
+    { days: 5, price: dados[index]?.valorDiario * 5 },
+    { days: 10, price: dados[index]?.valorDiario * 10 },
+  ];
+
+  if (!dados[index]) {
+    return &lt;div>Carregando...&lt;/div>;
+  }
+
+  return (
+    &lt;div className="page-container">
+      &lt;HeaderMain />
+      &lt;div className="content-wrap">
+        &lt;div className="historicoTabela">
+          &lt;h1 style={{ marginTop: "30px", marginBottom: "30px" }}>
+            Detalhes do pagamento
+          &lt;/h1>
+          &lt;Table>
+            &lt;thead>
+              &lt;tr>
+                &lt;th>Nome&lt;/th>
+                &lt;th>Carro Alugado&lt;/th>
+                &lt;th>Valor diário&lt;/th>
+                &lt;th>Dias Alugado&lt;/th>
+                &lt;th>Total&lt;/th>
+                &lt;th>Forma de pagamento&lt;/th>
+                &lt;th>Data de Locação&lt;/th>
+                &lt;th>Hora de Locação&lt;/th>
+              &lt;/tr>
+            &lt;/thead>
+            &lt;tbody>
+              &lt;tr>
+                &lt;td>{dados[index].nome}&lt;/td>
+                &lt;td>{dados[index].carro}&lt;/td>
+                &lt;td>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(dados[index].valorDiario)}
+                &lt;/td>
+                &lt;td>{dados[index].quantDias}&lt;/td>
+                &lt;td>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(
+                    dados[index]?.valorDiario * dados[index]?.quantDias
+                  )}
+                &lt;/td>
+                &lt;td>{dados[index].formPagamento}&lt;/td>
+                &lt;td>{dados[index].dataLocacao}&lt;/td>
+                &lt;td>{dados[index].horaLocacao}&lt;/td>
+              &lt;/tr>
+            &lt;/tbody>
+          &lt;/Table>
+        &lt;/div>
+        &lt;div className="button-container">
+          &lt;Link className="pagPag" aria-current="page" to={"/historico"}>
+            &lt;button className="button-cancel">Voltar&lt;/button>
+          &lt;/Link>
+          &lt;button className="button-renovar" onClick={handleRenovar}>
+            Renovar Aluguel
+          &lt;/button>
+        &lt;/div>
+        {showOptions &amp;&amp; (
+          &lt;div className="renew-options">
+            &lt;h3>Escolha a nova duração do aluguel:&lt;/h3>
+            &lt;div className="options-container">
+              {options.map((option) => (
+                &lt;div key={option.days} className="option-card">
+                  &lt;p>{option.days} dia(s)&lt;/p>
+                  &lt;p>
+                    Preço:{" "}
+                    {new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(option.price)}
+                  &lt;/p>
+                  &lt;button onClick={() => setSelectedDays(option.days)}>
+                    Selecionar
+                  &lt;/button>
+                &lt;/div>
+              ))}
+            &lt;/div>
+          &lt;/div>
+        )}
+        {selectedDays &amp;&amp; successMessage === "" ? (
+          &lt;Container className="pagamento-container">
+            &lt;h1>Pagamento&lt;/h1>
+            &lt;Form className="form">
+              &lt;Form.Group className="formGroup" controlId="formaPagamento">
+                &lt;Form.Label>Forma de Pagamento&lt;/Form.Label>
+                &lt;Form.Select
+                  name="formaPagamento"
+                  value={formValues.formaPagamento}
+                  onChange={(e) =>
+                    setFormValues({
+                      ...formValues,
+                      formaPagamento: e.target.value,
+                    })
+                  }
+                >
+                  &lt;option value="cartao">Cartão de Crédito&lt;/option>
+                  &lt;option value="pix">Pix&lt;/option>
+                  &lt;option value="boleto">Boleto&lt;/option>
+                &lt;/Form.Select>
+              &lt;/Form.Group>
+
+              {formValues.formaPagamento === "cartao" &amp;&amp; (
+                &lt;>
+                  &lt;Form.Group className="formGroup" controlId="titular">
+                    &lt;Form.Label>Titular do Cartão&lt;/Form.Label>
+                    &lt;Form.Control
+                      type="text"
+                      name="titular"
+                      value={formValues.titular}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          titular: e.target.value,
+                        })
+                      }
+                      placeholder="Nome completo"
+                      required
+                    />
+                  &lt;/Form.Group>
+
+                  &lt;Form.Group className="formGroup" controlId="numeroCartao">
+                    &lt;Form.Label>Número do Cartão&lt;/Form.Label>
+                    &lt;Form.Control
+                      type="text"
+                      name="numeroCartao"
+                      value={formValues.numeroCartao}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          numeroCartao: e.target.value,
+                        })
+                      }
+                      placeholder="1234 5678 9012 3456"
+                      required
+                    />
+                  &lt;/Form.Group>
+
+                  &lt;Form.Group className="formGroup" controlId="validade">
+                    &lt;Form.Label>Validade&lt;/Form.Label>
+                    &lt;Form.Control
+                      type="text"
+                      name="validade"
+                      value={formValues.validade}
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          validade: e.target.value,
+                        })
+                      }
+                      placeholder="MM/AA"
+                      required
+                    />
+                  &lt;/Form.Group>
+
+                  &lt;Form.Group className="formGroup" controlId="cvv">
+                    &lt;Form.Label>CVV&lt;/Form.Label>
+                    &lt;Form.Control
+                      type="text"
+                      name="cvv"
+                      value={formValues.cvv}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, cvv: e.target.value })
+                      }
+                      placeholder="123"
+                      required
+                    />
+                  &lt;/Form.Group>
+                &lt;/>
+              )}
+
+              {formValues.formaPagamento === "pix" &amp;&amp; (
+                &lt;>
+                  &lt;p>
+                    Pagamento via Pix. Siga as instruções no QR Code abaixo:
+                  &lt;/p>
+                  &lt;img src={qrCodeImage} alt="QR Code" />
+                &lt;/>
+              )}
+
+              {formValues.formaPagamento === "boleto" &amp;&amp; (
+                &lt;p>
+                  Pagamento via Boleto. Siga as instruções no boleto gerado.
+                &lt;/p>
+              )}
+
+              &lt;Button variant="primary" onClick={handleRenovarConfirm}>
+                Confirmar Pagamento
+              &lt;/Button>
+            &lt;/Form>
+          &lt;/Container>
+        ) : (
+          successMessage &amp;&amp; (
+            &lt;div className="success-message">
+              &lt;h3>{successMessage}&lt;/h3>
+              {formValues.formaPagamento === "pix"}
+            &lt;/div>
+          )
+        )}
+      &lt;/div>
+      &lt;Footer />
+    &lt;/div>
+  );
+};
+
+export default HistoricoDetalhes;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

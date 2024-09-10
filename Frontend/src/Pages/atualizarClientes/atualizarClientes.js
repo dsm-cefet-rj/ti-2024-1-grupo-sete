@@ -4,12 +4,24 @@ import axios from "axios";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
 import "./style.css"; 
+
+/**
+ * Componente para a página de atualização de clientes.
+ * @returns {React.ReactElement} A página de atualização de clientes.
+ * @description
+ * O componente 'AtualizarClientes' exibe uma lista de clientes e permite a edição dos dados de um cliente.
+ * Utiliza o token de autenticação armazenado no 'localStorage' para realizar chamadas à API.
+ * Inclui funcionalidades para buscar clientes, editar dados e mostrar mensagens de feedback.
+ */
 export default function AtualizarClientes() {
-  const [clientes, setClientes] = useState([]);
-  const [editingCliente, setEditingCliente] = useState(null);
-  const [message, setMessage] = useState('');
+  const [clientes, setClientes] = useState([]);// Estado para armazenar a lista de clientes
+  const [editingCliente, setEditingCliente] = useState(null); // Estado para armazenar o cliente sendo editado
+  const [message, setMessage] = useState(''); // Estado para armazenar mensagens de feedback
 
   useEffect(() => {
+    /**
+     * Função para buscar a lista de clientes.
+     */
     const token = localStorage.getItem('token'); 
     async function fetchClientes() {
       try {
@@ -29,13 +41,21 @@ export default function AtualizarClientes() {
       }
     }
 
-    fetchClientes();
+    fetchClientes(); // Chama a função para buscar os clientes
   }, []);
 
+  /**
+   * Função para iniciar a edição de um cliente.
+   * @param {Object} cliente - O cliente a ser editado.
+   */
   const handleEdit = (cliente) => {
     setEditingCliente(cliente);
   };
 
+  /**
+   * Função para salvar as alterações de um cliente.
+   * @param {React.FormEvent} e - Evento de submissão do formulário.
+   */
   const handleSave = async (e) => {
     const token = localStorage.getItem('token');
     e.preventDefault();
@@ -62,11 +82,19 @@ export default function AtualizarClientes() {
     }
   };
 
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de mudança do campo.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditingCliente(prev => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * Função para lidar com mudanças no endereço do cliente.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de mudança do campo.
+   */
   const handleEnderecoChange = (e) => {
     const { name, value } = e.target;
     setEditingCliente(prev => ({
@@ -75,6 +103,9 @@ export default function AtualizarClientes() {
     }));
   };
 
+  /**
+   * Função para cancelar a edição e fechar o formulário.
+   */
   const handleCancel = () => {
     setEditingCliente(null);
   };

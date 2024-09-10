@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Header/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Header/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import "./header.css";
+import Logo from "../../Assets/Logo2.png";
+import { RiLoginBoxLine } from "react-icons/ri";
+import { FaPersonCirclePlus } from "react-icons/fa6";
+import { GrUserAdmin } from "react-icons/gr";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
+import {
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
+  Nav,
+} from "reactstrap";
+import useUserStore from "../Zustand/storeUser";
+import { FaUser } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+/**
+ * Componente de Cabeçalho Principal.
+ * Exibe um cabeçalho com navegação e opções de menu, que muda dependendo do estado de autenticação do usuário.
+ * Inclui links para páginas principais, opções de perfil do usuário autenticado, e funcionalidades de login e cadastro para usuários não autenticados.
+ * Também fornece uma funcionalidade de logout que limpa o estado de autenticação e redireciona o usuário para a página inicial.
+ */
+export default function HeaderMain(props) {
+  const isLogged = useUserStore((state) => state.isAuthenticated);
+  const userName = useUserStore((state) => state.usuario.name);
+  const isAdmin = useUserStore((state) => state.usuario.isAdm)
+  const firstName = userName ? userName.split(" ")[0] : "";
+  const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+
+  /**
+   * Manipula o logout do usuário. Limpa o estado de autenticação e remove o token do localStorage.
+   * Exibe uma notificação de sucesso e redireciona o usuário para a página inicial após um pequeno atraso.
+   */
+  const handleLogout = () => {
+    useUserStore.getState().logout();
+    localStorage.removeItem("token");
+    console.log(isLogged);
+    toast.info('Você foi desconectado com sucesso!',
+      {
+        position: "top-center",
+        autoClose: 2700,
+        containerId: "shared-toast-container"
+      }
+    );
+    setTimeout(() => {
+      history.push('/');
+    }, 2000); 
+  };
+
+  /**
+   * Alterna o estado de visibilidade do menu colapsável.
+   */
+  const toggle = () => setIsOpen(!isOpen);
+  return (
+    &lt;>
+      &lt;div className="all">
+        &lt;nav className="navbar navbar-expand-lg bg-body-tertiary">
+          &lt;div className="container-fluid">
+            &lt;Link className="nav-link" to="/">
+              &lt;img className="ImgLogo" src={Logo} alt="DriveZoom Logo" />
+            &lt;/Link>
+            &lt;button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarScroll"
+              aria-controls="navbarScroll"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              onClick={toggle}
+            >
+              &lt;span className="navbar-toggler-icon">&lt;/span>
+            &lt;/button>
+            &lt;Collapse isOpen={isOpen} navbar>
+              &lt;Nav className="me-auto" navbar>
+                &lt;li className="nav-item">
+                  &lt;Link className="nav-link" aria-current="page" to="/">
+                    Home
+                  &lt;/Link>
+                &lt;/li>
+                &lt;li className="nav-item">
+                  &lt;Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/criarcarro"
+                  >
+                    Cadastre seu carro
+                  &lt;/Link>
+                &lt;/li>
+                &lt;UncontrolledDropdown nav inNavbar className="dropdown2">
+                  &lt;DropdownToggle nav caret>
+                    Mais informações
+                  &lt;/DropdownToggle>
+                  &lt;DropdownMenu>
+                    &lt;DropdownItem>
+                      &lt;Link className="nav-link" aria-current="page" to="/FAQ">
+                        FAQ
+                      &lt;/Link>
+                    &lt;/DropdownItem>
+                    &lt;DropdownItem divider />
+                    &lt;DropdownItem>
+                      &lt;Link
+                        className="nav-link"
+                        aria-current="page"
+                        to="/contatos"
+                      >
+                        Contatos
+                      &lt;/Link>
+                    &lt;/DropdownItem>
+                  &lt;/DropdownMenu>
+                &lt;/UncontrolledDropdown>
+              &lt;/Nav>
+              &lt;Nav navbar>
+                {isLogged ? (
+                  &lt;>
+                    &lt;UncontrolledDropdown nav inNavbar className="dropdown2">
+                      &lt;DropdownToggle nav caret>
+                        &lt;FaUser className="fa-user" /> Bem vindo, {firstName}
+                      &lt;/DropdownToggle>
+                      &lt;DropdownMenu>
+                      {isAdmin &amp;&amp; (
+                          &lt;DropdownItem>
+                            &lt;Link
+                              className="nav-link"
+                              aria-current="page"
+                              to="/admin"
+                            >
+                            &lt;GrUserAdmin />  ADMIN
+                            &lt;/Link>
+                          &lt;/DropdownItem>
+                        )}
+                        &lt;DropdownItem>
+                          &lt;Link
+                            className="nav-link"
+                            aria-current="page"
+                            to="/profile"
+                          >
+                            &lt;FaUser className="fa-user" /> Perfil
+                          &lt;/Link>
+                        &lt;/DropdownItem>
+                        &lt;DropdownItem>
+                          &lt;Link
+                            className="nav-link"
+                            aria-current="page"
+                            to="/atualizarcarro"
+                          >
+                            Seus Carros
+                          &lt;/Link>
+                        &lt;/DropdownItem>
+                        &lt;DropdownItem>
+                          &lt;Link
+                            className="nav-link"
+                            aria-current="page"
+                            to="/aluguelativo" // CONTRUIR!!!!!!!!
+                          >
+                            Aluguéis em Andamento
+                          &lt;/Link>
+                        &lt;/DropdownItem>
+                        &lt;DropdownItem>
+                          &lt;Link
+                            className="nav-link"
+                            aria-current="page"
+                            to="/historico"
+                          >
+                            Histórico de Pagamento
+                          &lt;/Link>
+                        &lt;/DropdownItem>
+                        &lt;DropdownItem divider />
+                        &lt;DropdownItem onClick={handleLogout}>
+                          &lt;RiLoginBoxLine className="HiOutlineLogout" /> Logout
+                        &lt;/DropdownItem>
+                      &lt;/DropdownMenu>
+                    &lt;/UncontrolledDropdown>
+                  &lt;/>
+                ) : (
+                  &lt;>
+                    &lt;li className="nav-item">
+                      &lt;Link
+                        className="nav-link"
+                        aria-current="page"
+                        to="/cadastro"
+                      >
+                        &lt;FaPersonCirclePlus className="fa-cadastro" />{" "}
+                        Cadastre-se
+                      &lt;/Link>
+                    &lt;/li>
+                    &lt;li className="nav-item">
+                      &lt;Link
+                        className="nav-link"
+                        aria-current="page"
+                        to="/login"
+                      >
+                        &lt;RiLoginBoxLine className="fa-login" /> Login
+                      &lt;/Link>
+                    &lt;/li>
+                  &lt;/>
+                )}
+              &lt;/Nav>
+            &lt;/Collapse>
+          &lt;/div>
+        &lt;/nav>
+      &lt;/div>
+    &lt;/>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

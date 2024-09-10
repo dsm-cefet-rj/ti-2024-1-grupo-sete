@@ -8,11 +8,19 @@ import { findCarroById } from '../Services/carrosServices';
 import useAluguelStore from '../../Components/Zustand/storeAluguel.js';
 import format from 'date-fns/format';
 
+/**
+ * Componente para exibir e confirmar o aluguel de um carro.
+ * @returns {React.ReactElement} A página de detalhes do pedido de aluguel.
+ * @description
+ * O componente 'Alugar' exibe os detalhes do carro selecionado para aluguel, incluindo o modelo, preço e proprietário.
+ * Também mostra a quantidade de dias para o aluguel e o valor total. Permite ao usuário confirmar o aluguel e redireciona para a página de 
+ * 'pagamento. Utiliza Zustand para gerenciar o estado global relacionado ao período de aluguel e o hook 'useHistory para navegação.
+ */
 export default function Alugar() {
-    const { id } = useParams();
-    const [carro, setCarro] = useState();
+    const { id } = useParams(); // Obtém o ID do carro a partir dos parâmetros da URL
+    const [carro, setCarro] = useState(); // Estado para armazenar as informações do carro
     //const [diasAluguel, setDiasAluguel] = useState(0);
-    const history = useHistory();
+    const history = useHistory(); // Hook para navegação
 
     //Zustand
     const diasEntreDatas = useAluguelStore((state) => state?.diasAluguel);
@@ -25,9 +33,13 @@ export default function Alugar() {
       setCarro(carroOfList);
     }, [id]);
   
-    const total = diasEntreDatas.length * (carro?.precoPorDia || 0); 
+    const total = diasEntreDatas.length * (carro?.precoPorDia || 0); // Calcula o total do aluguel
 
     useEffect(() => {
+      /**
+       * Função para buscar as informações do carro pelo ID.
+       * @param {string} id - O ID do carro a ser buscado.
+       */
       const fetchCarrosById = async (id) => {
           try{
               const response = await findCarroById(id);
@@ -40,6 +52,9 @@ export default function Alugar() {
       fetchCarrosById(id);
     }, [])
   
+    /**
+     * Função para confirmar o aluguel e redirecionar para a página de pagamento.
+     */
     const handleConfirmar = () => {
       history.push({
         pathname: `/pagamento/${id}`,

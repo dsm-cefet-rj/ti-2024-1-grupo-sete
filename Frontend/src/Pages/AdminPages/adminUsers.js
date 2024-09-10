@@ -5,20 +5,30 @@ import { useEffect, useState } from "react";
 import { Table, Button, Form } from "react-bootstrap";
 import { getAllUser } from "../Services/userServices.js";
 
+/**
+ * Componente de administração de usuários.
+ * @returns {React.ReactElement} Layout da página de administração de usuários cadastrados.
+ * @description
+ * O componente 'AdminUsers' exibe uma tabela de usuários cadastrados no sistema. A página inclui uma tabela com as 
+ * informações de nome, e-mail, telefone e endereço dos usuários, além de um botão para editar as informações de cada 
+ * usuário. 
+ */
 export default function AdminUsers() {
   const [user, setUser] = useState([]);
   const [editingCarro, setEditingCarro] = useState(null);
   const [message, setMessage] = useState('');
+
+  // Efeito para buscar todos os usuários ao montar o componente
   useEffect(() => {
     const pegaUser = async () => {
       try {
         const response = await getAllUser();
         console.log("\n\nUsuários encontrados:", response);
-        setUser(response.data);
+        setUser(response.data); // Define o estado 'user' com a resposta da API
       } catch (error) {
         console.error("Erro ao buscar usuários:", error.response.data.message);
         setMessage("Erro ao buscar usuários. Tente novamente mais tarde.");
-        setUser([]); 
+        setUser([]); // Define 'user' como uma lista vazia em caso de erro
       }
     };
   

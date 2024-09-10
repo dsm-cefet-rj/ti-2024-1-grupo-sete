@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/FerramentaPesquisa/barrapesquisa.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/FerramentaPesquisa/barrapesquisa.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useRef, useEffect } from "react";
+import axios from 'axios';
+import { Card } from "reactstrap";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns/format";
+import { addDays, eachDayOfInterval } from "date-fns";
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import useAluguelStore from "../Zustand/storeAluguel";
+import { pt } from "date-fns/locale";
+import "./style.css";
+
+/**
+ * Componente de pesquisa de carros para aluguel que permite selecionar a cidade e o intervalo de datas.
+ * @component
+ * @returns {JSX.Element} Retorna um elemento JSX que contém um campo de busca para a cidade e um seletor de intervalo de datas.
+ */
+export default function BarraPesquisa() {
+  const setBusca = useAluguelStore((state) => state.setBuscar);
+  const busca = useAluguelStore((state) => state.buscar);
+  const [digita, setDigita] = useState(busca);
+  const [carros, setCarros] = useState([]);
+  
+
+  /**
+   * Função para lidar com mudanças no campo de busca de cidade.
+   * @param {Object} event - O evento do campo de entrada.
+   */
+  const onChange = (event) => {
+    setDigita(event.target.value);
+  }
+
+  /**
+   * Função para definir o termo de busca e ativar a busca na aplicação.
+   * @param {string} searchTerm - O termo de busca selecionado ou digitado.
+   */
+  const onSearch = (searchTerm) => {
+    setDigita(searchTerm);
+    setBusca(searchTerm);
+    console.log('Qual cidade', busca);
+  }
+
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 1),
+      key: 'selection'
+    }
+  ]);
+
+  const setDiasAluguel = useAluguelStore((state) => state.setDiasAluguel);
+  const [open, setOpen] = useState(false);
+  const refOne = useRef(null);
+
+  /**
+   * Hook useEffect para adicionar eventos de teclado e clique, e calcular os dias de aluguel.
+   */
+  useEffect(() => {
+    document.addEventListener("keydown", hideOnEscape, true);
+    document.addEventListener("click", hideOnClickOutside, true);
+
+    const startDate = range[0].startDate;
+    const endDate = range[0].endDate;
+    const dias = eachDayOfInterval({ start: startDate, end: endDate });
+    setDiasAluguel(dias);
+  }, [range]);
+
+  /**
+   * Função para fechar o calendário ao pressionar a tecla "Escape".
+   * @param {Object} e - O evento de teclado.
+   */
+  const hideOnEscape = (e) => {
+    if (e.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  /**
+   * Função para fechar o calendário ao clicar fora dele.
+   * @param {Object} e - O evento de clique.
+   */
+  const hideOnClickOutside = (e) => {
+    if (refOne.current &amp;&amp; !refOne.current.contains(e.target)) {
+      setOpen(false);
+    }
+  }
+
+  return (
+    &lt;div className="pesquisa">
+      &lt;div className="pesquisa-conteudo">
+        &lt;h1 className="qual-cidade">Qual cidade e data deseja?&lt;/h1>
+        &lt;Card className="container-pesquisa">
+          &lt;div className="dentro-pesquisa">
+            &lt;h4 className="t4">Cidade&lt;/h4>
+            &lt;div className="organiza">
+              &lt;input type="text" value={digita} onChange={onChange} />
+              &lt;button className="botaoBuscaPesquisa" onClick={() => onSearch(digita)}> Buscar &lt;/button>
+            &lt;/div>
+          &lt;/div>
+          &lt;div className="dropdown">
+            {[...new Set(carros.map(item => item.cidade))]
+              .filter(cidade => {
+                const searchTerm = digita.toLowerCase();
+                const cidade1 = cidade.toLowerCase();
+                return searchTerm &amp;&amp; cidade1.includes(searchTerm) &amp;&amp; cidade1 !== searchTerm;
+              })
+              .slice(0, 4)
+              .map(cidade => (
+                &lt;div onClick={() => onSearch(cidade)} className="dropdown-row" key={cidade}>
+                  {cidade}
+                  &lt;div>&lt;/div>
+                &lt;/div>
+              ))}
+          &lt;/div>
+          &lt;div className="calendarWrap">
+            &lt;h4 className="t4">Dias para alugar&lt;/h4>
+            &lt;input
+              value={`${format(range[0].startDate, "dd/MM/yyyy")} ATÉ ${format(range[0].endDate, "dd/MM/yyyy")}`}
+              readOnly
+              className="inputBox"
+              onClick={() => setOpen(open => !open)}
+            />
+            &lt;div ref={refOne}>
+              {open &amp;&amp;
+                &lt;DateRange
+                  onChange={item => { setRange([item.selection]); }}
+                  editableDateInputs={true}
+                  minDate={new Date()}
+                  moveRangeOnFirstSelection={false}
+                  ranges={range}
+                  months={1}
+                  locale={pt}
+                  direction="horizontal"
+                  className="calendarElement"
+                />
+              }
+            &lt;/div>
+          &lt;/div>
+        &lt;/Card>
+      &lt;/div>
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

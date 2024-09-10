@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Perfil/perfil.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Perfil/perfil.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+import "./style.css"; 
+import useUserStore from "../../Components/Zustand/storeUser";
+import { Button } from "reactstrap";
+
+/**
+ * Componente de perfil do usuário, exibindo informações pessoais e opções de configuração.
+ * @returns {React.ReactElement} O componente de perfil, que inclui informações do usuário, opções de edição e exclusão de conta, e o cabeçalho e 
+ * rodapé da página.
+ * @description
+ * O componente 'Perfil' utiliza o hook 'useUserStore' para acessar as informações do usuário a partir do estado global.
+ * Ele renderiza um layout de perfil com detalhes pessoais, como nome, email, telefone e endereço.
+ * O layout inclui:
+ * - 'HeaderMain': O cabeçalho da página.
+ * - Seção de perfil contendo:
+ *   -> Nome do usuário.
+ *   -> Email do usuário.
+ *   -> Telefone do usuário (opcional).
+ *   -> Endereço do usuário.
+ *   -> Botões para editar a conta e excluir a conta (o botão de exclusão redireciona para uma URL externa).
+ * - 'Footer': O rodapé da página.
+ *
+ * @component
+ */
+export default function Perfil() {
+  const user = useUserStore((state) => state.usuario);
+
+  return (
+    &lt;div className="page-container">
+      &lt;HeaderMain />
+        &lt;div className="profile">
+            &lt;h1>Perfil&lt;/h1>
+        &lt;/div>
+    &lt;div className = "profile-container">
+        &lt;div class="col-lg-4 col-xl-3">
+              &lt;div class="card mb-3">
+                &lt;div class="card-body">
+                  &lt;div class="row">
+                    &lt;div class="col-sm-9">
+                      &lt;h6 class="mb-0">Nome&lt;/h6>
+                    &lt;/div>
+                    &lt;div class="col-sm-9 text-secondary">
+                      {user.name}
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div class="row">
+                    &lt;div class="col-sm-9">
+                      &lt;h6 class="mb-0">Email&lt;/h6>
+                    &lt;/div>
+                    &lt;div class="col-sm-9 text-secondary">
+                      {user.email}
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div class="row">
+                    &lt;div class="col-sm-9">
+                      &lt;h6 class="mb-0">Telefone&lt;/h6>
+                    &lt;/div>
+                    &lt;div class="col-sm-9 text-secondary">
+                      {user?.telefone}
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div class="row">
+                    &lt;div class="col-sm-9">
+                      &lt;h6 class="mb-0">Endereço&lt;/h6>
+                    &lt;/div>
+                    &lt;div class="col-sm-9 text-secondary">
+                      {user.endereco}
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div class="row">&lt;/div>
+                  &lt;div class="row">
+                    &lt;div class="col-sm-12">
+                    &lt;div className = "button-config">
+                        &lt;Button> Editar conta&lt;/Button>
+                    &lt;/div>
+                    &lt;div class="row">&lt;/div>
+                    &lt;div className = "button-config">                   
+                      &lt;a class="btn btn-danger  btn-sm" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Excluir conta&lt;/a>
+                    &lt;/div>
+                    &lt;/div>
+                  &lt;/div>
+                &lt;/div>
+              &lt;/div>
+              &lt;/div>
+              &lt;/div>
+
+
+
+      &lt;footer>
+        &lt;Footer />
+      &lt;/footer>
+    &lt;/div>
+  );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

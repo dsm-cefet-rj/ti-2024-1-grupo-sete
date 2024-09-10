@@ -7,6 +7,14 @@ import Message from "../../Components/Message/Message"
 import styles from "./Atualizardadoscarro.module.css"
 import { updateCarroByUser, findCarroById } from '../Services/carrosServices.js';
 
+/**
+ * Componente para a página de atualização de dados do carro.
+ * @returns {React.ReactElement} A página de atualização de dados do carro.
+ * @description
+ * O componente 'Atualizardadoscarro' permite ao usuário visualizar e atualizar os detalhes de um carro.
+ * Utiliza o ID do carro, fornecido via parâmetros de URL, para buscar os dados do carro e exibir um formulário de edição.
+ * Também exibe mensagens de sucesso ou erro baseadas nas operações realizadas.
+ */
 function Atualizardadoscarro() {
     const { id } = useParams()
     const [carro, setCarro] = useState([])
@@ -14,23 +22,28 @@ function Atualizardadoscarro() {
     const [message, setMessage] = useState()
     const [type, setType] = useState()
 
+    /**
+     * Função para buscar os dados do carro pelo ID.
+     */
     useEffect(() => {
         const getCarroById = async () => {
             try {
               const data = await findCarroById(id);
-              setCarro(data.data.carros);
+              setCarro(data.data.carros); // Atualiza o estado com os dados do carro
             } catch (error) {
               console.error("Erro ao buscar carros:", error.response.data.message);
               setMessage("Erro ao buscar carros. Tente novamente mais tarde.");
-              setCarro([]); 
+              setCarro([]); // Reseta o estado do carro em caso de erro
             }
           };
         
-          getCarroById();
-    }, [showCarroForm])
+          getCarroById(); // Chama a função para buscar os dados do carro
+    }, [showCarroForm]) // Dependência para re-fetch quando o formulário de edição é mostrado
 
-    
-
+    /**
+     * Função para atualizar os dados do carro.
+     * @param {Object} carro - Dados do carro a serem atualizados.
+     */
     async function editPost(carro) {
         try{
             let body = {
@@ -45,15 +58,18 @@ function Atualizardadoscarro() {
             const response = await updateCarroByUser(carro.id, body);
             //setEditingCarro(response)
             console.log("\n\nUPDATE CARRO", response)
-            setShowCarroForm(false)
-            setMessage('Seu carro foi atualizado com sucesso!')
-            setType('success')
+            setShowCarroForm(false) // Fecha o formulário de edição
+            setMessage('Seu carro foi atualizado com sucesso!') // Mensagem de sucesso
+            setType('success')// Tipo de mensagem
                 
             }catch(error){
               console.error("Erro ao editar carro:", error.response.data.message);
           }
     }
 
+    /**
+     * Função para alternar a visibilidade do formulário de edição.
+     */
     function toggleCarroForm() {
         setShowCarroForm(!showCarroForm)
     }

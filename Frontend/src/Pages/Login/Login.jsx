@@ -10,7 +10,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
 import useUserStore from "../../Components/Zustand/storeUser";
 
-
+/**
+ * Componente para a página de login.
+ * @returns {React.ReactElement} O componente de login, que inclui um formulário para entrada de e-mail e senha, e exibe mensagens de sucesso 
+ * ou erro.
+ * @description
+ * O componente 'Login' permite que os usuários façam login na aplicação. Inclui um formulário para entrada de e-mail e senha,
+ * e exibe mensagens de erro se as credenciais forem inválidas. Após um login bem-sucedido, o usuário é redirecionado para a página inicial.
+ * Utiliza o Zustand para gerenciar o estado global do usuário e o token de autenticação.
+ * @component
+ */
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -21,6 +30,9 @@ function Login() {
   const zustandToken = useUserStore((state) => state.token);
   const history = useHistory();
 
+  /**
+   * Função para redirecionar o usuário após o login bem-sucedido.
+   */
   const timer = () => {
     setTimeout(() => {
       history.push('/');  // Redireciona após o tempo definido
@@ -28,10 +40,15 @@ function Login() {
         top: 0,
         behavior: 'auto' // Isso adiciona uma rolagem suave
     });
-    }, 3000);  // 3000 ms = 3 segundos
+    }, 3000);
     console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco, zustandUser.isAdm);
   };
 
+  /**
+   * Função para fazer o login do usuário.
+   * @param {string} email - O e-mail do usuário.
+   * @param {string} senha - A senha do usuário.
+   */
   const handleLogin = async (email, senha) => {
     try {
       const response = await axios.post('http://localhost:5000/auth/', {
@@ -84,11 +101,14 @@ function Login() {
     }
   };
 
+  /**
+   * Função para lidar com o envio do formulário de login.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(""); 
     handleLogin(email, senha);
-    //console.log("XUXA", email, senha);
   };
 
   return (

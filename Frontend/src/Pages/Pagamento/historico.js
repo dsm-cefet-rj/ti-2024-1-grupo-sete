@@ -5,6 +5,16 @@ import Footer from "../../Components/Footer/footer";
 import Message from "../../Components/Message/Message";
 import { Table, Button } from "react-bootstrap";
 
+/**
+ * Componente para exibir o histórico de pagamentos do usuário.
+ * @returns {React.ReactElement} O componente de histórico, que inclui uma tabela com informações de alugueis e uma mensagem de sucesso.
+ * @description
+ * O componente 'Historico' exibe o histórico de pagamentos realizados pelo usuário. Ele faz uma chamada à API para buscar
+ * todos os registros de aluguel associados ao usuário e os exibe em uma tabela. Inclui funcionalidades para:
+ * - Carregar e exibir dados de registros de aluguel.
+ * - Mostrar uma mensagem de sucesso quando um carro é removido (ainda não implementada para remover efetivamente um carro).
+ * @component
+ */
 export default function Historico() {
   const [registro, setRegistro] = useState([]);
   const [messageRemove, setMessageRemove] = useState('');  

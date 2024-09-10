@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Login/Login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Login/Login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import axios from "axios";
+import "./Login.css";
+import logo from "../../Assets/logo2-200-recortado.png";
+import HeaderMain from "../../Components/Header";
+import Footer from "../../Components/Footer/footer";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
+import useUserStore from "../../Components/Zustand/storeUser";
+
+/**
+ * Componente para a página de login.
+ * @returns {React.ReactElement} O componente de login, que inclui um formulário para entrada de e-mail e senha, e exibe mensagens de sucesso 
+ * ou erro.
+ * @description
+ * O componente 'Login' permite que os usuários façam login na aplicação. Inclui um formulário para entrada de e-mail e senha,
+ * e exibe mensagens de erro se as credenciais forem inválidas. Após um login bem-sucedido, o usuário é redirecionado para a página inicial.
+ * Utiliza o Zustand para gerenciar o estado global do usuário e o token de autenticação.
+ * @component
+ */
+function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+  const setUser = useUserStore((state) => state.setUser);
+  const zustandUser = useUserStore((state) => state.usuario);
+  const setToken = useUserStore((state) => state.setToken);
+  const zustandToken = useUserStore((state) => state.token);
+  const history = useHistory();
+
+  /**
+   * Função para redirecionar o usuário após o login bem-sucedido.
+   */
+  const timer = () => {
+    setTimeout(() => {
+      history.push('/');  // Redireciona após o tempo definido
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto' // Isso adiciona uma rolagem suave
+    });
+    }, 3000);
+    console.log('Zustand', zustandToken, zustandUser.email, zustandUser.name, zustandUser.telefone, zustandUser.endereco, zustandUser.isAdm);
+  };
+
+  /**
+   * Função para fazer o login do usuário.
+   * @param {string} email - O e-mail do usuário.
+   * @param {string} senha - A senha do usuário.
+   */
+  const handleLogin = async (email, senha) => {
+    try {
+      const response = await axios.post('http://localhost:5000/auth/', {
+        email,
+        senha: senha,
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      console.log("\n\nRESPONSE:",response.data, "\n\n");
+      const { token, user } = response.data;
+      setToken(token);
+      setUser(user);
+
+      //console.log("XUXA", response.data);
+      console.log('Login bem-sucedido!', token, user.email, user.name, user.telefone, user.endereco, user.isAdm);
+      localStorage.setItem('token', token);
+      //console.log("XUXA TOKEN", localStorage.getItem('token'));
+      localStorage.setItem('userId', user.id);
+      localStorage.setItem('user', JSON.stringify(user))
+
+      toast.success("Login bem sucedido!", {
+        position: "top-center",
+        autoClose: 2700,
+        theme: "colored",
+        containerId: "shared-toast-container"
+        }
+      );
+
+      setEmail("");
+      setSenha("");
+      setError(""); 
+      timer();
+
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || "Erro no login. Tente novamente.");
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 2700,
+          theme: "colored",
+          containerId: "shared-toast-container"
+          }
+        );
+      }
+    }
+  };
+
+  /**
+   * Função para lidar com o envio do formulário de login.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(""); 
+    handleLogin(email, senha);
+  };
+
+  return (
+    &lt;>
+      &lt;div className="page-container">
+        &lt;HeaderMain />
+        &lt;div className="content-wrap">
+          &lt;form className="form" onSubmit={handleSubmit}>
+            &lt;span className="login-form-title">Bem Vindo!&lt;/span>
+            &lt;span className="login-form-title">
+              &lt;img src={logo} alt="Logo" />
+            &lt;/span>
+
+            &lt;div className="wrap-input">
+              &lt;input
+                className={email !== "" ? "has-val input" : "input"}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              &lt;span className="focus-input" data-placeholder="E-mail">&lt;/span>
+            &lt;/div>
+
+            &lt;div className="wrap-input">
+              &lt;input
+                className={senha !== "" ? "has-val input" : "input"}
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required 
+              />
+              &lt;span className="focus-input" data-placeholder="Senha">&lt;/span>
+            &lt;/div>
+
+            {error &amp;&amp; &lt;p className="error">{error}&lt;/p>}
+
+            &lt;div className="container-login-form-btn">
+              &lt;button className="login-form-btn">Login&lt;/button>
+            &lt;/div>
+
+            &lt;div className="text-center">
+              &lt;span className="txt1">Não possui conta?&lt;/span>
+              &lt;a className="txt2" href="#">
+              &lt;Link className="nav-link" aria-current="page" to="/cadastro">Criar conta.&lt;/Link>
+              &lt;/a>
+            &lt;/div>
+          &lt;/form>
+        &lt;/div>
+        &lt;footer>
+          &lt;Footer />
+        &lt;/footer>
+      &lt;/div>
+    &lt;/>
+  );
+}
+
+export default Login;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 21:58:23 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

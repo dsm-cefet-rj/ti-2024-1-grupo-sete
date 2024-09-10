@@ -4,9 +4,27 @@ import Botaocriarcarro from "../../Components/Form/Botaocriarcarro";
 import styles from "./Formcriarcarro.css";
 import "./Formcriarcarro.css";
 
+/**
+ * Componente para criar ou editar um carro.
+ * @param {Object} props - Propriedades do componente.
+ * @param {Function} props.handleSubmit - Função chamada ao submeter o formulário com os dados do carro.
+ * @param {string} props.botaotxt - Texto para o botão de submit.
+ * @param {Object} [props.carroData] - Dados do carro para edição (opcional).
+ * @returns {React.ReactElement} O formulário para criar ou editar um carro.
+ * @description
+ * O componente 'Formcriarcarro' é utilizado para criar ou editar um carro. Ele exibe um formulário com campos para o modelo do carro, ano de 
+ * fabricação, cidade, preço por dia, detalhes e foto do carro.
+ * Quando o formulário é enviado, ele verifica se todos os campos obrigatórios estão preenchidos e chama a função 'handleSubmit' com os dados do 
+ * carro.
+ * O componente utiliza um estado local para gerenciar os dados do carro e atualiza este estado conforme o usuário preenche os campos do formulário.
+ */
 function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
   const [carro, setCarro] = useState(carroData || {});
 
+  /**
+   * Função para lidar com o envio do formulário.
+   * @param {React.FormEvent} e - O evento de envio do formulário.
+   */
   const submit = (e) => {
     e.preventDefault();
     if (
@@ -21,12 +39,13 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
     handleSubmit(carro);
   };
 
+  /**
+   * Função para lidar com mudanças nos campos do formulário.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - O evento de mudança do campo.
+   */
   function handleChange(e) {
     setCarro({ ...carro, [e.target.name]: e.target.value });
   }
-  //<h2>Cadastrar carro</h2>
-  //<h6 style={{textAlign:"center", marginBottom:"25px"}}>Cadastre aqui seu carro para ser alugado</h6>
-
   return (
     <form onSubmit={submit} className="form">
       
