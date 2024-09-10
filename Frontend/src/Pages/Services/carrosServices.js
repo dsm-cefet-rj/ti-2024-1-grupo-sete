@@ -145,5 +145,16 @@ export async function updateCarroByUser(carroId, body) {
             },
         });
     return response;
-    
 }
+
+export async function deleteCarroByUser (id) {
+    const token = localStorage.getItem('token');
+    console.log("\n\nDentro de deleteCarroByUser:\n\n");
+    const response = await axios.delete(`http://localhost:5000/carros/${id}`, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+    return response;
+};

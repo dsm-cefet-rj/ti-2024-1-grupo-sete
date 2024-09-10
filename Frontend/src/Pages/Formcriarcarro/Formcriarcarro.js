@@ -120,16 +120,6 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
           value={carro.enderecoRetirada}
         />
       </div>
-      {/*<div className="input-file">
-                <Input
-                    type="file"
-                    text="Foto do carro"
-                    name="Image"
-                    placeholder="Insira uma foto do carro"
-                    handleOnChange={handleChange}
-                    value={carro.Image}
-                />
-            </div>*/}
       <Botaocriarcarro text={botaotxt}/>
     </form>
   );

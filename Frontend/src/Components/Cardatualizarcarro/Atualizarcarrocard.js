@@ -7,7 +7,6 @@ import {BsPencil, BsFillTrashFill} from 'react-icons/bs'
  * @component
  * @param {Object} props - Propriedades passadas para o componente.
  * @param {string} props.id - ID do carro.
- * @param {string} props.userName - Nome do proprietário do carro.
  * @param {string} props.modelo - Modelo do carro.
  * @param {number} props.ano - Ano do carro.
  * @param {string} props.cidade - Cidade onde o carro está localizado.
@@ -15,7 +14,7 @@ import {BsPencil, BsFillTrashFill} from 'react-icons/bs'
  * @param {function} props.handleRemove - Função para remover o carro.
  * @returns {JSX.Element} Retorna um elemento JSX que representa o cartão de informações do carro.
  */
-function Atualizarcarrocard({id, userName, modelo, ano, cidade, precoPorDia, handleRemove}) {
+function Atualizarcarrocard({id, modelo, ano, cidade, precoPorDia, handleRemove}) {
 
     /**
      * Função chamada quando o botão "Remover" é clicado.
