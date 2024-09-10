@@ -27,7 +27,7 @@ export default function Alugar() {
     console.log("diasEntreDatas", diasEntreDatas);
     let primeiroDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[0], "dd/MM/yyyy") : '';
     let ultimoDia = diasEntreDatas?.length > 0 ? format(diasEntreDatas[diasEntreDatas.length - 1], "dd/MM/yyyy") : '';
-  
+    
     useEffect(() => {
       const carroOfList = carros[id];
       setCarro(carroOfList);
@@ -73,14 +73,15 @@ export default function Alugar() {
         <h2>Detalhes do Pedido</h2>
       </div>
       <div className="containerAluguel">
-        <div className="colunm coluna-1">
+        <div className="colunm-coluna-1">
           <img src={carro?.fotoLink1} alt={`${carro?.modelo} - ${carro?.ano}`} className="img-carro" />
         </div>
-        <div className="culunm coluna-2">
+        <div className="colunm coluna-2">
           <p className="item"><b>Proprietário: </b> {carro?.userName}</p>
           <p className="item"><b>Modelo: </b> {carro?.modelo} {carro?.ano}</p>
           <p className="item"><b>Cidade: </b> {carro?.cidade}</p>
           <p className="item"><b>Preço/dia: </b> R$ {carro?.precoPorDia}</p>
+          <p className="item"><b>Endereço de retirada: </b>{carro?.enderecoRetirada}</p>
         </div>
       </div>
 

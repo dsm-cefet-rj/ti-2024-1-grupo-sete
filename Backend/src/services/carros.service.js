@@ -30,8 +30,8 @@ const byUserService = (id) => Carros.find({user: id})
     .sort({_id: -1})
     .populate("user");
 
-const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1) => 
-    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1},
+const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada) => 
+    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada},
     {
         rawResult: true,
     } 

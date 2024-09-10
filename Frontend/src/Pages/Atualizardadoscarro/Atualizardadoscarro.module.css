@@ -51,6 +51,7 @@
 
 .carro_info {
     width: 100%;
+    align-content: center;
     border-top: 1px solid #7A7A7A;
     padding-top: 1.2em;
     font-size: 1.7em;

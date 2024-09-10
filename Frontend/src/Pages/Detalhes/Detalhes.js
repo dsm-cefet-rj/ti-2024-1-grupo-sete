@@ -83,9 +83,6 @@ export default function Detalhes() {
                 <Carousel.Item>
                     <img className="img-carrossel" src= {carro?.fotoLink1}/>
                 </Carousel.Item>
-                <Carousel.Item>
-                    <img className="img-carrossel" src={carro?.Image2} />
-                </Carousel.Item>
         </Carousel>
           
         </section>
@@ -103,6 +100,15 @@ export default function Detalhes() {
             <ul className="flex-container-3">
                 <li className="flex-container-item-3">
                     <p>{carro?.detalhes}</p>
+                </li>
+            </ul>
+            <div className="detalhes-titulo">
+                    <h3>Endereço de retirada:</h3>
+                </div>
+
+            <ul className="flex-container-3">
+                <li className="flex-container-item-3">
+                    <p>{carro?.enderecoRetirada}</p>
                 </li>
             </ul>
             </div>

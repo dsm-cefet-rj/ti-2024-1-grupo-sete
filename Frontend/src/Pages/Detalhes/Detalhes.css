@@ -145,6 +145,7 @@
     margin-bottom: 62px;
     margin-left: 4em;
     margin-right: 4em;
+    font-size: 1em;
 }
 
 .data {
@@ -190,12 +191,14 @@
     border-left: 5px solid rgb(193, 193, 194);
     align-items: center;
     column-width: 850px;
+    font-size: 1em;
 }
 .detalhes-titulo {
     font-weight: bold;
     text-decoration-color: rgb(57, 53, 53);
     padding: 20px;
     background-color: rgb(193, 193, 194);
+    
 }
 
 .detalhes-titulo h3 {

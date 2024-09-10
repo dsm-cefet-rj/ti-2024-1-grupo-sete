@@ -186,6 +186,16 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
                   value={carro.fotoLink1}
                 />
               </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Endereço de retirada"
+                  name="enderecoRetirada"
+                  placeholder="Insira o endereço da retirada do seu carro"
+                  handleOnChange={handleChange}
+                  value={carro.enderecoRetirada}
+                />
+              </div>
               <div className="buttonContainer">
                 <Button type="submit">Enviar para análise</Button>
               </div>

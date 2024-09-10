@@ -25,6 +25,10 @@ const RegistroSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  modeloRegistro: {
+    type: String,
+    required: true
+  },
 
   //Cliente / comprador
   user: {

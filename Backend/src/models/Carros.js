@@ -29,11 +29,10 @@ const CarrosSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    // fotoLink2: {
-    //     type: String,
-    //     require: true
-    // },
-
+    enderecoRetirada: {
+        type: String,
+        require: true,
+    }, 
 
     diasAlugado: {
         type: Array,
