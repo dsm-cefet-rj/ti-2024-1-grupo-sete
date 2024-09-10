@@ -12,13 +12,12 @@ const updateService = (
     id,
     name,
     email,
-    senha,
     telefone,
     endereco
 ) => 
     User.findOneAndUpdate(
     {_id: id},
-    {name, email, senha, telefone, endereco}
+    {name, email, telefone, endereco}
 )
 
 export default {

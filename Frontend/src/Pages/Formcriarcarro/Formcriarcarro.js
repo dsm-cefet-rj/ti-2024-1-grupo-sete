@@ -74,7 +74,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
         <Input
           type="text"
           text="Preço por dia"
-          name="preco"
+          name="precoPorDia"
           placeholder="Insira o custo por dia de aluguel"
           handleOnChange={handleChange}
           value={carro.precoPorDia}
@@ -84,7 +84,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
         <Input
           type="text"
           text="Mais detalhes sobre o carro"
-          name="detalhe"
+          name="detalhes"
           placeholder="Insira detalhes sobre o carro"
           handleOnChange={handleChange}
           value={carro.detalhes}
@@ -94,7 +94,7 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
         <Input
           type="text"
           text="Foto"
-          name="detalhe"
+          name="fotoLink1"
           placeholder="Insira detalhes sobre o carro"
           handleOnChange={handleChange}
           value={carro.fotoLink1}

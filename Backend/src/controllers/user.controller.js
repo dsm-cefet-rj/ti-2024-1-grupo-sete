@@ -68,9 +68,9 @@ const findById = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { name, email, senha, telefone, endereco } = req.body;
+    const { name, email, telefone, endereco } = req.body;
 
-    if (!name && !email && !senha && !telefone && !endereco) {
+    if (!name && !email && !telefone && !endereco) {
       res.status(400).send({ message: "Preencha pelo menos 1 campo para atualizar o cadastro" })
     }
 
@@ -90,7 +90,6 @@ const update = async (req, res) => {
       id,
       name,
       email,
-      senha,
       telefone,
       endereco
     );
