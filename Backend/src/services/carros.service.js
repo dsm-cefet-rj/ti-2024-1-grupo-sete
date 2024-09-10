@@ -18,7 +18,7 @@ const createService = (body) => Carros.create(body);
  * Encontra todos os carros, ordenados pelo ID em ordem decrescente, e limita o resultado a 20 carros.
  * @returns {Promise<Array<mongoose.Document>>} - Promessa que resolve para um array de documentos de carros.
  */
-const findAllService = () => Carros.find().sort({_id: -1}).populate("user").limit(20);
+const findAllService = () => Carros.find().sort({_id: -1}).populate("user");
 
 /**
  * Conta o número total de documentos de carros no banco de dados.

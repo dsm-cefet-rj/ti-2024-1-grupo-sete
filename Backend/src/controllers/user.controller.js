@@ -42,8 +42,7 @@ const create = async (req, res) => {
         email,
         senha,
         telefone,
-        endereco,
-        isAdm
+        endereco
       },
     });
   } catch (err) {
