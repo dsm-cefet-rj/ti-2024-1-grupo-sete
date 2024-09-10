@@ -1,9 +1,28 @@
+/**
+ * @fileoverview Middleware para autenticação de requisições usando JWT (JSON Web Token) com Bearer Token.
+ * @requires dotenv
+ * @requires jsonwebtoken
+ * @requires ../services/user.service
+ */
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken';
 import userService from "../services/user.service.js"
 
 dotenv.config();
 
+/**
+ * Middleware para verificar a presença e validade de um token JWT na requisição.
+ * Este middleware verifica o cabeçalho `Authorization` da requisição, que deve conter um token JWT no formato 'Bearer <token>'. O middleware 
+ * valida o token usando a chave JWT fornecida nas variáveis de ambiente e, se o token for válido, recupera as informações do usuário associado 
+ * ao token. 
+ * O ID do usuário é anexado ao objeto da requisição ('req.userId'), permitindo que a próxima função de middleware ou rota tenha acesso a essas 
+ * informações. Caso o token esteja ausente, inválido ou o usuário associado não seja encontrado, retorna um status de erro 401.
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @param {Function} next - Função para passar para o próximo middleware ou rota.
+ * @returns {void}
+ */
 export const authMiddleware = (req, res, next) => {
     try{
         const { authorization } = req.headers;

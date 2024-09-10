@@ -1,6 +1,28 @@
+/**
+ * @fileoverview Controlador para gerenciar carros, incluindo criação, busca, atualização e exclusão de registros de carros.
+ * @requires ../services/carros.service
+ * @requires mongoose
+ */
 import {createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService, diasAlugadoService} from "../services/carros.service.js";
 import {ObjectId} from "mongoose";
 
+/**
+ * Cria um novo carro e o salva no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter os detalhes do carro.
+ * @param {string} req.body.modelo - Modelo do carro.
+ * @param {number} req.body.ano - Ano do carro.
+ * @param {string} req.body.cidade - Cidade onde o carro está localizado.
+ * @param {number} req.body.precoPorDia - Preço por dia do aluguel.
+ * @param {string} req.body.detalhes - Detalhes adicionais sobre o carro.
+ * @param {string} req.body.fotoLink1 - URL da foto do carro.
+ * @param {number} [req.body.diasAlugado] - Número de dias que o carro foi alugado.
+ * @param {Date} [req.body.dataCriado] - Data de criação do registro do carro.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const create = async (req, res) => {
     try{
         const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
@@ -31,6 +53,14 @@ const create = async (req, res) => {
     }
 }
 
+/**
+ * Busca todos os carros cadastrados no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findAll = async (req, res) => {
     try{
         //let {limit, offset} = req.query;
@@ -112,6 +142,14 @@ const findAll = async (req, res) => {
     // }
 };
 
+/**
+ * Busca os carros mais populares no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const topCarros = async (req, res) => {
     try{
         const carros = await topCarrosService();
@@ -142,6 +180,16 @@ const topCarros = async (req, res) => {
     }
 };
 
+/**
+ * Busca um carro específico pelo seu ID.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do carro a ser buscado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findById = async (req, res) => {
     try{
         const {id} = req.params;
@@ -169,6 +217,16 @@ const findById = async (req, res) => {
     }
 };
 
+/**
+ * Busca carros pelo modelo.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.query - Consultas da requisição.
+ * @param {string} req.query.modelo - Modelo do carro a ser buscado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const searchByModelo = async (req, res) => {
     try{
         const {modelo} = req.query;
@@ -200,7 +258,14 @@ const searchByModelo = async (req, res) => {
     }
 };
 
-//Procura carros por meio de 1 user 
+/**
+ * Busca carros pertencentes a um usuário específico.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const byUser = async (req, res) => {
     try{
         const id = req.userId;
@@ -227,6 +292,23 @@ const byUser = async (req, res) => {
     }
 };
 
+/**
+ * Atualiza as informações de um carro específico.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter os campos a serem atualizados.
+ * @param {string} [req.body.modelo] - Novo modelo do carro.
+ * @param {number} [req.body.ano] - Novo ano do carro.
+ * @param {string} [req.body.cidade] - Nova cidade do carro.
+ * @param {number} [req.body.precoPorDia] - Novo preço por dia do aluguel.
+ * @param {string} [req.body.detalhes] - Novos detalhes sobre o carro.
+ * @param {string} [req.body.fotoLink1] - Novo URL da foto do carro.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do carro a ser atualizado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const update = async (req, res) => {
     try{
         //Atributos do carro que serão atualizados (não necessariamente todos, mas pelo menos 1)
@@ -252,6 +334,16 @@ const update = async (req, res) => {
     }
 };
 
+/**
+ * Remove um carro específico do banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do carro a ser removido.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const apagarCarro = async (req, res) => {
     try{
         const {id} = req.params;
@@ -272,6 +364,17 @@ const apagarCarro = async (req, res) => {
     }
 };
 
+/**
+ * Atualiza os dias de aluguel de um carro.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter o ID do carro e o array de dias de aluguel.
+ * @param {string} req.body.carroId - ID do carro a ser atualizado.
+ * @param {number[]} req.body.diasAlugadoArray - Array de dias de aluguel a serem atualizados.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const updateDiasAlugado = async (req, res) => {
     try{
         const {carroId, diasAlugadoArray} = req.body; //Mdnar alguelId em body no criaAluguelServices (Front)

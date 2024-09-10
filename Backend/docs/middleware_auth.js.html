@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: middleware/auth.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: middleware/auth.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Middleware para autenticação de requisições usando JWT (JSON Web Token).
+ * @requires jsonwebtoken
+ */
+const jwt = require('jsonwebtoken');
+
+/**
+ * Middleware para verificar a presença e validade de um token JWT.
+ * Este middleware extrai o token do cabeçalho da requisição ('x-auth-token'), verifica sua validade usando a chave JWT fornecida nas variáveis de 
+ * ambiente, e anexa os dados decodificados do usuário ao objeto da requisição ('req.user'), permitindo que a próxima função de middleware ou rota 
+ * acesse as informações do usuário. Caso o token esteja ausente ou inválido, retorna um status de erro 401.
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @param {Function} next - Função para passar para o próximo middleware ou rota.
+ * @returns {void}
+ */
+module.exports = function(req, res, next) {
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).json({ msg: 'No token, authorization denied' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.CHAVE_JWT);
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

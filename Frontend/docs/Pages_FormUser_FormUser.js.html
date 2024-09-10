@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/FormUser/FormUser.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/FormUser/FormUser.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Input from "../../Components/Form/Input";
+import Botaocriarcarro from "../../Components/Form/Botaocriarcarro";
+import styles from "./FormUser.css";
+import "./FormUser.css";
+
+/**
+ * Formulário de criação/edição de usuários.
+ * @component
+ * @param {Object} props
+ * @param {Function} props.handleSubmit - Função chamada ao enviar o formulário.
+ * @param {string} props.botaotxt - Texto exibido no botão de submissão.
+ * @param {Object} [props.userData] - Dados do usuário para edição (opcional).
+ * @returns {React.ReactElement} Formulário de criação/edição de usuário.
+ * @description
+ * O 'FormUser' é um componente que exibe um formulário para criar ou editar informações de um usuário.
+ * O formulário inclui campos para nome, e-mail, telefone e endereço, com validação para garantir que todos os campos sejam preenchidos antes da 
+ * submissão.
+ * Ao submeter o formulário, a função 'handleSubmit' é chamada com os dados do usuário.
+ */
+function FormUser({ handleSubmit, botaotxt, userData }) {
+  // Estado para os dados do usuário, inicializando com os dados passados via props ou um objeto vazio
+  const [user, setUser] = useState(userData || {});
+
+   /**
+   * Função de submissão do formulário.
+   * @param {React.FormEvent&lt;HTMLFormElement>} e - Evento de formulário.
+   * @description 
+   * A função previne o comportamento padrão de recarregar a página ao enviar o formulário.
+   * Se algum campo estiver vazio, a função exibe um erro no console. Caso contrário, chama 'handleSubmit' com os dados do usuário.
+   */
+  const submit = (e) => {
+    e.preventDefault();
+
+    // Validação básica para verificar se todos os campos foram preenchidos
+    if (
+      user.name === "" ||
+      user.email === "" ||
+      user.telefone === "" ||
+      user.endereco === ""
+    ) {
+      console.error("Por favor, preencha todos os campos.");
+      return;
+    }
+    handleSubmit(user);
+  };
+
+  /**
+   * Função para atualizar o estado do usuário ao alterar os inputs.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de mudança dos inputs.
+   * @description
+   * Atualiza dinamicamente os valores dos campos do formulário.
+   */
+  function handleChange(e) {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  }
+  //&lt;h2>Cadastrar user&lt;/h2>
+  //&lt;h6 style={{textAlign:"center", marginBottom:"25px"}}>Cadastre aqui seu user para ser alugado&lt;/h6>
+
+  return (
+    &lt;form onSubmit={submit} className="form">
+      
+      {/* &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Seu nome"
+          name="dono"
+          placeholder="Insira o seu nome"
+          handleOnChange={handleChange}
+          value={user.dono}
+        />
+      &lt;/div> */}
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Usuário"
+          name="name"
+          placeholder="Insira o modelo do user"
+          handleOnChange={handleChange}
+          value={user.name}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="E-mail"
+          name="email"
+          placeholder="Insira o ano de fabricação"
+          handleOnChange={handleChange}
+          value={user.email}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Telefone"
+          name="telefone"
+          placeholder="Insira a cidade"
+          handleOnChange={handleChange}
+          value={user.telefone}
+        />
+      &lt;/div>
+      &lt;div className="formGroup">
+        &lt;Input
+          type="text"
+          text="Endereço"
+          name="endereco"
+          placeholder="Insira o custo por dia de aluguel"
+          handleOnChange={handleChange}
+          value={user.endereco}
+        />
+      &lt;/div>
+      {/*&lt;div className="input-file">
+                &lt;Input
+                    type="file"
+                    text="Foto do user"
+                    name="Image"
+                    placeholder="Insira uma foto do user"
+                    handleOnChange={handleChange}
+                    value={user.Image}
+                />
+            &lt;/div>*/}
+      &lt;Botaocriarcarro text={botaotxt}/>
+    &lt;/form>
+  );
+}
+
+export default FormUser;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Atualizarcarrocard">Atualizarcarrocard</a></li><li><a href="global.html#Atualizardadoscarro">Atualizardadoscarro</a></li><li><a href="global.html#Botaocriarcarro">Botaocriarcarro</a></li><li><a href="global.html#Criarcarro">Criarcarro</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormClientes">FormClientes</a></li><li><a href="global.html#FormUser">FormUser</a></li><li><a href="global.html#Formcriarcarro">Formcriarcarro</a></li><li><a href="global.html#HistoricoDetalhes">HistoricoDetalhes</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Pagamento">Pagamento</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#ProtectedAdminRoutes">ProtectedAdminRoutes</a></li><li><a href="global.html#containsArray">containsArray</a></li><li><a href="global.html#createRegistro">createRegistro</a></li><li><a href="global.html#criarCarro">criarCarro</a></li><li><a href="global.html#findCarroById">findCarroById</a></li><li><a href="global.html#getAllAluguel">getAllAluguel</a></li><li><a href="global.html#getAllAluguelByUser">getAllAluguelByUser</a></li><li><a href="global.html#getAllCarros">getAllCarros</a></li><li><a href="global.html#getAllCarrosByUser">getAllCarrosByUser</a></li><li><a href="global.html#getAllRegistro">getAllRegistro</a></li><li><a href="global.html#getAllRegistroByUser">getAllRegistroByUser</a></li><li><a href="global.html#getAllUser">getAllUser</a></li><li><a href="global.html#initialClienteData">initialClienteData</a></li><li><a href="global.html#reportWebVitals">reportWebVitals</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#updateCarroByUser">updateCarroByUser</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#useAluguelStore">useAluguelStore</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Sep 09 2024 22:37:15 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

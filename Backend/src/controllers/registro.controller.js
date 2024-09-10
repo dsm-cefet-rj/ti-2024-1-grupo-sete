@@ -1,5 +1,25 @@
+/**
+ * @fileoverview Controlador para gerenciar registros de pagamento de aluguel de carros.
+ * @requires ../services/registro.service
+ */
 import { createService, findAllService, byUserService } from "../services/registro.service.js";
 
+/**
+ * Cria um novo registro de pagamento de aluguel e o salva no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter os detalhes do pagamento.
+ * @param {number} req.body.valorDia - Valor do aluguel por dia.
+ * @param {number} req.body.valorTotal - Valor total do pagamento.
+ * @param {number} req.body.quantidadeDias - Quantidade de dias do aluguel.
+ * @param {Date} req.body.dataDoPagamento - Data do pagamento.
+ * @param {string} req.body.formaPagamento - Forma de pagamento utilizada.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do carro associado ao registro.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const create = async (req, res) => {
     try{
         console.log("Registro controller")
@@ -32,6 +52,14 @@ const create = async (req, res) => {
     }
 }
 
+/**
+ * Busca todos os registros de pagamento de aluguel no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findAll = async (req, res) => {
     try{
         const registro = await findAllService();
@@ -66,6 +94,14 @@ const findAll = async (req, res) => {
     }
 }
 
+/**
+ * Busca os registros de pagamento de aluguel pertencentes a um usuário específico.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const byUser = async (req, res) => {
     try{
         const id = req.userId;

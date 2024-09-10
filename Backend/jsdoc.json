@@ -1,0 +1,22 @@
+{
+    "source": {
+      "include": ["src"],
+      "exclude": ["node_modules"]
+    },
+    "opts": {
+      "destination": "./docs",
+      "recurse": true
+    },
+    "plugins": [
+      "plugins/markdown"
+    ],
+    "templates": {
+      "default": {
+        "outputSourceFiles": true
+      }
+    },
+    "markdown": {
+      "parser": "gfm"
+    }
+  }
+  

@@ -1,5 +1,20 @@
+/**
+ * @fileoverview Controlador para gerenciar operações relacionadas a aluguéis, incluindo a criação, recuperação de todos os aluguéis e aluguéis 
+ * por usuário.
+ * @requires ../services/aluguel.service
+ */
 import {createService, findAllService, byUserService} from "../services/aluguel.service.js";
 
+/**
+ * Cria um novo aluguel.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter 'valorDia', 'valorTotal', e 'quantidadeDias'.
+ * @param {Object} req.params - Parâmetros da requisição, deve conter 'id' do carro.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const create = async (req, res) => {
     try{
         console.log("Aluguel controller")
@@ -26,6 +41,14 @@ const create = async (req, res) => {
     }
 };
 
+/**
+ * Recupera todos os aluguéis.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findAll = async (req, res) => {
     try{
         const aluguel = await findAllService();
@@ -60,6 +83,14 @@ const findAll = async (req, res) => {
     }
 }
 
+/**
+ * Recupera os aluguéis de um usuário específico.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const byUser = async (req, res) => {
     try{
         const id = req.userId;

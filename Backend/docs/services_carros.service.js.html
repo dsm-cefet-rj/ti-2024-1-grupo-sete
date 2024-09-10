@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/carros.service.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/carros.service.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Carros from "../models/Carros.js";
+
+/**
+ * Cria um novo documento de carro no banco de dados.
+ * @param {Object} body - Dados do carro a serem criados.
+ * @param {string} body.modelo - Modelo do carro.
+ * @param {string} body.ano - Ano de fabricação do carro.
+ * @param {string} body.cidade - Cidade onde o carro está disponível.
+ * @param {number} body.precoPorDia - Preço por dia do aluguel do carro.
+ * @param {string} body.detalhes - Detalhes adicionais sobre o carro.
+ * @param {string} body.fotoLink1 - Link para a foto principal do carro.
+ * @param {mongoose.Schema.Types.ObjectId} body.user - ID do usuário que criou o carro.
+ * @returns {Promise&lt;mongoose.Document>} - Promessa que resolve para o documento do carro criado.
+ */
+const createService = (body) => Carros.create(body);
+
+/**
+ * Encontra todos os carros, ordenados pelo ID em ordem decrescente, e limita o resultado a 20 carros.
+ * @returns {Promise&lt;Array&lt;mongoose.Document>>} - Promessa que resolve para um array de documentos de carros.
+ */
+const findAllService = () => Carros.find().sort({_id: -1}).populate("user").limit(20);
+
+/**
+ * Conta o número total de documentos de carros no banco de dados.
+ * @returns {Promise&lt;number>} - Promessa que resolve para o número total de documentos de carros.
+ */
+const countCarros = () => Carros.countDocuments();
+
+/**
+ * Encontra os 3 carros mais recentes, ordenados pelo ID em ordem decrescente.
+ * @returns {Promise&lt;Array&lt;mongoose.Document>>} - Promessa que resolve para um array de 3 documentos de carros.
+ */
+const topCarrosService = () => Carros.find().sort({_id: -1}).populate("user").limit(3);
+
+/**
+ * Encontra um carro pelo ID fornecido.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do carro a ser encontrado.
+ * @returns {Promise&lt;mongoose.Document|null>} - Promessa que resolve para o documento do carro encontrado ou null se não encontrado.
+ */
+const findByIdService = (id) => Carros.findById(id).populate("user");
+
+/**
+ * Pesquisa carros pelo modelo fornecido, com correspondência parcial e sem diferenciação entre maiúsculas e minúsculas.
+ * @param {string} modelo - Modelo do carro a ser pesquisado.
+ * @returns {Promise&lt;Array&lt;mongoose.Document>>} - Promessa que resolve para um array de documentos de carros que correspondem à pesquisa.
+ */
+const searchByModeloService = (modelo) => 
+    Carros.find({
+        modelo: {$regex: `${modelo || ""}`, $options: "i"},
+    })
+    .sort({_id: -1})
+    .populate("user");
+
+/**
+ * Encontra carros criados por um usuário específico.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do usuário cujos carros devem ser encontrados.
+ * @returns {Promise&lt;Array&lt;mongoose.Document>>} - Promessa que resolve para um array de documentos de carros criados pelo usuário.
+ */
+const byUserService = (id) => Carros.find({user: id})
+    .sort({_id: -1})
+    .populate("user");
+
+/**
+ * Atualiza um carro com base no ID fornecido e nos novos dados.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do carro a ser atualizado.
+ * @param {string} modelo - Novo modelo do carro.
+ * @param {string} ano - Novo ano de fabricação do carro.
+ * @param {string} cidade - Nova cidade onde o carro está disponível.
+ * @param {number} precoPorDia - Novo preço por dia do aluguel do carro.
+ * @param {string} detalhes - Novos detalhes sobre o carro.
+ * @param {string} fotoLink1 - Novo link para a foto principal do carro.
+ * @returns {Promise&lt;mongoose.Document>} - Promessa que resolve para o documento atualizado do carro.
+ */
+const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1) => 
+    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1},
+    {
+        rawResult: true,
+    } 
+    );
+
+/**
+ * Remove um carro do banco de dados com base no ID fornecido.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do carro a ser removido. 
+ * @returns {Promise&lt;mongoose.Document|null>} - Promessa que resolve para o documento do carro removido ou null se não encontrado.
+ */
+const apagarCarroService = (id) => Carros.findOneAndDelete({_id: id});
+
+/**
+ * Adiciona novos dias ao array 'diasAlugado' de um carro com base no ID fornecido.
+ * @param {mongoose.Schema.Types.ObjectId} carroId - ID do carro ao qual os dias devem ser adicionados.
+ * @param {Array&lt;Date>} diasAlugadoArray - Array de datas representando os dias em que o carro foi alugado.
+ * @returns {Promise&lt;mongoose.Document>} - Promessa que resolve para o documento atualizado do carro.
+ */
+const diasAlugadoService = (carroId, diasAlugadoArray) => Carros.findByIdAndUpdate(
+    {_id: carroId},
+    { $push: {diasAlugado: diasAlugadoArray}}
+);
+
+export { createService, findAllService, countCarros, topCarrosService, findByIdService, searchByModeloService, byUserService, updateService, apagarCarroService, diasAlugadoService };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,6 +1,24 @@
+/**
+ * @fileoverview Controlador para gerenciar usuários, incluindo criação, busca e atualização de dados.
+ * @requires ../services/user.service
+ */
 import userService from "../services/user.service.js";
 /* const mongoose = require("mongoose"); */
 
+/**
+ * Cria um novo usuário e o salva no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter os detalhes do usuário.
+ * @param {string} req.body.name - Nome do usuário.
+ * @param {string} req.body.email - Email do usuário.
+ * @param {string} req.body.senha - Senha do usuário.
+ * @param {string} req.body.telefone - Telefone do usuário.
+ * @param {string} req.body.endereco - Endereço do usuário.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const create = async (req, res) => {
   try{
     const { name, email, senha, telefone, endereco } = req.body;
@@ -33,6 +51,14 @@ const create = async (req, res) => {
   }
 };
 
+/**
+ * Busca todos os usuários cadastrados no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findAll = async (req, res) => {
   try{
     const users = await userService.findAllService();
@@ -47,6 +73,15 @@ const findAll = async (req, res) => {
   }
 }
 
+/**
+ * Busca um usuário específico com base no ID fornecido na requisição.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.user - Dados do usuário autenticado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const findById = async (req, res) => {
 
 /*   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -66,6 +101,21 @@ const findById = async (req, res) => {
   }
 };
 
+/**
+ * Atualiza os dados de um usuário com base no ID fornecido na requisição.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, pode conter campos para atualização.
+ * @param {string} req.body.name - Nome do usuário.
+ * @param {string} req.body.email - Email do usuário.
+ * @param {string} req.body.telefone - Telefone do usuário.
+ * @param {string} req.body.endereco - Endereço do usuário.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do usuário a ser atualizado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise<void>}
+ */
 const update = async (req, res) => {
   try {
     const { name, email, telefone, endereco } = req.body;

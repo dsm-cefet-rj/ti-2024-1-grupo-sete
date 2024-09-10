@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/user.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/user.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Controlador para gerenciar usuários, incluindo criação, busca e atualização de dados.
+ * @requires ../services/user.service
+ */
+import userService from "../services/user.service.js";
+/* const mongoose = require("mongoose"); */
+
+/**
+ * Cria um novo usuário e o salva no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, deve conter os detalhes do usuário.
+ * @param {string} req.body.name - Nome do usuário.
+ * @param {string} req.body.email - Email do usuário.
+ * @param {string} req.body.senha - Senha do usuário.
+ * @param {string} req.body.telefone - Telefone do usuário.
+ * @param {string} req.body.endereco - Endereço do usuário.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise&lt;void>}
+ */
+const create = async (req, res) => {
+  try{
+    const { name, email, senha, telefone, endereco } = req.body;
+
+    if (!name || !email || !senha || !telefone || !endereco) {
+    res.status(400).send({ message: "Preencha todos os campos" })
+    }
+
+    const user = await userService.createService(req.body);
+    //aqui ele chama a função de user.service?
+
+    if (!user) {
+      return res.status(400).send({ message: "Erro ao criar usuário" });
+    }
+
+    res.status(201).send({
+      message: "Usuário cadastrado com sucesso",
+      user: {
+        id: user._id,
+        name,
+        email,
+        senha,
+        telefone,
+        endereco,
+        isAdm
+      },
+    });
+  } catch (err) {
+    res.status(500).send({message: err.message});
+  }
+};
+
+/**
+ * Busca todos os usuários cadastrados no banco de dados.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise&lt;void>}
+ */
+const findAll = async (req, res) => {
+  try{
+    const users = await userService.findAllService();
+
+    if (users.length == 0) {
+      return res.status(400).send({ message: "Não há usuários cadastrados." })
+    }
+
+    res.send(users)
+  } catch(err){
+    res.status(500).send({message: err.message});
+  }
+}
+
+/**
+ * Busca um usuário específico com base no ID fornecido na requisição.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.user - Dados do usuário autenticado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise&lt;void>}
+ */
+const findById = async (req, res) => {
+
+/*   if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({ message: "ID inválido" })
+  } */
+
+  try {
+    const user = req.user;
+
+/*   if (!user) {
+    return res.status(400).send({ message: "Usuário não encontrado" });
+  } */
+
+    res.send(user);
+  } catch(err){
+      res.status(500).send({message: err.message});
+  }
+};
+
+/**
+ * Atualiza os dados de um usuário com base no ID fornecido na requisição.
+ * @async
+ * @function
+ * @param {Object} req - Objeto da requisição.
+ * @param {Object} req.body - Corpo da requisição, pode conter campos para atualização.
+ * @param {string} req.body.name - Nome do usuário.
+ * @param {string} req.body.email - Email do usuário.
+ * @param {string} req.body.telefone - Telefone do usuário.
+ * @param {string} req.body.endereco - Endereço do usuário.
+ * @param {Object} req.params - Parâmetros da requisição.
+ * @param {string} req.params.id - ID do usuário a ser atualizado.
+ * @param {Object} res - Objeto de resposta.
+ * @returns {Promise&lt;void>}
+ */
+const update = async (req, res) => {
+  try {
+    const { name, email, telefone, endereco } = req.body;
+
+    if (!name &amp;&amp; !email &amp;&amp; !telefone &amp;&amp; !endereco) {
+      res.status(400).send({ message: "Preencha pelo menos 1 campo para atualizar o cadastro" })
+    }
+
+    const {id, user} = req;
+
+/*   if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({ message: "ID inválido" })
+  } */
+
+/*   const user = await userService.findByIdService(id); */
+
+/*   if (!user) {
+    return res.status(400).send({ message: "Usuário não encontrado" });
+  } */
+
+    await userService.updateService(
+      id,
+      name,
+      email,
+      telefone,
+      endereco
+    );
+
+    res.send({message: "Usuário atualizado com sucesso"});
+  } catch(err) {
+    res.status(500).send({message: err.message});
+  }
+};
+
+export default { create, findAll, findById, update };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

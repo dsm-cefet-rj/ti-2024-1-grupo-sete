@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/user.service.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/user.service.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import User from "../models/User.js";
+
+/**
+ * Cria um novo documento de usuário no banco de dados.
+ * @param {Object} body - Dados do usuário a serem criados.
+ * @param {string} body.name - Nome do usuário.
+ * @param {string} body.email - Email do usuário.
+ * @param {string} body.senha - Senha do usuário.
+ * @param {string} body.telefone - Telefone do usuário.
+ * @param {string} body.endereco - Endereço do usuário.
+ * @param {boolean} [body.isAdm=false] - Indica se o usuário é um administrador. O padrão é 'false'.
+ * @returns {Promise&lt;mongoose.Document>} - Promessa que resolve para o documento do usuário criado.
+ */
+const createService = (body) => User.create(body);
+//.create: método do Schema que cria um novo item dentro desse Schema (padrão)
+
+/**
+ * Encontra todos os usuários no banco de dados.
+ * @returns {Promise&lt;Array&lt;mongoose.Document>>} - Promessa que resolve para um array de documentos de usuários.
+ */
+const findAllService = () => User.find();
+
+/**
+ * Encontra um usuário pelo ID.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do usuário a ser encontrado.
+ * @returns {Promise&lt;mongoose.Document|null>} - Promessa que resolve para o documento do usuário encontrado, ou `null` se não encontrado.
+ */
+const findByIdService = (id) => User.findById(id);
+
+/**
+ * Atualiza os dados de um usuário específico.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do usuário a ser atualizado.
+ * @param {string} [name] - Novo nome do usuário.
+ * @param {string} [email] - Novo email do usuário.
+ * @param {string} [telefone] - Novo telefone do usuário.
+ * @param {string} [endereco] - Novo endereço do usuário.
+ * @returns {Promise&lt;mongoose.Document|null>} - Promessa que resolve para o documento do usuário atualizado, ou 'null' se não encontrado.
+ */
+const updateService = (
+    id,
+    name,
+    email,
+    telefone,
+    endereco
+) => 
+    User.findOneAndUpdate(
+    {_id: id},
+    {name, email, telefone, endereco}
+)
+
+export default {
+    createService,
+    findAllService,
+    findByIdService,
+    updateService,
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

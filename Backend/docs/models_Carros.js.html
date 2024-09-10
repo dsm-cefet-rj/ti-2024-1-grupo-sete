@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/Carros.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/Carros.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import mongoose from 'mongoose';
+
+/**
+ * Esquema para o modelo de Carros.
+ * O esquema define a estrutura do documento de carro no MongoDB. Inclui informações sobre o modelo do carro, ano, cidade, preço diário, detalhes, 
+ * links das fotos, dias alugado, data de criação e o usuário que cadastrou o carro.
+ * O esquema também referencia o modelo 'User'.
+ * @typedef {Object} Carros
+ * @property {string} modelo - Modelo do carro.
+ * @property {string} ano - Ano de fabricação do carro.
+ * @property {string} cidade - Cidade onde o carro está disponível.
+ * @property {number} precoPorDia - Preço do aluguel por dia.
+ * @property {string} detalhes - Detalhes adicionais sobre o carro.
+ * @property {string} fotoLink1 - Link para a foto principal do carro.
+ * @property {Array&lt;number>} [diasAlugado] - Array com os dias em que o carro foi alugado.
+ * @property {Date} [dataCriado] - Data em que o carro foi cadastrado (default: data e hora atual).
+ * @property {mongoose.Schema.Types.ObjectId} user - Referência ao ID do usuário que cadastrou o carro.
+ */
+const CarrosSchema = new mongoose.Schema({
+
+    /**
+     * Modelo do carro.
+     * @type {String}
+     * @required
+     */
+    modelo: {
+        type: String,
+        require: true,
+    },
+
+    /**
+     * Ano de fabricação do carro.
+     * @type {String}
+     * @required
+     */
+    ano: {
+        type: String,
+        require: true,
+    },
+
+    /**
+     * Cidade onde o carro está disponível.
+     * @type {String}
+     * @required
+     */
+    cidade: {
+        type: String,
+        require: true,
+    },
+
+    /**
+     * Preço do aluguel por dia.
+     * @type {Number}
+     * @required
+     */
+    precoPorDia: {
+        type: Number,
+        require: true,
+    },
+
+    /**
+     * Detalhes adicionais sobre o carro.
+     * @type {String}
+     * @required
+     */
+    detalhes: {
+        type: String,
+        require: true,
+    },
+
+    /**
+     * Link para a foto principal do carro.
+     * @type {String}
+     * @required
+     */
+    fotoLink1: {
+        type: String,
+        require: true,
+    },
+    // fotoLink2: {
+    //     type: String,
+    //     require: true
+    // },
+
+    /**
+     * Array com os dias em que o carro foi alugado.
+     * @type {Array&lt;number>}
+     */
+    diasAlugado: {
+        type: Array,
+    },
+
+    /**
+     * Data em que o carro foi cadastrado.
+     * @type {Date}
+     * @default Date.now()
+     */
+    dataCriado: {
+        type: Date,
+        default: Date.now(),
+    },
+
+/**
+     * Referência ao usuário que cadastrou o carro.
+     * @type {mongoose.Schema.Types.ObjectId}
+     * @required
+     * @ref User
+     */
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
+});
+
+
+/**
+ * Modelo do Carros.
+ * Este modelo é usado para interagir com a coleção 'Carros' no banco de dados MongoDB.
+ * @type {mongoose.Model&lt;Carros>}
+ */
+const Carros = mongoose.model("Carros", CarrosSchema)
+
+export default Carros;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/aluguel.service.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/aluguel.service.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Aluguel from "../models/Aluguel.js";
+
+/**
+ * Cria um novo documento de aluguel no banco de dados.
+ * @param {Object} body - Dados para criar o novo documento de aluguel.
+ * @param {number} body.valorDia - Valor por dia do aluguel.
+ * @param {number} body.valorTotal - Valor total do aluguel.
+ * @param {Array} body.quantidadeDias - Quantidade de dias do aluguel.
+ * @param {Date} [body.dataDoPagamento] - Data do pagamento. Se não fornecida, será a data atual.
+ * @param {string} body.formaPagamento - Forma de pagamento utilizada.
+ * @param {mongoose.Schema.Types.ObjectId} body.user - ID do usuário associado ao aluguel.
+ * @param {mongoose.Schema.Types.ObjectId} body.carro - ID do carro associado ao aluguel.
+ * @returns {Promise&lt;mongoose.Document>} - Promessa que resolve para o novo documento de aluguel.
+ */
+const createService = (body) => Aluguel.create(body);
+
+/**
+ * Recupera todos os documentos de aluguel do banco de dados, ordenados por data de criação (do mais recente para o mais antigo).
+ * Popula os campos relacionados a 'user' e 'carro', incluindo informações adicionais de cada um.
+ * @returns {Promise&lt;mongoose.Document[]>} - Promessa que resolve para uma lista de documentos de aluguel.
+ */
+const findAllService = () => {
+    return Aluguel.find()
+        .sort({ _id: -1 })
+        .populate({
+            path: 'user', // Popula o campo 'user' em Aluguel
+            select: 'name email endereco' // Seleciona os campos desejados do usuário
+        })
+        .populate({
+            path: 'carro', // Popula o campo 'carro' em Aluguel
+            select: 'modelo cidade user', // Inclui o campo 'user' dentro de carro
+            populate: {
+                path: 'user', // Popula o campo 'user' dentro de carro
+                select: 'name' // Seleciona apenas o campo 'name' do usuário associado ao carro
+            }
+        });
+};
+
+/**
+ * Recupera um documento de aluguel pelo ID.
+ * Popula o campo 'user' associado ao aluguel.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do documento de aluguel a ser recuperado.
+ * @returns {Promise&lt;mongoose.Document|null>} - Promessa que resolve para o documento de aluguel ou null se não encontrado.
+ */
+const findByIdService = (id) => Aluguel.findById(id).populate("user");
+
+/**
+ * Recupera todos os documentos de aluguel associados a um usuário específico.
+ * Popula os campos relacionados a 'user' e 'carro'.
+ * @param {mongoose.Schema.Types.ObjectId} id - ID do usuário cujos aluguéis devem ser recuperados.
+ * @returns {Promise&lt;mongoose.Document[]>} - Promessa que resolve para uma lista de documentos de aluguel.
+ */
+const byUserService = (id) => Aluguel.find({user: id})
+    .sort({_id: -1})
+    .populate("user")
+    .populate({
+        path: 'carro', // Popula o campo 'carro' em Aluguel
+        select: 'modelo cidade user', // Inclui o campo 'user' dentro de carro
+    });
+
+
+export {createService, findAllService, findByIdService, byUserService};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/Aluguel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/Aluguel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import mongoose from 'mongoose';
+
+/**
+ * Esquema para o modelo de Aluguel.
+ * O esquema define a estrutura do documento de aluguel no MongoDB. Inclui informações sobre o valor diário do aluguel, o valor total, a quantidade
+ * de dias, o usuário que fez o aluguel e o carro alugado. O esquema também referencia os modelos 'User' e 'Carros'.
+ * @typedef {Object} Aluguel
+ * @property {number} valorDia - Valor diário do aluguel.
+ * @property {number} valorTotal - Valor total do aluguel.
+ * @property {Array&lt;number>} quantidadeDias - Array com a quantidade de dias do aluguel.
+ * @property {mongoose.Schema.Types.ObjectId} user - Referência ao ID do usuário que fez o aluguel.
+ * @property {mongoose.Schema.Types.ObjectId} carro - Referência ao ID do carro alugado.
+ */
+const AluguelSchema = new mongoose.Schema({
+    /**
+     * Valor diário do aluguel.
+     * @type {Number}
+     * @required
+     */
+    valorDia: {
+        type: Number,
+        require: true,
+    },
+
+    /**
+     * Valor total do aluguel.
+     * @type {Number}
+     * @required
+     */
+    valorTotal: {
+        type: Number,
+        require: true,
+    },
+
+    /**
+     * Quantidade de dias do aluguel.
+     * @type {Array&lt;number>}
+     * @required
+     */
+    quantidadeDias: {
+        type: Array,
+        require: true,
+    },
+
+    // formaPagamento: {
+    //     type: String,
+    //     require: true,
+    // },
+
+    /**
+     * Referência ao usuário que fez o aluguel.
+     * @type {mongoose.Schema.Types.ObjectId}
+     * @required
+     * @ref User
+     */
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+
+    /**
+     * Referência ao carro alugado.
+     * @type {mongoose.Schema.Types.ObjectId}
+     * @required
+     * @ref Carros
+     */
+    carro: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Carros",
+        required: true,
+    }
+});
+
+/**
+ * Modelo do Aluguel.
+ * Este modelo é usado para interagir com a coleção 'Aluguel' no banco de dados MongoDB.
+ * @type {mongoose.Model&lt;Aluguel>}
+ */
+const Aluguel = mongoose.model("Aluguel", AluguelSchema)
+
+export default Aluguel;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ano">ano</a></li><li><a href="global.html#apagarCarro">apagarCarro</a></li><li><a href="global.html#apagarCarroService">apagarCarroService</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authMiddleware">authMiddleware</a></li><li><a href="global.html#byUser">byUser</a></li><li><a href="global.html#byUserService">byUserService</a></li><li><a href="global.html#carro">carro</a></li><li><a href="global.html#cidade">cidade</a></li><li><a href="global.html#connectDatabase">connectDatabase</a></li><li><a href="global.html#countCarros">countCarros</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createService">createService</a></li><li><a href="global.html#dataCriado">dataCriado</a></li><li><a href="global.html#dataDoPagamento">dataDoPagamento</a></li><li><a href="global.html#detalhes">detalhes</a></li><li><a href="global.html#diasAlugado">diasAlugado</a></li><li><a href="global.html#diasAlugadoService">diasAlugadoService</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#endereco">endereco</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllService">findAllService</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#findByIdService">findByIdService</a></li><li><a href="global.html#formaPagamento">formaPagamento</a></li><li><a href="global.html#fotoLink1">fotoLink1</a></li><li><a href="global.html#generateToken">generateToken</a></li><li><a href="global.html#isAdm">isAdm</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginService">loginService</a></li><li><a href="global.html#modelo">modelo</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#precoPorDia">precoPorDia</a></li><li><a href="global.html#quantidadeDias">quantidadeDias</a></li><li><a href="global.html#searchByModelo">searchByModelo</a></li><li><a href="global.html#searchByModeloService">searchByModeloService</a></li><li><a href="global.html#senha">senha</a></li><li><a href="global.html#telefone">telefone</a></li><li><a href="global.html#topCarros">topCarros</a></li><li><a href="global.html#topCarrosService">topCarrosService</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateDiasAlugado">updateDiasAlugado</a></li><li><a href="global.html#updateService">updateService</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#validId">validId</a></li><li><a href="global.html#validUser">validUser</a></li><li><a href="global.html#valorDia">valorDia</a></li><li><a href="global.html#valorTotal">valorTotal</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Sep 10 2024 01:52:27 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
