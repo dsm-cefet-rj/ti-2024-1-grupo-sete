@@ -3,11 +3,38 @@ import Input from "../../Components/Form/Input";
 import { Button } from "reactstrap";
 import HeaderMain from "../../Components/Header";
 import Footer from "../../Components/Footer/footer";
-import "./Criarcarro.css";
-import {criarCarro} from "../Services/carrosServices.js" ;
+import { criarCarro } from "../Services/carrosServices.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import "./Criarcarro.css";
+
+/**
+ * Schema de validação com Yup
+ * @type {Yup.ObjectSchema}
+ */
+const validationSchema = Yup.object({
+  modelo: Yup.string().required('Modelo é obrigatório'),
+  ano: Yup.number()
+    .typeError('Ano deve ser um número')
+    .integer('Ano deve ser um número inteiro')
+    .positive('Ano deve ser um número positivo')
+    .required('Ano é obrigatório'),
+  precoPorDia: Yup.number()
+    .typeError('Preço deve ser um número')
+    .integer('Preço deve ser um número inteiro')
+    .positive('Preço deve ser um número positivo')
+    .required('Preço por dia é obrigatório'),
+  cidade: Yup.string()
+    .matches(/^[A-Za-z\s]+, [A-Z]{2}$/, 'Formato da cidade deve ser "Cidade, UF"')
+    .required('Cidade é obrigatória'),
+  detalhes: Yup.string().required('Detalhes são obrigatórios'),
+  fotoLink1: Yup.string()
+    .url('Link da foto deve ser uma URL válida')
+    .required('Link da foto é obrigatório'),
+  enderecoRetirada: Yup.string().required('Endereço de retirada é obrigatório')
+});
 
 /**
  * Componente para criar um novo carro para alugar.
@@ -24,82 +51,62 @@ import { useHistory } from 'react-router-dom';
  */
 function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
   const [carro, setCarro] = useState(carroData || {});
-  const [submitted, setSubmitted] = useState(false); 
-
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
   const history = useHistory();
-  const timer = () => {
-    setTimeout(() => {
-      //history.push('/');  // Redireciona após o tempo definido
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Isso adiciona uma rolagem suave
-      });
-    }, 3000);  // 3000 ms = 3 segundos
-  };
-  
+
   /**
    * Função chamada ao enviar o formulário. Valida os dados e envia para o serviço de criação de carro.
    * @param {React.FormEvent<HTMLFormElement>} e - Evento de envio do formulário.
    */
   const submit = async (e) => {
     e.preventDefault();
-    if (
-      carro.modelo === "" ||
-      carro.ano === "" ||
-      carro.precoPorDia === "" ||
-      carro.cidade === "" ||
-      carro.detalhes === "" ||
-      carro.fotoLink1 === ""
-    ) {
-      console.error("Por favor, preencha todos os campos.");
-      toast.warning("Por favor, preencha todos os campos.", {
-        position: "top-center",
-        autoClose: 2700,
-        containerId: "shared-toast-container"
-      });
-      return;
-    }
 
-    const carroComCliente = { ...carro };
-    console.log("CARRO COM CLIENTE:", carroComCliente);
+    try {
+      // Valida os dados usando o esquema Yup
+      await validationSchema.validate(carro, { abortEarly: false });
+      
+      // Envia os dados para o serviço de criação de carro
+      const carroComCliente = { ...carro };
+      console.log("CARRO COM CLIENTE:", carroComCliente);
 
-    const token = localStorage.getItem('token'); 
-    console.log("XUXA TESTEEEEEEEEEEE", carro, token);
+      const token = localStorage.getItem('token'); 
+      console.log("XUXA TESTEEEEEEEEEEE", carro, token);
 
-      try{
-        console.log("POST CARRO AQUI", carroComCliente);
-        await criarCarro(carroComCliente);
-        //console.log("\n\n\LOG DO RESPONSE\n\n", response.data);
-        //const {carroCriado} = response.data;
-        //const { token, user } = response.data;
-        //console.log("Carro cadastrado com sucesso:", carroCriado);
-        setSubmitted(true);
-  
-      }catch(error){
-        console.error("Erro ao cadastrar carro:", error);
-      };
-    
+      await criarCarro(carroComCliente);
+
       toast.success("Carro cadastrado com sucesso!", {
         position: "top-center",
         autoClose: 2700,
         containerId: "shared-toast-container"
       });
-      timer();
 
+      setSubmitted(true);
+      setErrors({});
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 3000);
 
-    // axios
-    // .post(`http://localhost:5000/carros/`, {modelo: carro.modelo, ano: carro.ano, cidade: carro.cidade, precoPorDia: carro.preco, detalhes: carro.detalhe, fotoLink1: carro.fotoLink1}, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`
-    //     }
-    //   })
-    //   .then((response) => {
-    //     console.log("Carro cadastrado com sucesso:", response.data);
-    //     setSubmitted(true);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Erro ao cadastrar carro:", error);
-    //   });
+    } catch (err) {
+      if (err.inner) {
+        // Captura erros de validação e exibe mensagens
+        const validationErrors = err.inner.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(validationErrors);
+      } else {
+        console.error("Erro ao cadastrar carro:", err);
+        toast.error("Erro ao cadastrar carro. Tente novamente.", {
+          position: "top-center",
+          autoClose: 2700,
+          containerId: "shared-toast-container"
+        });
+      }
+    }
   };
 
   /**
@@ -135,46 +142,62 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
                   handleOnChange={handleChange}
                   value={carro.modelo}
                 />
+                {errors.modelo && <div className="error">{errors.modelo}</div>}
               </div>
               <div className="formGroup">
                 <Input
-                  type="text"
+                  type="number"
                   text="Ano de fabricação"
                   name="ano"
                   placeholder="Insira o ano de fabricação"
                   handleOnChange={handleChange}
                   value={carro.ano}
                 />
+                {errors.ano && <div className="error">{errors.ano}</div>}
               </div>
               <div className="formGroup">
                 <Input
-                  type="text"
-                  text="Cidade"
-                  name="cidade"
-                  placeholder="Insira a cidade"
-                  handleOnChange={handleChange}
-                  value={carro.cidade}
-                />
-              </div>
-              <div className="formGroup">
-                <Input
-                  type="text"
+                  type="number"
                   text="Preço por dia"
                   name="precoPorDia"
                   placeholder="Insira o custo por dia de aluguel"
                   handleOnChange={handleChange}
                   value={carro.precoPorDia}
                 />
+                {errors.precoPorDia && <div className="error">{errors.precoPorDia}</div>}
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Cidade"
+                  name="cidade"
+                  placeholder="Insira a cidade no formato 'Cidade, UF'"
+                  handleOnChange={handleChange}
+                  value={carro.cidade}
+                />
+                {errors.cidade && <div className="error">{errors.cidade}</div>}
+              </div>
+              <div className="formGroup">
+                <Input
+                  type="text"
+                  text="Endereço de retirada"
+                  name="enderecoRetirada"
+                  placeholder="Insira o endereço de retirada"
+                  handleOnChange={handleChange}
+                  value={carro.enderecoRetirada}
+                />
+                {errors.enderecoRetirada && <div className="error">{errors.enderecoRetirada}</div>}
               </div>
               <div className="formGroup">
                 <Input
                   type="text"
                   text="Mais detalhes sobre o carro"
                   name="detalhes"
-                  placeholder="Insira detalhes sobre o carro"
+                  placeholder="Insira detalhes sobre o carro (opcional)"
                   handleOnChange={handleChange}
                   value={carro.detalhes}
                 />
+                {errors.detalhes && <div className="error">{errors.detalhes}</div>}
               </div>
               <div className="formGroup">
                 <Input
@@ -185,16 +208,7 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
                   handleOnChange={handleChange}
                   value={carro.fotoLink1}
                 />
-              </div>
-              <div className="formGroup">
-                <Input
-                  type="text"
-                  text="Endereço de retirada"
-                  name="enderecoRetirada"
-                  placeholder="Insira o endereço da retirada do seu carro"
-                  handleOnChange={handleChange}
-                  value={carro.enderecoRetirada}
-                />
+                {errors.fotoLink1 && <div className="error">{errors.fotoLink1}</div>}
               </div>
               <div className="buttonContainer">
                 <Button type="submit">Enviar para análise</Button>
@@ -206,6 +220,7 @@ function Criarcarro({ handleSubmit, botaotxt, carroData, clienteId }) {
           <Footer />
         </footer>
       </div>
+      <ToastContainer />
     </>
   );
 }

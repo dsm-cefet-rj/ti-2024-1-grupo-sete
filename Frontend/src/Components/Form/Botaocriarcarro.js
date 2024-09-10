@@ -1,3 +1,4 @@
+import { Button } from 'reactstrap'
 import styles from './Botaocriarcarro.module.css'
 
 /**
@@ -10,7 +11,7 @@ import styles from './Botaocriarcarro.module.css'
 function Botaocriarcarro({ text }) {
     return (
         <div>
-            <button className={styles.btn}>{text}</button>
+            <Button>{text}</Button>
         </div>
     )
 }

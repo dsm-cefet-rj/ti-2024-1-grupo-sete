@@ -9,6 +9,7 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
+    "formik": "^2.4.6",
     "json-server": "^1.0.0-alpha.23",
     "npm": "^10.8.3",
     "react": "^18.2.0",
@@ -22,6 +23,7 @@
     "react-toastify": "^10.0.5",
     "reactstrap": "^9.2.2",
     "web-vitals": "^2.1.4",
+    "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },
   "scripts": {

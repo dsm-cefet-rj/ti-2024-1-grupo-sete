@@ -77,3 +77,10 @@
     flex-direction: column;
     min-height: 100vh;
 }
+
+.error {
+    color: red; /* Define a cor do texto como vermelha */
+    font-size: 0.875rem; /* Define o tamanho da fonte */
+    margin-top: 0.25rem; /* Adiciona uma pequena margem acima do erro */
+    display: block; /* Faz com que o erro ocupe a linha inteira */
+  }

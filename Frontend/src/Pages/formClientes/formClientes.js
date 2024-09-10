@@ -37,8 +37,8 @@ const initialClienteData = {
  */
 function FormClientes() {
   const [cliente, setCliente] = useState(initialClienteData);
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-
   const history = useHistory();
 
   /**
@@ -50,7 +50,7 @@ function FormClientes() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth' // Isso adiciona uma rolagem suave
-    });
+      });
     }, 3000);
   };
 
@@ -60,47 +60,68 @@ function FormClientes() {
    */
   const submit = (e) => {
     e.preventDefault();
+    
+    // Resetar erros
+    const validationErrors = {};
 
-    if (
-      cliente.nome === "" ||
-      cliente.telefone === "" ||
-      cliente.endereco === "" ||
-      cliente.email === "" ||
-      cliente.senha === ""
-    ) {
-      toast.error("Por favor, preencha todos os campos.", {
-        position: "top-center",
-        autoClose: 2700,
-        }
-      );
-      console.error("Por favor, preencha todos os campos.");
+    // Validações
+    if (cliente.nome.split(" ").length < 2) {
+      validationErrors.nome = "Por favor, insira o nome e sobrenome.";
+    }
+
+    // Regex para validar o formato de email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(cliente.email)) {
+      validationErrors.email = "Por favor, insira um e-mail válido.";
+    }
+
+    // Regex para validar o formato de telefone (exemplo: (99) 99999-9999)
+    const telefonePattern = /^\d{2} \d{9}$/;
+    if (!telefonePattern.test(cliente.telefone)) {
+      validationErrors.telefone = "Por favor, insira um telefone válido no formato 99 999999999.";
+    }
+
+    // Valida o endereço
+    const enderecoParts = cliente.endereco.split(", ");
+    if (enderecoParts.length < 2) {
+      validationErrors.endereco = "Por favor, insira o endereço no formato 'Cidade, Rua, Número'.";
+    }
+
+    // Valida a senha
+    if (cliente.senha.length < 6) {
+      validationErrors.senha = "A senha deve ter pelo menos 6 caracteres.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    axios.post("http://localhost:5000/user", { name: cliente.nome, email:cliente.email, senha: cliente.senha, telefone: cliente.telefone, endereco: cliente.endereco })
+    // Envia os dados para a API
+    axios.post("http://localhost:5000/user", { 
+      name: cliente.nome, 
+      email: cliente.email, 
+      senha: cliente.senha, 
+      telefone: cliente.telefone, 
+      endereco: cliente.endereco 
+    })
       .then((response) => {
         console.log("Cliente cadastrado com sucesso:", response.data);
         setSubmitted(true);
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar cliente:", error.response.data.message);
-        toast.error(error.response.data.message, {
+        toast.success("Cadastro bem-sucedido!", {
           position: "top-center",
           autoClose: 2700,
-          }
-        );
-      }
-    );
-
-    //Notificação
-    toast.success("Cadastro bem-sucedido!", {
-      position: "top-center",
-      autoClose: 2700,
-    });
-    timer();
-
+        });
+        timer();
+      })
+      .catch((error) => {
+        console.error("Erro ao cadastrar cliente:", error.response?.data?.message || error.message);
+        toast.error("Erro ao cadastrar cliente. Tente novamente.", {
+          position: "top-center",
+          autoClose: 2700,
+        });
+      });
   };
-
 
   /**
    * Função para lidar com mudanças nos campos do formulário.
@@ -108,16 +129,17 @@ function FormClientes() {
    */
   const handleChange = (e) => {
     const { name, value } = e.target;
-      setCliente({
-        ...cliente,
-        [name]: value,
-      });
+    setCliente({
+      ...cliente,
+      [name]: value,
+    });
+    setErrors({ ...errors, [name]: "" }); // Limpa o erro ao mudar o valor
   };
 
   return (
     <>
       <HeaderMain />
-      <ToastContainer/>
+      <ToastContainer />
       {submitted ? (
         <div className={styles.thankYouMessage}>
           <p>Enviamos um e-mail para confirmação.</p>
@@ -134,6 +156,7 @@ function FormClientes() {
               handleOnChange={handleChange}
               value={cliente.nome}
             />
+            {errors.nome && <p className={styles.error}>{errors.nome}</p>}
           </div>
           <div className={styles.formGroup}>
             <Input
@@ -144,16 +167,18 @@ function FormClientes() {
               handleOnChange={handleChange}
               value={cliente.email}
             />
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
           </div>
           <div className={styles.formGroup}>
             <Input
               type="text"
               text="Telefone"
               name="telefone"
-              placeholder="Insira o telefone"
+              placeholder="Insira o telefone (ex: (99) 99999-9999)"
               handleOnChange={handleChange}
               value={cliente.telefone}
             />
+            {errors.telefone && <p className={styles.error}>{errors.telefone}</p>}
           </div>
 
           <div className={styles.formGroup}>
@@ -161,10 +186,11 @@ function FormClientes() {
               type="text"
               text="Endereço"
               name="endereco"
-              placeholder = "Insira seu endereço"
+              placeholder="Insira seu endereço (Cidade, Rua, Número)"
               handleOnChange={handleChange}
               value={cliente.endereco}
             />
+            {errors.endereco && <p className={styles.error}>{errors.endereco}</p>}
           </div>
 
           <div className={styles.formGroup}>
@@ -172,10 +198,11 @@ function FormClientes() {
               type="password"
               text="Senha"
               name="senha"
-              placeholder="Crie uma senha"
+              placeholder="Crie uma senha (mínimo 6 caracteres)"
               handleOnChange={handleChange}
               value={cliente.senha}
             />
+            {errors.senha && <p className={styles.error}>{errors.senha}</p>}
           </div>
           <div className={styles.buttonContainer}>
             <Button type="submit">Criar Conta</Button>
