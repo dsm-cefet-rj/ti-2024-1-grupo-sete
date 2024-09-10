@@ -70,7 +70,7 @@ export default function AluguelAtivo() {
                     variant="primary"
                     //onClick={() => setEditingCarro(aluguel)}
                   >
-                    Editar
+                    Detalhes
                   </Button>
                   <button className="btn btn-danger" type="submit">Deletar Aluguel</button>
                 </td>
