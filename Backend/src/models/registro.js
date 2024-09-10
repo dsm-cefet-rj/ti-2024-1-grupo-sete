@@ -66,6 +66,10 @@ const RegistroSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  modeloRegistro: {
+    type: String,
+    required: true
+  },
 
   /**
    * Referência ao usuário que fez o registro.

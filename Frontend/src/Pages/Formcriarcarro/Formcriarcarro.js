@@ -28,10 +28,12 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
   const submit = (e) => {
     e.preventDefault();
     if (
-      carro.dono === "" ||
+      carro.detalhes === "" ||
       carro.preco === "" ||
       carro.cidade === "" ||
-      carro.modelo === ""
+      carro.modelo === "" ||
+      carro.fotoLink1 === "" ||
+      carro.enderecoRetirada === ""
     ) {
       console.error("Por favor, preencha todos os campos.");
       return;
@@ -48,17 +50,6 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
   }
   return (
     <form onSubmit={submit} className="form">
-      
-      {/* <div className="formGroup">
-        <Input
-          type="text"
-          text="Seu nome"
-          name="dono"
-          placeholder="Insira o seu nome"
-          handleOnChange={handleChange}
-          value={carro.dono}
-        />
-      </div> */}
       <div className="formGroup">
         <Input
           type="text"
@@ -117,6 +108,16 @@ function Formcriarcarro({ handleSubmit, botaotxt, carroData }) {
           placeholder="Insira detalhes sobre o carro"
           handleOnChange={handleChange}
           value={carro.fotoLink1}
+        />
+      </div>
+      <div className="formGroup">
+        <Input
+          type="text"
+          text="Endereço de retirada"
+          name="enderecoRetirada"
+          placeholder="Insira endereço de retirada do seu carro"
+          handleOnChange={handleChange}
+          value={carro.enderecoRetirada}
         />
       </div>
       {/*<div className="input-file">

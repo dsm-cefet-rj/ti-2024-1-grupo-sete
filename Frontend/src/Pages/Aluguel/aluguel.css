@@ -40,13 +40,25 @@
   text-align: center;
 
 }
+
+.containerAluguel{
+  justify-items: center;
+}
+
+.colunm-coluna-1{
+  align-self: center;
+  align-content: center;
+}
+
 .img-carro{
   box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.089);
   border-radius: 10px;
   border: solid 3px rgba(0, 0, 0, 0.28);
-  max-width: 600px;
-  min-width: 200px;
+  max-width: 700px;
+  min-width: 600px;
   margin: 20px;
+  max-height: 500px;
+  min-height: 400px;
 }
 
 .pagPag{
@@ -122,6 +134,7 @@
   margin: 10px;
   margin-top: 30px;
   font-weight: bolder;
+  font-size: 1.4em;
 }
 
 .diasAluguel{

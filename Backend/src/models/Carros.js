@@ -77,14 +77,20 @@ const CarrosSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    // fotoLink2: {
-    //     type: String,
-    //     require: true
-    // },
+
+    /**
+     * Endereço para retirada do carro.
+     * @type {String}
+     * @required
+     */
+    enderecoRetirada: {
+        type: String,
+        require: true,
+    }, 
 
     /**
      * Array com os dias em que o carro foi alugado.
-     * @type {Array<number>}
+     * @type {Array<Date>}
      */
     diasAlugado: {
         type: Array,

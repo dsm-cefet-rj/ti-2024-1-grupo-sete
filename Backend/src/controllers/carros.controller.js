@@ -25,10 +25,10 @@ import {ObjectId} from "mongoose";
  */
 const create = async (req, res) => {
     try{
-        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, diasAlugado, dataCriado} = req.body;
+        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada, diasAlugado, dataCriado} = req.body;
         //console.log("É PREÇO!", precoPorDia) ok
 
-        if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1){
+        if(!modelo || !ano || !cidade || !precoPorDia || !detalhes || !fotoLink1 || !enderecoRetirada){
             res.status(400).send({ message: "Preencha todos os campos" });
         }
 
@@ -41,6 +41,7 @@ const create = async (req, res) => {
             precoPorDia,
             detalhes,
             fotoLink1,
+            enderecoRetirada,
             diasAlugado,
             dataCriado,
             user: req.userId,
@@ -106,6 +107,7 @@ const findAll = async (req, res) => {
                 precoPorDia: carrosItem.precoPorDia,
                 detalhes: carrosItem.detalhes,
                 fotoLink1: carrosItem.fotoLink1,
+                enderecoRetirada: carrosItem.enderecoRetirada,
                 diasAlugado: carrosItem.diasAlugado,
                 dataCriado: carrosItem.dataCriado,
                 userName: carrosItem.user.name,
@@ -168,6 +170,7 @@ const topCarros = async (req, res) => {
                 precoPorDia: carrosItem.precoPordia,
                 detalhes: carrosItem.detalhes,
                 fotoLink1: carrosItem.fotoLink1,
+                enderecoRetirada: carrosItem.enderecoRetirada,
                 diasAlugado: carrosItem.diasAlugado,
                 dataCriado: carrosItem.dataCriado,
                 userName: carrosItem.user.name,
@@ -205,6 +208,7 @@ const findById = async (req, res) => {
                 precoPorDia: carros.precoPorDia,
                 detalhes: carros.detalhes,
                 fotoLink1: carros.fotoLink1,
+                enderecoRetirada: carros.enderecoRetirada,
                 diasAlugado: carros.diasAlugado,
                 dataCriado: carros.dataCriado,
                 userName: carros.user.name,
@@ -246,6 +250,7 @@ const searchByModelo = async (req, res) => {
                 precoPorDia: carrosItem.precoPorDia,
                 detalhes: carrosItem.detalhes,
                 fotoLink1: carrosItem.fotoLink1,
+                enderecoRetirada: carrosItem.enderecoRetirada,
                 diasAlugado: carrosItem.diasAlugado,
                 dataCriado: carrosItem.dataCriado,
                 userName: carrosItem.user.name,
@@ -280,6 +285,7 @@ const byUser = async (req, res) => {
                 precoPorDia: carrosItem.precoPorDia,
                 detalhes: carrosItem.detalhes,
                 fotoLink1: carrosItem.fotoLink1,
+                enderecoRetirada: carrosItem.enderecoRetirada,
                 diasAlugado: carrosItem.diasAlugado,
                 dataCriado: carrosItem.dataCriado,
                 userName: carrosItem.user.name,
@@ -312,10 +318,10 @@ const byUser = async (req, res) => {
 const update = async (req, res) => {
     try{
         //Atributos do carro que serão atualizados (não necessariamente todos, mas pelo menos 1)
-        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1} = req.body;
+        const {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada} = req.body;
         const {id} = req.params;
 
-        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1){
+        if(!modelo && !ano && !cidade && !precoPorDia && !detalhes && !fotoLink1 && !enderecoRetirada){
             res.status(400).send({ message: "Preencha pelo menos 1 campo para editar o seu carro" });
         }
 
@@ -326,7 +332,7 @@ const update = async (req, res) => {
             res.status(400).send({ message: "Você não pode editar este carro" });
         }
 
-        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1);
+        await updateService(id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada);
 
         return res.send({carros, message: "Carro editado com sucesso"});
     }catch(err) {

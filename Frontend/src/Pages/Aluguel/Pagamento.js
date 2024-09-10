@@ -97,7 +97,8 @@ const Pagamento = () => {
       valorTotal: carro?.precoPorDia * quantidadeDias.length,
       quantidadeDias: formattedDias,
       dataDoPagamento: dataCriado,
-      formaPagamento: formaPagamentoParaRegistro
+      formaPagamento: formaPagamentoParaRegistro,
+      modeloRegistro: carro?.modelo
     };
   
     try {

@@ -61,18 +61,19 @@ const byUserService = (id) => Carros.find({user: id})
     .populate("user");
 
 /**
- * Atualiza um carro com base no ID fornecido e nos novos dados.
+ * Atualiza um documento de carro com base no ID fornecido.
  * @param {mongoose.Schema.Types.ObjectId} id - ID do carro a ser atualizado.
- * @param {string} modelo - Novo modelo do carro.
- * @param {string} ano - Novo ano de fabricação do carro.
- * @param {string} cidade - Nova cidade onde o carro está disponível.
- * @param {number} precoPorDia - Novo preço por dia do aluguel do carro.
- * @param {string} detalhes - Novos detalhes sobre o carro.
- * @param {string} fotoLink1 - Novo link para a foto principal do carro.
+ * @param {string} modelo - Modelo do carro.
+ * @param {string} ano - Ano de fabricação do carro.
+ * @param {string} cidade - Cidade onde o carro está disponível.
+ * @param {number} precoPorDia - Preço por dia do aluguel do carro.
+ * @param {string} detalhes - Detalhes adicionais sobre o carro.
+ * @param {string} fotoLink1 - Link para a foto principal do carro.
+ * @param {string} enderecoRetirada - Endereço para retirada do carro.
  * @returns {Promise<mongoose.Document>} - Promessa que resolve para o documento atualizado do carro.
  */
-const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1) => 
-    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1},
+const updateService = (id, modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada) => 
+    Carros.findOneAndUpdate({_id: id}, {modelo, ano, cidade, precoPorDia, detalhes, fotoLink1, enderecoRetirada},
     {
         rawResult: true,
     } 

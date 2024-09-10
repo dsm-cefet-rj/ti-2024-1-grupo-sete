@@ -23,7 +23,7 @@ import { createService, findAllService, byUserService } from "../services/regist
 const create = async (req, res) => {
     try{
         console.log("Registro controller")
-        const {valorDia, valorTotal, quantidadeDias, dataDoPagamento, formaPagamento} = req.body;
+        const {valorDia, valorTotal, quantidadeDias, dataDoPagamento, formaPagamento, modeloRegistro} = req.body;
         //console.log("É PREÇO!", precoPorDia) ok
         const {id} = req.params;
         //console.log(req.params);
@@ -33,13 +33,14 @@ const create = async (req, res) => {
         }
 
         //const carros = await findByIdService(id);
-        console.log("\n\nreq.userId:", req.userId)
+        console.log("\n\nreq.userId:", req.userId, id)
         const registro = await createService({
             valorDia,
             valorTotal,//R$$$
             quantidadeDias,
             dataDoPagamento,
             formaPagamento,
+            modeloRegistro,
             user: req.userId,
             carro: id,
         });
@@ -72,15 +73,17 @@ const findAll = async (req, res) => {
         res.send({
             results: registro.map((registros) => ({
                 id: registros._id,
-                userName: registros.user.name,
                 valorDia: registros.valorDia,
                 valorTotal: registros.valorTotal,
                 quantidadeDias: registros.quantidadeDias,
                 dataDoPagamento: registros.dataDoPagamento,
                 formaPagamento: registros.formaPagamento,
+                modeloRegistro: registros.modeloRegistro,
                 userId: registros.user._id,
+                userName: registros.user.name,
                 userEmail: registros.user.email,
                 userEndereco: registros.user.endereco,
+                carroModelo: registros.carro.modelo,
                 //carroId: registros.carro._id,
                 // modelo: registros.carro.modelo,
                 // fotoLink1: registros.fotoLink1,
@@ -113,7 +116,8 @@ const byUser = async (req, res) => {
                 id: registroItem._id,
                 valorDia: registroItem.valorDia,
                 valorTotal: registroItem.valorTotal,
-                quantidadeDias: registroItem.quantidadeDias, 
+                quantidadeDias: registroItem.quantidadeDias,
+                modeloRegistro: registroItem.modeloRegistro,
                 userId: registroItem.user._id,
                 userName: registroItem.user.name
             })),

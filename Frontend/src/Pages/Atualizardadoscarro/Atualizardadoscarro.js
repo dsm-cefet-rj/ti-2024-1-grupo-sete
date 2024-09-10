@@ -52,7 +52,8 @@ function Atualizardadoscarro() {
                 cidade: carro.cidade,
                 precoPorDia: carro.precoPorDia,
                 detalhes: carro.detalhes,
-                fotoLink1: carro.fotoLink1
+                fotoLink1: carro.fotoLink1,
+                enderecoRetirada: carro.enderecoRetirada,
             }
             console.log("\n\nBody:", body);
             const response = await updateCarroByUser(carro.id, body);
@@ -105,6 +106,9 @@ function Atualizardadoscarro() {
                     </p>
                     <p>
                         <span>Foto:</span> {carro.fotoLink1}
+                    </p>
+                    <p>
+                        <span>Endereço retirada:</span> {carro.enderecoRetirada}
                     </p>
                 </div>
             ) : (
